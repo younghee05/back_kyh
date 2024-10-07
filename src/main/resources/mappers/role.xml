@@ -7,9 +7,9 @@
         insert into roles_tb
         values(0, #{name})
     </insert>
-    <select id="findByName" resultType="org.test.teamproject_back.entity.Role" >
+    <select id="findByName" resultType="org.test.teamproject_back.entity.Role">
         select
-            role_id,
+            role_id as id,
             name
         from
             roles_tb
