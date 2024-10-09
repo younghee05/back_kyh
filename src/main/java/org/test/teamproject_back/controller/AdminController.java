@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.test.teamproject_back.dto.request.ReqSigninDto;
 import org.test.teamproject_back.service.AdminService;
+import org.test.teamproject_back.service.AuthService;
 
 
 @RestController
@@ -15,10 +16,10 @@ import org.test.teamproject_back.service.AdminService;
 public class AdminController {
 
     @Autowired
-    private AdminService adminService;
+    private AuthService authService;
 
     @PostMapping("/signin")
     public ResponseEntity<?> signin(@RequestBody ReqSigninDto dto) {
-        return ResponseEntity.ok().body(null);
+        return ResponseEntity.ok().body(authService.signin(dto));
     }
 }
