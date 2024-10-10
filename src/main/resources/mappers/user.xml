@@ -66,4 +66,12 @@
         where
             ut.user_id = #{id}
     </select>
+    <select id="findByName" resultType="java.lang.Integer">
+        select
+            count(*)
+        from
+            users_tb
+        where
+            name = #{name}
+    </select>
 </mapper>
