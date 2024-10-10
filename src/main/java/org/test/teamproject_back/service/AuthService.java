@@ -1,5 +1,6 @@
 package org.test.teamproject_back.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.test.teamproject_back.dto.request.ReqSigninDto;
@@ -36,6 +37,9 @@ public class AuthService {
     @Autowired
     private JwtProvider jwtProvider;
 
+    @Value("${user.profile.img.default}")
+    private String defaultProfileImg;
+
     @Transactional(rollbackFor = SignupException.class)
     public RespSignupDto signup(ReqSignupDto dto, String roleName) throws SignupException {
 
@@ -48,7 +52,7 @@ public class AuthService {
                 throw new SignupException("비밀번호가 일치하지 않습니다.");
             }
 
-            user = dto.toEntity(bCryptPasswordEncoder);
+            user = dto.toEntity(bCryptPasswordEncoder, defaultProfileImg);
             userMapper.save(user);
 
 
