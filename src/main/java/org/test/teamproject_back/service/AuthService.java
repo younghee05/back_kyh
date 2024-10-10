@@ -37,7 +37,7 @@ public class AuthService {
     private JwtProvider jwtProvider;
 
     @Transactional(rollbackFor = SignupException.class)
-    public RespSignupDto signup(ReqSignupDto dto) throws SignupException {
+    public RespSignupDto signup(ReqSignupDto dto, String roleName) throws SignupException {
 
         User user = null;
         try {
@@ -52,10 +52,10 @@ public class AuthService {
             userMapper.save(user);
 
 
-            Role role = roleMapper.findByName("ROLE_USER");
+            Role role = roleMapper.findByName(roleName);
             if (role == null) {
                 role = Role.builder()
-                        .name("ROLE_USER")
+                        .name(roleName)
                         .build();
 
                 roleMapper.save(role);
@@ -96,7 +96,8 @@ public class AuthService {
 
     public User checkUsernameAndPassword(String username, String password) {
         User user = userMapper.findByUsername(username);
-        if (user == null) {
+        System.out.println(user);
+        if (user == null) {;
             throw new UsernameNotFoundException("사용자 정보를 확인하세요.");
         }
         if (!bCryptPasswordEncoder.matches(password, user.getPassword())) {

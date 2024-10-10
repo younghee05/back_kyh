@@ -1,7 +1,7 @@
 package org.test.teamproject_back.controller;
 
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 import org.test.teamproject_back.dto.request.ReqAccessDto;
 import org.test.teamproject_back.dto.request.ReqSigninDto;
 import org.test.teamproject_back.dto.request.ReqSignupDto;
@@ -9,13 +9,11 @@ import org.test.teamproject_back.exception.SignupException;
 import org.test.teamproject_back.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.test.teamproject_back.service.TokenService;
 
 import javax.validation.Valid;
 
+@RequestMapping("/user")
 @RestController
 public class AuthController {
 
@@ -27,7 +25,8 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@Valid @RequestBody ReqSignupDto dto) throws SignupException {
 //        System.out.println(dto);
-        return ResponseEntity.ok().body(authService.signup(dto));
+        String roleName = "ROLE_USER";
+        return ResponseEntity.ok().body(authService.signup(dto, roleName));
     }
 
     @PostMapping("/signin")

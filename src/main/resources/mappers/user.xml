@@ -24,7 +24,7 @@
     </resultMap>
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         insert into users_tb
-        values(0, #{username}, #{name}, #{email}, #{phoneNumber}, #{password}, now())
+        values(0, #{username}, #{name}, #{email}, #{password}, #{phoneNumber}, now())
     </insert>
     <select id="findByUsername" resultMap="userResultMap">
         select

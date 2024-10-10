@@ -23,6 +23,13 @@ public class RoleDataInit implements CommandLineRunner {
             roleMapper.save(role);
         }
 
+        if (roleMapper.findByName(("ROLE_MANAGER")) == null) {
+            Role role = Role.builder()
+                    .name("ROLE_MANAGER")
+                    .build();
+            roleMapper.save(role);
+        }
+
         if (roleMapper.findByName(("ROLE_USER")) == null) {
             Role role = Role.builder()
                     .name("ROLE_USER")

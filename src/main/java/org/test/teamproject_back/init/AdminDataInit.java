@@ -31,7 +31,7 @@ public class AdminDataInit implements CommandLineRunner {
     @Transactional(rollbackFor = SignupException.class)
     public void run(String... args) throws Exception {
         String username = "admin"; // 원하는 관리자 아이디
-        String password = "admin123"; // 원하는 관리자 비밀번호
+        String password = "Admin1q2w3e4r!!"; // 원하는 관리자 비밀번호
         String encryptedPassword = bCryptPasswordEncoder.encode(password);
 
         if (userMapper.findByName("관리자") == 0) {
