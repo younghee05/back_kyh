@@ -9,4 +9,5 @@ public interface UserMapper {
     User findByUsername(String username);
     User findById(Long userId);
     int findByName(String name);
+    User findAllUsersByRole(String roleName);
 }

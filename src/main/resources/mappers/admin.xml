@@ -3,5 +3,26 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.test.teamproject_back.repository.AdminMapper">
-
+    <update id="updateByUserId">
+        update users_tb
+        set
+            username = #{username},
+            name = #{name},
+            email = #{email},
+            password = #{password},
+            phone_number = #{phoneNumber},
+            img = #{img}
+        where
+            user_id = #{id}
+    </update>
+    <delete id="deleteUser">
+        delete from users_tb
+        where
+            user_id = #{userId}
+    </delete>
+    <delete id="deleteUserRoles">
+        delete from user_roles_tb
+        where
+            user_id = #{userId}
+    </delete>
 </mapper>

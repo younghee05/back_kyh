@@ -24,7 +24,7 @@
     </resultMap>
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         insert into users_tb
-        values(0, #{username}, #{name}, #{email}, #{password}, #{phoneNumber}, now())
+        values(0, #{username}, #{name}, #{email}, #{password}, #{phoneNumber}, #{img}, now())
     </insert>
     <select id="findByUsername" resultMap="userResultMap">
         select
@@ -73,5 +73,25 @@
             users_tb
         where
             name = #{name}
+    </select>
+    <select id="findAllUsersByRole" resultType="org.test.teamproject_back.entity.User">
+        select
+            ut.user_id,
+            ut.username,
+            ut.name,
+            ut.email,
+            ut.phone_number,
+            ut.password,
+            urt.user_roles_id,
+            urt.user_id,
+            urt.role_id,
+            rt.role_id,
+            rt.name
+        from
+            users_tb ut
+            left outer join user_roles_tb urt on (ut.user_id = urt.user_id)
+            left outer join roles_tb rt on (rt.role_id = urt.role_id)
+        where
+            rt.name = #{roleName}
     </select>
 </mapper>
