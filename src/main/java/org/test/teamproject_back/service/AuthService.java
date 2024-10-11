@@ -100,7 +100,7 @@ public class AuthService {
 
     public User checkUsernameAndPassword(String username, String password) {
         User user = userMapper.findByUsername(username);
-        System.out.println(user);
+//        System.out.println(user);
         if (user == null) {;
             throw new UsernameNotFoundException("사용자 정보를 확인하세요.");
         }

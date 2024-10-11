@@ -33,21 +33,21 @@ public class AdminController {
         return ResponseEntity.ok().body(authService.signin(dto));
     }
 
-    // 직원관리
     @GetMapping("/search")
-    public ResponseEntity<?> getAllAdminUsers(@RequestParam(required = false) String roleName) {
-        return ResponseEntity.ok().body(adminService.getAllUsers(roleName));
+    public ResponseEntity<?> getAllAdminUsers(@RequestParam(required = false) String role) {
+        return ResponseEntity.ok().body(adminService.getAllUsers(role));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}") 
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        adminService.deleteById(id);
+        adminService.deleteUser(id);
         return ResponseEntity.ok().body(true);
     }
 
     @PutMapping("/modify/{id}")
     public ResponseEntity<?> modify(@Valid @RequestBody ReqModifyUserDto dto)  {
-        adminService.modifyById(dto);
+//        System.out.println(dto);
+        adminService.modifyUser(dto);
         return ResponseEntity.ok().body(true);
     }
 }

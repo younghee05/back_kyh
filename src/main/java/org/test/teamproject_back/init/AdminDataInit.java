@@ -1,6 +1,7 @@
 package org.test.teamproject_back.init;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -25,12 +26,13 @@ public class AdminDataInit implements CommandLineRunner {
     private RoleMapper roleMapper;
     @Autowired
     private UserRolesMapper userRolesMapper;
-
+    @Value("${user.profile.img.default}")
+    private String img;
 
     @Override
     @Transactional(rollbackFor = SignupException.class)
     public void run(String... args) throws Exception {
-        String username = "admin"; // 원하는 관리자 아이디
+        String username = "admin12"; // 원하는 관리자 아이디
         String password = "Admin1q2w3e4r!!"; // 원하는 관리자 비밀번호
         String encryptedPassword = bCryptPasswordEncoder.encode(password);
 
@@ -41,6 +43,7 @@ public class AdminDataInit implements CommandLineRunner {
                     .email(password + "@example.com")
                     .password(encryptedPassword)
                     .phoneNumber("010-1234-5678")
+                    .img(img)
                     .build();
 
             userMapper.save(user);

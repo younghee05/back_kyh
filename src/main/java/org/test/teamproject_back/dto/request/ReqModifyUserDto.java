@@ -20,13 +20,13 @@ public class ReqModifyUserDto {
     private String email;
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[~!@#$%^&*?])[A-Za-z\\d~!@#$%^&*?]{8,16}$", message = "비밀번호는 8자이상 16자이하의 영대소문, 숫자, 특수문자(~!@#$%^&*?)를 포함하여합니다.")
     private String password;
-    private String checkPassword;
     @Pattern(regexp = "^01[0-9]{1,2}-[0-9]{3,4}-[0-9]{4}$", message = "전화번호는 010-1234-5678 형식이어야합니다.")
     private String phoneNumber;
     private String img;
 
-    public User toEntity(BCryptPasswordEncoder bycryptPasswordEncoder, String img) {
+    public User toEntity(BCryptPasswordEncoder bycryptPasswordEncoder) {
         return User.builder()
+                .id(userId)
                 .username(username)
                 .name(name)
                 .email(email)

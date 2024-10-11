@@ -15,12 +15,12 @@
         where
             user_id = #{id}
     </update>
-    <delete id="deleteUser">
+    <delete id="deleteUserByUserId">
         delete from users_tb
         where
             user_id = #{userId}
     </delete>
-    <delete id="deleteUserRoles">
+    <delete id="deleteUserRolesByUserId">
         delete from user_roles_tb
         where
             user_id = #{userId}
