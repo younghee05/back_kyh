@@ -43,7 +43,7 @@ public class JwtAccessTokenFilter extends GenericFilter {
             Long userId = ((Integer) claims.get("userId")).longValue();
             User user = userMapper.findById(userId);
             if (user == null) {
-                throw new JwtException("해당 ID(" + userId + "의 사용자 정보를 찾지 못했습니다.");
+                throw new JwtException("해당 ID(" + userId + ")의 사용자 정보를 찾지 못했습니다.");
             }
             PrincipalUser principalUser = user.toPrincipal();
             Authentication authentication = new UsernamePasswordAuthenticationToken(principalUser, null, principalUser.getAuthorities());

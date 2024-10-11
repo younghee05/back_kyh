@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,9 +17,9 @@ public class Product {
     private int price;
     private int stock;
     private int salesCount;
-    private int categoryId;
     private String description;
     private String origin;
     private String img;
     private String createdDate;
+    private Set<Category> categories;
 }

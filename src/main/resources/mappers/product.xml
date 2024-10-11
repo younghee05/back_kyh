@@ -13,10 +13,10 @@
         <result property="origin" column="origin"></result>
         <result property="img" column="img"></result>
         <result property="createdDate" column="created_date"></result>
-        <collection property="categoryId" javaType="java.util.Set" resultMap="categoryMap"></collection>
+        <collection property="categories" javaType="java.util.Set" resultMap="categoryMap"></collection>
     </resultMap>
     <resultMap id="categoryMap" type="org.test.teamproject_back.entity.Category">
-        <id property="categoryId" column="category_id"></id>
+        <id property="categoryId" column="ct_category_id"></id>
         <result property="name" column="name"></result>
     </resultMap>
 
@@ -35,12 +35,50 @@
             created_date = now()
         )
     </insert>
-    <select id="searchProductByTitle" resultType="org.test.teamproject_back.entity.Product">
+    <update id="updateProduct">
+        update products_tb
+        set
+            title = #{title},
+            price = #{price},
+            stock = #{stock},
+            sales_count = #{salesCount},
+            category_id = #{categoryId},
+            description = #{description},
+            origin = #{origin},
+            img = #{img}
+        where product_id = #{product_id}
+    </update>
+    <delete id="deleteProductById">
+        delete from products_tb
+        where
+            product_id = #{productId}
+    </delete>
+    <select id="searchProductByTitle" resultMap="productMap">
+        select
+            pt.product_id,
+            pt.title,
+            pt.price,
+            pt.stock,
+            pt.sales_count,
+            pt.description,
+            pt.origin,
+            pt.img,
+            pt.created_date,
+            pt.category_id,
+            ct.category_id as ct_category_id,
+            ct.name
+        from
+            products_tb pt
+        left outer join categories_tb ct on (pt.category_id = ct.category_id)
+        where
+            pt.title like concat('%',trim(ifnull(#{title},'')),'%')
+    </select>
+    <select id="findCategoryById" resultType="org.test.teamproject_back.entity.Category">
         select
             *
         from
-            products_tb
+            categories_tb
         where
-            title like "%{title}%"
+            category_id = #{categoryId}
     </select>
 </mapper>
