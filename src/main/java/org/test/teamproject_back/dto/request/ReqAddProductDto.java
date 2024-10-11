@@ -2,6 +2,8 @@ package org.test.teamproject_back.dto.request;
 
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
 public class ReqAddProductDto {
     private String title;

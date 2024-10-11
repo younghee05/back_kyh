@@ -40,7 +40,7 @@ public class AdminService {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
-        if (!authorities.contains("ROLE_ADMIN")) {
+        if (!(authorities.contains("ROLE_ADMIN") || authorities.contains("ROLE_MANAGER"))) {
             throw new AuthenticationServiceException("조회 할 수 있는 권한이 없습니다.");
         }
 
