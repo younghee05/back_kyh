@@ -6,4 +6,5 @@ import org.test.teamproject_back.entity.Product;
 @Mapper
 public interface ProductMapper {
     int addProduct(Product product);
+    Product searchProductByTitle(String title);
 }
