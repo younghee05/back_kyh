@@ -34,7 +34,7 @@ public class AdminController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> getAllAdminUsers(@RequestParam(required = false) String role) {
+    public ResponseEntity<?> getAllUsers(@RequestParam(required = false) String role) {
         return ResponseEntity.ok().body(adminService.getAllUsers(role));
     }
 

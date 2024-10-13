@@ -5,6 +5,7 @@ import lombok.Data;
 import org.test.teamproject_back.entity.Category;
 import org.test.teamproject_back.entity.Product;
 
+import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -14,20 +15,17 @@ public class ReqModifyProductDto {
     private String title;
     private int price;
     private int stock;
-    private int salesCount;
-    private int categoryId;
     private String description;
     private String origin;
     private String img;
+    private int categoryId;
 
-    public Product toEntity(Category category) {
+    public Product toProduct() {
         return Product.builder()
                 .productId(productId)
                 .title(title)
                 .price(price)
                 .stock(stock)
-                .salesCount(salesCount)
-                .category(category)
                 .description(description)
                 .origin(origin)
                 .img(img)

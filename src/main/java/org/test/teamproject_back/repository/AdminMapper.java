@@ -6,7 +6,7 @@ import org.test.teamproject_back.entity.UserRoles;
 
 @Mapper
 public interface AdminMapper {
+    User findUserById(Long userId);
     int deleteUserByUserId(Long userId);
-    int deleteUserRolesByUserId(Long userId);
-    int updateByUserId(User user);
+    int updateUserByUserId(User user);
 }

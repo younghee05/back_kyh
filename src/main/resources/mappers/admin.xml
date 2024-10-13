@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.test.teamproject_back.repository.AdminMapper">
-    <update id="updateByUserId">
+    <update id="updateUserByUserId">
         update users_tb
         set
             username = #{username},
@@ -20,9 +20,12 @@
         where
             user_id = #{userId}
     </delete>
-    <delete id="deleteUserRolesByUserId">
-        delete from user_roles_tb
+    <select id="findUserById" resultType="org.test.teamproject_back.entity.User">
+        select
+            *
+        from
+            users_tb
         where
             user_id = #{userId}
-    </delete>
+    </select>
 </mapper>

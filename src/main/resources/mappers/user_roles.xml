@@ -7,4 +7,26 @@
         insert into user_roles_tb
         values(0, #{userId}, #{roleId})
     </insert>
+    <update id="updateUserRoles">
+        update user_roles_tb
+        set
+            role_id = #{roleId}
+        where
+            user_id = #{userId}
+    </update>
+    <delete id="deleteUserRolesByUserId">
+        delete from user_roles_tb
+        where
+        user_id = #{userId}
+    </delete>
+    <select id="findUserRolesByUserId" resultType="org.test.teamproject_back.entity.UserRoles">
+        select
+            user_roles_id as id,
+            user_id as userId,
+            role_id as roleId
+        from
+            user_roles_tb
+        where
+            user_id = #{userId}
+    </select>
 </mapper>
