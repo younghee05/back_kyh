@@ -24,14 +24,12 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@Valid @RequestBody ReqSignupDto dto) throws SignupException {
-//        System.out.println(dto);
         String roleName = "ROLE_USER";
         return ResponseEntity.ok().body(authService.signup(dto, roleName));
     }
 
     @PostMapping("/signin")
     public ResponseEntity<?> signin(@Valid @RequestBody ReqSigninDto dto) {
-//        System.out.println(dto);
         return ResponseEntity.ok().body(authService.signin(dto));
     }
 

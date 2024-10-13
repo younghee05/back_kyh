@@ -16,7 +16,9 @@ public class ProductController {
 
     @PostMapping("/add")
     public ResponseEntity<?> addProduct(@RequestBody ReqAddProductDto dto) {
-        return ResponseEntity.ok().body(productService.addProduct(dto));
+//        System.out.println(dto);
+        productService.addProduct(dto);
+        return ResponseEntity.ok().body(true);
     }
 
     @GetMapping("/search") // 상품 조회
@@ -32,7 +34,6 @@ public class ProductController {
 
     @PutMapping("/modify/{id}")
     public ResponseEntity<?> modifyProduct(@RequestBody ReqModifyProductDto dto) {
-//        System.out.println(dto);
         productService.modifyProduct(dto);
         return ResponseEntity.ok().body(true);
     }

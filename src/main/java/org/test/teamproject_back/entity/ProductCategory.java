@@ -5,15 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
-
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserRoles {
+public class ProductCategory {
     private Long id;
-    private Long userId;
-    private int roleId;
-    private Role role;
+    private Long productId;
+    private int categoryId;
+    private Category category;
 }

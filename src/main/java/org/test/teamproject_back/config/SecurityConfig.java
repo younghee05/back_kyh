@@ -1,15 +1,14 @@
 package org.test.teamproject_back.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.test.teamproject_back.security.filter.JwtAccessTokenFilter;
+import org.test.teamproject_back.security.handler.AccessDeniedHandler;
 import org.test.teamproject_back.security.handler.AuthenticationHandler;
 
 @EnableWebSecurity
@@ -20,6 +19,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtAccessTokenFilter jwtAccessTokenFilter;
     @Autowired
     private AuthenticationHandler authenticationHandler;
+    @Autowired
+    private AccessDeniedHandler accessDeniedHandler;
 
 
     @Override
@@ -38,6 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/user/*", "/admin/signin")
                 .permitAll()
+                .antMatchers("/admin/signup")
+                .hasRole("ADMIN")
                 .antMatchers("/admin/**")
                 .hasAnyRole("ADMIN", "MANAGER")
                 .anyRequest()
@@ -45,6 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.exceptionHandling()
                 .authenticationEntryPoint(authenticationHandler);
+        http.exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler);
 
         http.addFilterBefore(jwtAccessTokenFilter, UsernamePasswordAuthenticationFilter.class);
 

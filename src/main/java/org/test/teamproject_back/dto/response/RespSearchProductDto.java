@@ -3,18 +3,14 @@ package org.test.teamproject_back.dto.response;
 import lombok.Builder;
 import lombok.Data;
 import org.test.teamproject_back.entity.Category;
+import org.test.teamproject_back.entity.Product;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Builder
 @Data
 public class RespSearchProductDto {
-    private Set<Category> category;
-    private String title;
-    private int price;
-    private String origin;
-    private int salesCount;
-    private int stock;
-    private String createdDate;
+    private List<Product> products;
 }

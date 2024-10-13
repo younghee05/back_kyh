@@ -21,5 +21,5 @@ public class Product {
     private String origin;
     private String img;
     private String createdDate;
-    private Set<Category> categories;
+    private Set<ProductCategory> productCategories;
 }
