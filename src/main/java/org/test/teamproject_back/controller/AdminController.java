@@ -22,7 +22,7 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    @PostMapping("/signup")
+    @PostMapping("/main/signup")
     public ResponseEntity<?> signup(@Valid @RequestBody ReqSignupDto dto) throws SignupException {
         String roleName = "ROLE_MANAGER";
         return ResponseEntity.ok().body(authService.signup(dto, roleName));
@@ -34,18 +34,18 @@ public class AdminController {
         return ResponseEntity.ok().body(authService.signin(dto));
     }
 
-    @GetMapping("/search")
+    @GetMapping("/main/search")
     public ResponseEntity<?> getAllUsers(@RequestParam(required = false) String role) {
         return ResponseEntity.ok().body(adminService.getAllUsers(role));
     }
 
-    @DeleteMapping("/delete/{id}") 
+    @DeleteMapping("/main/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         adminService.deleteUser(id);
         return ResponseEntity.ok().body(true);
     }
 
-    @PutMapping("/modify/{id}")
+    @PutMapping("/main/modify/{id}")
     public ResponseEntity<?> modify(@Valid @RequestBody ReqModifyUserDto dto)  {
 //        System.out.println(dto);
         adminService.modifyUser(dto);

@@ -8,7 +8,7 @@ import org.test.teamproject_back.dto.request.ReqModifyProductDto;
 import org.test.teamproject_back.service.ProductService;
 
 @RestController
-@RequestMapping("/admin/product")
+@RequestMapping("/admin/main/product")
 public class ProductController {
 
     @Autowired
