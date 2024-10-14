@@ -17,7 +17,8 @@ public class ReqModifyProductDto {
     private int stock;
     private String description;
     private String origin;
-    private String img;
+    private String thumbnailImg;
+    private String contentsImg;
     private int categoryId;
 
     public Product toProduct() {
@@ -28,7 +29,8 @@ public class ReqModifyProductDto {
                 .stock(stock)
                 .description(description)
                 .origin(origin)
-                .img(img)
+                .thumbnailImg(thumbnailImg)
+                .contentsImg(contentsImg)
                 .build();
     }
 }

@@ -19,7 +19,8 @@ public class Product {
     private int salesCount;
     private String description;
     private String origin;
-    private String img;
+    private String thumbnailImg;
+    private String contentsImg;
     private String createdDate;
     private Set<ProductCategory> productCategories;
 }
