@@ -66,8 +66,8 @@ public class AuthService {
             }
 
             UserRoles userRoles = UserRoles.builder()
-                    .userId(user.getId())
-                    .roleId(role.getId())
+                    .userId(user.getUserId())
+                    .roleId(role.getRoleId())
                     .build();
             userRolesMapper.save(userRoles);
             user.setUserRoles(Set.of(userRoles));

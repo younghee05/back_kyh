@@ -12,7 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Data
 public class UserRoles {
-    private Long id;
+    private Long userRolesId;
     private Long userId;
     private int roleId;
     private Role role;

@@ -14,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Data
 public class User {
-    private Long id;
+    private Long userId;
     private String username;
     private String name;
     private String email;
@@ -26,7 +26,7 @@ public class User {
 
     public PrincipalUser toPrincipal() {
         return PrincipalUser.builder()
-                .id(id)
+                .id(userId)
                 .username(username)
                 .password(password)
                 .roles(userRoles)
