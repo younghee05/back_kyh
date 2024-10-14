@@ -21,7 +21,7 @@
     </delete>
     <select id="findUserRolesByUserId" resultType="org.test.teamproject_back.entity.UserRoles">
         select
-            user_roles_id as id,
+            user_roles_id,
             user_id as userId,
             role_id as roleId
         from

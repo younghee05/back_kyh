@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class ProductCategory {
-    private Long id;
+    private Long productCategoryId;
     private Long productId;
     private int categoryId;
     private Category category;

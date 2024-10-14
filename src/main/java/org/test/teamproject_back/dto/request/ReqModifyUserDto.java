@@ -25,7 +25,7 @@ public class ReqModifyUserDto {
 
     public User toEntity(BCryptPasswordEncoder bycryptPasswordEncoder) {
         return User.builder()
-                .id(userId)
+                .userId(userId)
                 .username(username)
                 .name(name)
                 .email(email)
