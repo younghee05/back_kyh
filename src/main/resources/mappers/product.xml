@@ -11,7 +11,8 @@
         <result property="salesCount" column="sales_count"></result>
         <result property="description" column="description"></result>
         <result property="origin" column="origin"></result>
-        <result property="img" column="img"></result>
+        <result property="thumbnailImg" column="thumbnail_img"></result>
+        <result property="contentsImg" column="contents_img"></result>
         <result property="createdDate" column="created_date"></result>
         <collection property="productCategories" javaType="java.util.Set" resultMap="productCategoryMap"></collection>
     </resultMap>
@@ -27,9 +28,9 @@
     </resultMap>
 
     <insert id="addProduct" useGeneratedKeys="true" keyProperty="productId">
-        insert into products_tb (product_id, title, price, stock, description, origin, img, created_date)
+        insert into products_tb (product_id, title, price, stock, description, origin, thumbnail_img, contents_img, created_date)
         values(
-            0, #{title}, #{price}, #{stock}, #{description}, #{origin}, #{img}, now()
+            0, #{title}, #{price}, #{stock}, #{description}, #{origin}, #{thumbnailImg}, #{contentsImg}, now()
         )
     </insert>
     <insert id="addCategory" useGeneratedKeys="true" keyProperty="categoryId">
@@ -48,7 +49,8 @@
             stock = #{stock},
             description = #{description},
             origin = #{origin},
-            img = #{img}
+            thumbnail_img = #{thumbnailImg},
+            contents_img = #{contentsImg}
         where
             product_id = #{productId}
     </update>
@@ -76,7 +78,8 @@
             pt.sales_count,
             pt.description,
             pt.origin,
-            pt.img,
+            pt.thumbnail_img,
+            pt.contents_img,
             pt.created_date,
             ct.category_id as ct_category_id,
             ct.name,

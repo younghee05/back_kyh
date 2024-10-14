@@ -1,6 +1,7 @@
 package org.test.teamproject_back.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,19 +27,20 @@ public class ProductService {
 
     @Autowired
     private ProductMapper productMapper;
+    @Value("${user.profile.thumbnailImg.default}")
+    private String defaultThumbnailImg;
 
     @Transactional(rollbackFor = SQLException.class)
     public void addProduct(ReqAddProductDto dto) {
-        Product product = Product.builder()
-                .title(dto.getTitle())
-                .price(dto.getPrice())
-                .stock(dto.getStock())
-                .description(dto.getDescription())
-                .origin(dto.getOrigin())
-                .img(dto.getImg())
-                .build();
+        Product product = null;
 
-        productMapper.addProduct(product);
+        if (dto.getThumbnailImg().isBlank() || dto.getThumbnailImg() == null) {
+            product = dto.toProduct(defaultThumbnailImg);
+            productMapper.addProduct(product);
+        } else {
+            product = dto.toProduct(dto.getThumbnailImg());
+            productMapper.addProduct(product);
+        }
 
         ProductCategory productCategory = ProductCategory.builder()
                 .productId(product.getProductId())
@@ -62,7 +64,7 @@ public class ProductService {
 
     @Transactional(rollbackFor = SQLException.class)
     public void deleteProduct(Long id) {
-        if(!(Optional.ofNullable(productMapper.findProductById(id))).isPresent()) {
+        if (!(Optional.ofNullable(productMapper.findProductById(id))).isPresent()) {
             throw new InvalidInputException("해당 상품 정보가 존재하지 않습니다.");
         }
         productMapper.deleteProductById(id);
@@ -71,7 +73,7 @@ public class ProductService {
 
     @Transactional(rollbackFor = SQLException.class)
     public void modifyProduct(ReqModifyProductDto dto) {
-        if(!(Optional.ofNullable(productMapper.findProductById(dto.getProductId()))).isPresent()) {
+        if (!(Optional.ofNullable(productMapper.findProductById(dto.getProductId()))).isPresent()) {
             throw new InvalidInputException("해당 상품 정보가 존재하지 않습니다.");
         }
         productMapper.updateProduct(dto.toProduct());
