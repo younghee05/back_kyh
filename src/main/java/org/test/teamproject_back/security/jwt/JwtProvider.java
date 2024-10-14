@@ -38,6 +38,7 @@ public class JwtProvider {
         if (bearerToken == null) {
             throw new RuntimeException();
         }
+
         int bearerLength = "bearer ".length();
         return bearerToken.substring(bearerLength);
     }
