@@ -28,8 +28,9 @@ public class AdminController {
         return ResponseEntity.ok().body(authService.signup(dto, roleName));
     }
 
-    @PostMapping("/signin")
+    @PostMapping
     public ResponseEntity<?> signin(@Valid @RequestBody ReqSigninDto dto) {
+        System.out.println(dto);
         return ResponseEntity.ok().body(authService.signin(dto));
     }
 
