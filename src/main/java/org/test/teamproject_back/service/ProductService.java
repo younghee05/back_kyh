@@ -42,7 +42,7 @@ public class ProductService {
 
         ProductCategory productCategory = ProductCategory.builder()
                 .productId(product.getProductId())
-                .categoryId(dto.getCategoryId())
+                .categoryId(dto.getCategory())
                 .build();
         productMapper.addProductCategory(productCategory);
     }

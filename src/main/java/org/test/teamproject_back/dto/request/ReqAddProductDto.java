@@ -9,7 +9,7 @@ public class ReqAddProductDto {
     private String title;
     private int price;
     private int stock;
-    private int categoryId;
+    private int category;
     private String description;
     private String origin;
     private String img;
