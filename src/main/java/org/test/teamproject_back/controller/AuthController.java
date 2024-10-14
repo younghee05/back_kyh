@@ -34,7 +34,7 @@ public class AuthController {
     }
 
     @GetMapping("/access")
-    public ResponseEntity<?> access(ReqAccessDto dto) {
+    public ResponseEntity<?> access(@RequestParam(required = false) ReqAccessDto dto) {
         return ResponseEntity.ok().body(tokenService.isValidAccessToken(dto.getAccessToken()));
     }
 
