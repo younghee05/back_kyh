@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.test.teamproject_back.repository.CartItemMapper">
+    <resultMap id="cartResultMap" type="org.test.teamproject_back.entity.Cart">
+        <id property="cartId" column="cart_id"></id>
+        <result property="userId" column="user_id"></result>
+        <collection property="cartItem" javaType="java.util.List" resultMap="cartItemsResultMap"></collection>
+    </resultMap>
+    <resultMap id="cartItemsResultMap" type="org.test.teamproject_back.entity.CartItem">
+        <id property="cartItemId" column="cart_item_id"></id>
+        <result property="cartId" column="cit_cart_id"></result>
+        <result property="productId" column="product_id"></result>
+        <result property="quantity" column="quantity"></result>
+        <result property="price" column="price"></result>
+        <association property="product" resultMap="productResultMap"></association>
+    </resultMap>
+    <resultMap id="productResultMap" type="org.test.teamproject_back.entity.Product">
+        <result property="title" column="title"></result>
+        <result property="thumbnailImg" column="thumbnail_img"></result>
+    </resultMap>
+    <insert id="addCartItems" useGeneratedKeys="true" keyProperty="cartItemId">
+        insert into cart_items_tb
+        values(0, #{cartId}, #{productId}, #{quantity}, #{price})
+    </insert>
+    <select id="findCartByUserId" resultMap="cartResultMap">
+        select
+            ct.cart_id,
+            ct.user_id,
+            cit.cart_item_id,
+            cit.cart_id as cit_cart_id,
+            cit.product_id,
+            cit.quantity,
+            cit.price,
+            pt.title,
+            pt.thumbnail_img
+        from
+            cart_items_tb cit
+            left outer join products_tb pt on (pt.product_id = cit.product_id)
+            left outer join cart_tb ct on (ct.cart_id = cit.cart_id)
+            left outer join users_tb ut on (ct.user_id = ut.user_id)
+        where
+            ct.user_id = #{userId}
+    </select>
+</mapper>

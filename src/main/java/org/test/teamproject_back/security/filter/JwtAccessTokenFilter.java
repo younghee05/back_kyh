@@ -35,8 +35,11 @@ public class JwtAccessTokenFilter extends GenericFilter {
         }
 
         String bearerAccessToken = httpServletRequest.getHeader("Authorization");
+        System.out.println("bearerAccessToken: " + bearerAccessToken);
         if (bearerAccessToken == null || bearerAccessToken.isBlank()) {
+            System.out.println(bearerAccessToken);
             filterChain.doFilter(servletRequest, servletResponse);
+            System.out.println("after");
             return;
         }
 
