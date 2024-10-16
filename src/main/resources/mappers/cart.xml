@@ -7,4 +7,13 @@
         insert into cart_tb
         values(0, #{userId}, now())
     </insert>
+    <select id="findCartIdByUserId" resultType="java.lang.Long">
+        select
+            cart_id
+        from
+            cart_tb
+        where
+            user_id = #{userId};
+    </select>
+
 </mapper>

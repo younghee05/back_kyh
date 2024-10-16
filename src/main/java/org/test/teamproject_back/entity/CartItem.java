@@ -15,5 +15,6 @@ public class CartItem {
     private Long productId;
     private int quantity;
     private int price;
+    private String createdAt;
     private Product product;
 }

@@ -14,17 +14,19 @@
         <result property="productId" column="product_id"></result>
         <result property="quantity" column="quantity"></result>
         <result property="price" column="price"></result>
+        <result property="createdAt" column="created_at"></result>
         <association property="product" resultMap="productResultMap"></association>
     </resultMap>
     <resultMap id="productResultMap" type="org.test.teamproject_back.entity.Product">
         <result property="title" column="title"></result>
         <result property="thumbnailImg" column="thumbnail_img"></result>
+        <result property="description" column="description"></result>
     </resultMap>
     <insert id="addCartItems" useGeneratedKeys="true" keyProperty="cartItemId">
         insert into cart_items_tb
-        values(0, #{cartId}, #{productId}, #{quantity}, #{price})
+        values(0, #{cartId}, #{productId}, #{quantity}, #{price}, now())
     </insert>
-    <select id="findCartByUserId" resultMap="cartResultMap">
+    <select id="findCartListByUserId" resultMap="cartResultMap">
         select
             ct.cart_id,
             ct.user_id,
@@ -33,8 +35,10 @@
             cit.product_id,
             cit.quantity,
             cit.price,
+            cit.created_at,
             pt.title,
-            pt.thumbnail_img
+            pt.thumbnail_img,
+            pt.description
         from
             cart_items_tb cit
             left outer join products_tb pt on (pt.product_id = cit.product_id)
