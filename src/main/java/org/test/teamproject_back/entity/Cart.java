@@ -11,10 +11,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Cart { // shopping cart tb
-    private Long cartId; // id
+public class Cart {
+    private Long cartId;
     private Long userId;
-    private List<Product> product; // 타입 고민
-    private CartItem cartItem;
     private String createdDate;
+    private List<CartItem> cartItem;
 }

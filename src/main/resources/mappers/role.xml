@@ -9,7 +9,7 @@
     </insert>
     <select id="findByName" resultType="org.test.teamproject_back.entity.Role">
         select
-            role_id,
+            role_id as roleId,
             name
         from
             roles_tb

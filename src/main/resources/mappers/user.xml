@@ -23,7 +23,7 @@
         <id property="roleId" column="role_id"></id>
         <id property="name" column="role_name"></id>
     </resultMap>
-    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" useGeneratedKeys="true" keyProperty="userId">
         insert into users_tb
         values(0, #{username}, #{name}, #{email}, #{password}, #{phoneNumber}, #{img}, now())
     </insert>
