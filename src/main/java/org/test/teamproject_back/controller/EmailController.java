@@ -14,7 +14,7 @@ public class EmailController {
     @Autowired
     private EmailService emailService;
 
-    @PostMapping("/send")
+    @PostMapping("")
     public ResponseEntity<?> sendEmail(@RequestBody ReqSendMailDto dto) throws Exception {
         System.out.println(dto);
         emailService.sendEmail(dto);

@@ -53,7 +53,7 @@ public class CartService {
         cartItemMapper.addCartItems(dto.toCartItem(cartId));
     }
 
-    public RespSearchCartDto searchCart(Long userId) {
+    public RespSearchCartDto getCart(Long userId) {
         PrincipalUser principalUser = (PrincipalUser) SecurityContextHolder
                 .getContext()
                 .getAuthentication()

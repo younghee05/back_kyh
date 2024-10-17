@@ -10,7 +10,6 @@ import org.test.teamproject_back.entity.Role;
 import org.test.teamproject_back.entity.User;
 import org.test.teamproject_back.entity.UserRoles;
 import org.test.teamproject_back.exception.SignupException;
-import org.test.teamproject_back.repository.AdminMapper;
 import org.test.teamproject_back.repository.RoleMapper;
 import org.test.teamproject_back.repository.UserMapper;
 import org.test.teamproject_back.repository.UserRolesMapper;

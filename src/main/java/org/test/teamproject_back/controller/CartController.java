@@ -16,24 +16,24 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    @PostMapping("/add")
+    @PostMapping("")
     public ResponseEntity<?> addCart(@RequestBody ReqAddCartDto dto) {
         cartService.addCart(dto);
         return ResponseEntity.ok().body(true);
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> searchCart(@RequestParam Long userId) {
-        return ResponseEntity.ok().body(cartService.searchCart(userId));
+    public ResponseEntity<?> getCart(@RequestParam Long userId) {
+        return ResponseEntity.ok().body(cartService.getCart(userId));
     }
 
-    @PutMapping("/modify/{cartId}")
+    @PutMapping("/{cartId}")
     public ResponseEntity<?> modifyCart(@RequestBody ReqModifyCartDto dto) {
         cartService.modifyCart(dto);
         return ResponseEntity.ok().body(true);
     }
 
-    @DeleteMapping("/delete/{cartId}")
+    @DeleteMapping("/{cartId}")
     public ResponseEntity<?> deleteCart(@RequestBody ReqDeleteCartDto dto) {
         cartService.deleteCart(dto);
         return ResponseEntity.ok().body(true);

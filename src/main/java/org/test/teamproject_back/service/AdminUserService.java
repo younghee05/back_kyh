@@ -10,9 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.test.teamproject_back.dto.request.ReqModifyUserDto;
 import org.test.teamproject_back.dto.response.RespAdminDto;
 import org.test.teamproject_back.entity.User;
-import org.test.teamproject_back.entity.UserRoles;
 import org.test.teamproject_back.exception.InvalidInputException;
-import org.test.teamproject_back.repository.AdminMapper;
+import org.test.teamproject_back.repository.AdminUserMapper;
 import org.test.teamproject_back.repository.UserMapper;
 import org.test.teamproject_back.repository.UserRolesMapper;
 import org.test.teamproject_back.security.principal.PrincipalUser;
@@ -23,12 +22,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class AdminService {
+public class AdminUserService {
 
     @Autowired
     private UserMapper userMapper;
     @Autowired
-    private AdminMapper adminMapper;
+    private AdminUserMapper adminUserMapper;
     @Autowired
     private UserRolesMapper userRolesMapper;
     @Autowired
@@ -62,10 +61,10 @@ public class AdminService {
         if (!authorities.contains("ROLE_ADMIN")) {
             throw new AuthenticationServiceException("삭제 할 수 있는 권한이 없습니다.");
         }
-        if(!(Optional.ofNullable(adminMapper.findUserById(userId))).isPresent()) {
+        if(!(Optional.ofNullable(adminUserMapper.findUserById(userId))).isPresent()) {
             throw new InvalidInputException("해당 사용자 정보가 존재하지 않습니다.");
         }
-        adminMapper.deleteUserByUserId(userId);
+        adminUserMapper.deleteUserByUserId(userId);
         userRolesMapper.deleteUserRolesByUserId(userId);
     }
 
@@ -84,10 +83,10 @@ public class AdminService {
             throw new AuthenticationServiceException("수정 할 수 있는 권한이 없습니다.");
         }
 
-        if(!(Optional.ofNullable(adminMapper.findUserById(dto.getUserId()))).isPresent()) {
+        if(!(Optional.ofNullable(adminUserMapper.findUserById(dto.getUserId()))).isPresent()) {
             throw new InvalidInputException("해당 사용자 정보가 존재하지 않습니다.");
         }
-        adminMapper.updateUserByUserId(dto.toEntity(bCryptPasswordEncoder));
+        adminUserMapper.updateUserByUserId(dto.toEntity(bCryptPasswordEncoder));
     }
 
 }
