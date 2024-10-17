@@ -6,6 +6,7 @@
     <resultMap id="cartResultMap" type="org.test.teamproject_back.entity.Cart">
         <id property="cartId" column="cart_id"></id>
         <result property="userId" column="user_id"></result>
+        <result property="createdDate" column="created_at"></result>
         <collection property="cartItem" javaType="java.util.List" resultMap="cartItemsResultMap"></collection>
     </resultMap>
     <resultMap id="cartItemsResultMap" type="org.test.teamproject_back.entity.CartItem">
@@ -13,32 +14,84 @@
         <result property="cartId" column="cit_cart_id"></result>
         <result property="productId" column="product_id"></result>
         <result property="quantity" column="quantity"></result>
-        <result property="price" column="price"></result>
-        <result property="createdAt" column="created_at"></result>
+        <result property="price" column="cit_price"></result>
+        <result property="createdAt" column="cit_created_at"></result>
         <association property="product" resultMap="productResultMap"></association>
     </resultMap>
     <resultMap id="productResultMap" type="org.test.teamproject_back.entity.Product">
+        <id property="productId" column="pt_product_id"></id>
         <result property="title" column="title"></result>
-        <result property="thumbnailImg" column="thumbnail_img"></result>
+        <result property="price" column="price"></result>
+        <result property="stock" column="stock"></result>
+        <result property="salesCount" column="sales_count"></result>
         <result property="description" column="description"></result>
+        <result property="origin" column="origin"></result>
+        <result property="thumbnailImg" column="thumbnail_img"></result>
+        <result property="contentsImg" column="contents_img"></result>
+        <result property="createdDate" column="created_date"></result>
     </resultMap>
     <insert id="addCartItems" useGeneratedKeys="true" keyProperty="cartItemId">
         insert into cart_items_tb
         values(0, #{cartId}, #{productId}, #{quantity}, #{price}, now())
     </insert>
+    <update id="updateCartItems">
+        update cart_items_tb
+        set
+            quantity = #{quantity}
+        where
+            cart_id = #{cartId}
+            and cart_item_id = #{cartItemId}
+    </update>
     <select id="findCartListByUserId" resultMap="cartResultMap">
         select
-            ct.cart_id,
-            ct.user_id,
             cit.cart_item_id,
             cit.cart_id as cit_cart_id,
             cit.product_id,
             cit.quantity,
-            cit.price,
-            cit.created_at,
+            cit.price as cit_price,
+            cit.created_at as cit_created_at,
+            ct.cart_id,
+            ct.user_id,
+            ct.created_at,
+            pt.product_id as pt_product_id,
             pt.title,
+            pt.price,
+            pt.stock,
+            pt.sales_count,
+            pt.description,
+            pt.origin,
             pt.thumbnail_img,
-            pt.description
+            pt.contents_img,
+            pt.created_date
+        from
+            cart_items_tb cit
+            left outer join products_tb pt on (pt.product_id = cit.product_id)
+            left outer join cart_tb ct on (ct.cart_id = cit.cart_id)
+            left outer join users_tb ut on (ct.user_id = ut.user_id)
+        where
+            ct.user_id = #{userId}
+    </select>
+    <select id="findCartItemListByUserId" resultMap="cartItemsResultMap">
+        select
+            cit.cart_item_id,
+            cit.cart_id as cit_cart_id,
+            cit.product_id,
+            cit.quantity,
+            cit.price as cit_price,
+            cit.created_at as cit_created_at,
+            ct.cart_id,
+            ct.user_id,
+            ct.created_at,
+            pt.product_id as pt_product_id,
+            pt.title,
+            pt.price,
+            pt.stock,
+            pt.sales_count,
+            pt.description,
+            pt.origin,
+            pt.thumbnail_img,
+            pt.contents_img,
+            pt.created_date
         from
             cart_items_tb cit
             left outer join products_tb pt on (pt.product_id = cit.product_id)

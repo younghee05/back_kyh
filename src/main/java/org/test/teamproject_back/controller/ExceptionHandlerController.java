@@ -9,6 +9,7 @@ import org.test.teamproject_back.exception.SignupException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
+import org.test.teamproject_back.exception.UnauthorizedAccessException;
 
 @RestControllerAdvice
 public class ExceptionHandlerController {
@@ -35,6 +36,11 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(InvalidInputException.class)
     public ResponseEntity<?> invalidInputException(InvalidInputException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ExceptionHandler(UnauthorizedAccessException.class)
+    public ResponseEntity<?> unauthorizedAccessException(UnauthorizedAccessException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 }
