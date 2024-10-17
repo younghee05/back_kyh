@@ -15,5 +15,14 @@
         where
             user_id = #{userId};
     </select>
+    <select id="findCartItemIdByCartId" resultType="java.lang.Long">
+        select
+            cit.cart_item_id
+        from
+            cart_tb ct
+            left outer join cart_items_tb cit on (ct.cart_id = cit.cart_id)
+        where
+            ct.cart_id = #{cartId};
+    </select>
 
 </mapper>

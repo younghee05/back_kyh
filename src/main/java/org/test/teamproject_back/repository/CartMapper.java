@@ -9,4 +9,5 @@ import java.util.List;
 public interface CartMapper {
     int addCart(Cart cart);
     Long findCartIdByUserId(Long userId);
+    List<Long> findCartItemIdByCartId(Long cartId);
 }
