@@ -13,4 +13,5 @@ public interface CartItemMapper {
     List<Cart> findCartListByUserId(Long userId);
     List<CartItem> findCartItemListByUserId(Long userId);
     int updateCartItems(CartItem cartItem);
+    int deleteCartItemByCartItemId(Long cartItemId);
 }

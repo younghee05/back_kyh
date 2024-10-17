@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.test.teamproject_back.dto.request.ReqAddCartDto;
+import org.test.teamproject_back.dto.request.ReqDeleteCartDto;
 import org.test.teamproject_back.dto.request.ReqModifyCartDto;
 import org.test.teamproject_back.dto.request.ReqModifyProductDto;
 import org.test.teamproject_back.dto.response.RespSearchCartDto;
@@ -37,18 +38,19 @@ public class CartService {
                 .getAuthentication()
                 .getPrincipal();
 
-        if (principalUser.getId() == dto.getUserId()) {
-            Long cartId = cartMapper.findCartIdByUserId(dto.getUserId());
-
-            if (cartId == null) {
-                Cart cart = dto.toCart();
-                cartMapper.addCart(cart);
-                cartItemMapper.addCartItems(dto.toCartItem(cart.getCartId()));
-                return;
-            }
-            cartItemMapper.addCartItems(dto.toCartItem(cartId));
+        if (principalUser.getId() != dto.getUserId()) {
+            throw new UnauthorizedAccessException("잘못된 접근입니다. 다시 로그인 후 시도해 주세요");
         }
 
+        Long cartId = cartMapper.findCartIdByUserId(dto.getUserId());
+
+        if (cartId == null) {
+            Cart cart = dto.toCart();
+            cartMapper.addCart(cart);
+            cartItemMapper.addCartItems(dto.toCartItem(cart.getCartId()));
+            return;
+        }
+        cartItemMapper.addCartItems(dto.toCartItem(cartId));
     }
 
     public RespSearchCartDto searchCart(Long userId) {
@@ -57,13 +59,12 @@ public class CartService {
                 .getAuthentication()
                 .getPrincipal();
 
-        if (principalUser.getId() != userId) {
-            throw new UnauthorizedAccessException("본인 인증이 필요합니다.");
+        if (principalUser.getId() != userId || cartMapper.findCartIdByUserId(userId) == null) {
+            throw new UnauthorizedAccessException("잘못된 접근입니다. 다시 로그인 후 시도해 주세요");
         }
 
         List<Cart> cartList = cartItemMapper.findCartListByUserId(userId);
         List<CartItem> cartItemList = cartItemMapper.findCartItemListByUserId(userId);
-        System.out.println(cartItemList);
 
         Long totalAmount = cartItemList.stream()
                 .mapToLong(
@@ -84,8 +85,8 @@ public class CartService {
                 .getAuthentication()
                 .getPrincipal();
 
-        if (principalUser.getId() != dto.getUserId()) {
-            throw new UnauthorizedAccessException("본인 인증이 필요합니다.");
+        if (principalUser.getId() != dto.getUserId() || cartMapper.findCartIdByUserId(dto.getUserId()) != dto.getCartId()) {
+            throw new UnauthorizedAccessException("잘못된 접근입니다. 다시 로그인 후 시도해 주세요");
         }
 
         List<Long> cartItemsIdList = cartMapper.findCartItemIdByCartId(dto.getCartId()); // 카트에 해당하는 아이템
@@ -98,5 +99,18 @@ public class CartService {
                 cartItemMapper.updateCartItems(dto.toCartItem(dto.getCartId(), cartItemId, dto.getQuantity()));
             }
         }
+    }
+
+    @Transactional(rollbackFor = SQLException.class)
+    public void deleteCart(ReqDeleteCartDto dto) {
+        PrincipalUser principalUser = (PrincipalUser) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        if (principalUser.getId() != dto.getUserId() || cartMapper.findCartIdByUserId(dto.getUserId()) != dto.getCartId()) {
+            throw new UnauthorizedAccessException("잘못된 접근입니다. 다시 로그인 후 시도해 주세요");
+        }
+        cartItemMapper.deleteCartItemByCartItemId(dto.getCartItemId());
     }
 }
