@@ -4,8 +4,10 @@ import lombok.Builder;
 import lombok.Data;
 import org.test.teamproject_back.entity.User;
 
+import java.util.List;
+
 @Builder
 @Data
 public class RespAdminDto {
-    private User user;
+    private List<User> user;
 }

@@ -101,4 +101,26 @@
         where
             product_id = #{id}
     </select>
+    <select id="getAllProductsList" resultMap="productResultMap">
+        select
+            pt.product_id,
+            pt.title,
+            pt.price,
+            pt.stock,
+            pt.sales_count,
+            pt.description,
+            pt.origin,
+            pt.thumbnail_img,
+            pt.contents_img,
+            pt.created_date,
+            ct.category_id as ct_category_id,
+            ct.name,
+            pct.product_category_id,
+            pct.product_id as pct_product_id,
+            pct.category_id as pct_category_id
+        from
+            products_tb pt
+            left outer join product_category_tb pct on (pt.product_id = pct.product_id)
+            left outer join categories_tb ct on (pct.category_id = ct.category_id)
+    </select>
 </mapper>

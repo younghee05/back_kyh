@@ -8,33 +8,19 @@ import org.test.teamproject_back.dto.request.ReqModifyProductDto;
 import org.test.teamproject_back.service.ProductService;
 
 @RestController
-@RequestMapping("/admin/main/product")
 public class ProductController {
 
     @Autowired
     private ProductService productService;
 
-    @PostMapping("/add")
-    public ResponseEntity<?> addProduct(@RequestBody ReqAddProductDto dto) {
-        System.out.println(dto);
-        productService.addProduct(dto);
-        return ResponseEntity.ok().body(true);
+    @GetMapping("/") // 전체
+    public ResponseEntity<?> get() {
+        return ResponseEntity.ok().body(productService.getAllProducts());
     }
 
     @GetMapping("/search") // 상품 조회
     public ResponseEntity<?> searchProduct(@RequestParam String title) {
-        return ResponseEntity.ok().body(productService.searchProduct(title));
+        return ResponseEntity.ok().body(productService.searchProducts(title));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
-        return ResponseEntity.ok().body(true);
-    }
-
-    @PutMapping("/modify/{id}")
-    public ResponseEntity<?> modifyProduct(@RequestBody ReqModifyProductDto dto) {
-        productService.modifyProduct(dto);
-        return ResponseEntity.ok().body(true);
-    }
 }

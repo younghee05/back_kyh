@@ -75,24 +75,4 @@
         where
             name = #{name}
     </select>
-    <select id="findAllUsersByRole" resultMap="userResultMap">
-        select
-            ut.user_id,
-            ut.username,
-            ut.name,
-            ut.email,
-            ut.phone_number,
-            ut.password,
-            urt.user_roles_id,
-            urt.user_id,
-            urt.role_id,
-            rt.role_id,
-            rt.name as role_name
-        from
-            users_tb ut
-            left outer join user_roles_tb urt on (ut.user_id = urt.user_id)
-            left outer join roles_tb rt on (rt.role_id = urt.role_id)
-        where
-            rt.name = #{roleName}
-    </select>
 </mapper>
