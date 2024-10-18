@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.test.teamproject_back.repository.ProductLikeMapper">
+    <resultMap id="productLikeProductResultMap" type="org.test.teamproject_back.entity.ProductLike">
+        <id property="productLikeId" column="product_like_id" />
+        <result property="userId" column="user_id" />
+        <collection property="product" javaType="java.util.Set" resultMap="productResultMap" />
+    </resultMap>
+    <resultMap id="productResultMap" type="org.test.teamproject_back.entity.Product">
+        <id property="productId" column="product_id"/>
+        <result property="title" column="title" />
+        <result property="price" column="stock" />
+        <result property="salesCount" column="sales_count" />
+        <result property="description" column="description" />
+        <result property="origin" column="origin" />
+        <result property="thumbnailImg" column="thumbnail_img" />
+        <result property="contentsImg" column="contents_img" />
+        <result property="createdDate" column="create_date" />
+    </resultMap>
+
+    <insert id="addProductLike">
+        insert into products_like_tb
+        values(0, #{productId}, #{userId})
+    </insert>
+
+    <delete id="deleteProductLike">
+        delete from products_like_tb
+        where
+        product_id = #{productId}
+        and user_id = #{userId}
+    </delete>
+
+    <select id="getLikeCountByProductId" resultType="java.lang.Integer">
+        select
+        count(product_id)
+        from
+        products_like_tb
+        where
+        product_id = #{productId}
+    </select>
+
+    <select id="SearchProductLikeByUserId" resultMap="productLikeProductResultMap">
+        select
+        plt.product_like_id,
+        plt.product_id,
+        plt.user_id,
+        pt.product_id as product_id,
+        pt.title,
+        pt.price,
+        pt.stock,
+        pt.sales_count,
+        pt.description,
+        pt.origin,
+        pt.thumbnail_img,
+        pt.contents_img,
+        pt.createcd_date
+        from
+        products_like_tb plt
+        left outer join products_tb pt on(pt.product_id = plt.product_id)
+        where
+        plt.user_id = #{userId}
+    </select>
+
+</mapper>
