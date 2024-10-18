@@ -12,6 +12,7 @@ public interface ProductMapper {
     int addProduct(Product product);
     int addCategory(Category category);
     int addProductCategory(ProductCategory productCategory);
+    List<Product> getAllProductsList();
     List<Product> findProductByTitle(String title);
     Product findProductById(Long id);
     int deleteProductById(Long productId);

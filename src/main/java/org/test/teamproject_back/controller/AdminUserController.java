@@ -10,18 +10,22 @@ import javax.validation.Valid;
 
 
 @RestController
-@RequestMapping("/admin/main")
+@RequestMapping("/admin/main/user")
 public class AdminUserController {
 
     @Autowired
     private AdminUserService adminUserService;
 
     @GetMapping("/role")
-    public ResponseEntity<?> getAllUsers(@RequestParam(required = false) String role) {
+    public ResponseEntity<?> getAllUsers(@RequestParam(required = false) int role) {
         return ResponseEntity.ok().body(adminUserService.getAllUsers(role));
     }
 
-    // 사용자 정보로 user 검색 기능
+    // 사용자 정보로 user 검색 기능 admin_user.xml 수정
+    @GetMapping("/role/name")
+    public ResponseEntity<?> search(@RequestParam(required = false) int role, @RequestParam(required = false) String name) {
+        return ResponseEntity.ok().body(adminUserService.searchUsers(role, name));
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
