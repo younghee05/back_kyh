@@ -7,7 +7,6 @@ import org.test.teamproject_back.entity.CartItem;
 @Builder
 @Data
 public class ReqModifyCartDto {
-    private Long userId;
     private Long cartId;
     private Long cartItemId;
     private int quantity;

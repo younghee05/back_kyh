@@ -45,6 +45,7 @@ public class ProductService {
         ProductCategory productCategory = ProductCategory.builder()
                 .productId(product.getProductId())
                 .categoryId(dto.getCategory())
+                .semiCategoryId(dto.getSemiCategory())
                 .build();
         productMapper.addProductCategory(productCategory);
     }
@@ -52,42 +53,46 @@ public class ProductService {
     public RespSearchProductDto getAllProducts() {
         List<Product> productList = productMapper.getAllProductsList();
 
-        if (productList == null || productList.isEmpty()) {
-            throw new InvalidInputException("해당 상품 정보가 존재하지 않습니다.");
-        }
-
         return RespSearchProductDto.builder()
                 .products(productList)
                 .build();
     }
 
     public RespSearchProductDto searchProducts(String title) {
-
-        List<Product> response = productMapper.findProductByTitle(title.trim());
-
-        if (response == null || response.isEmpty()) {
-            throw new InvalidInputException("해당 상품 정보가 존재하지 않습니다.");
-        }
+        List<Product> productList = productMapper.findProductByTitle(title.trim());
+        int productCount = productMapper.findProductCountByTitle(title.trim());
 
         return RespSearchProductDto.builder()
-                .products(response)
+                .products(productList)
+                .count(productCount)
+                .build();
+    }
+
+    public RespSearchProductDto searchCategory(Long categoryId) {
+        List<Product> productList = productMapper.findProductByCategory(categoryId);
+
+        return RespSearchProductDto.builder()
+                .products(productList)
+                .build();
+    }
+
+    public RespSearchProductDto searchSemiCategory(Long categoryId, Long semiCategoryId) {
+        System.out.println(categoryId + " " + semiCategoryId);
+        List<Product> productList = productMapper.findProductBySemiCategory(categoryId, semiCategoryId);
+
+        return RespSearchProductDto.builder()
+                .products(productList)
                 .build();
     }
 
     @Transactional(rollbackFor = SQLException.class)
     public void deleteProduct(Long id) {
-        if (!(Optional.ofNullable(productMapper.findProductById(id))).isPresent()) {
-            throw new InvalidInputException("해당 상품 정보가 존재하지 않습니다.");
-        }
         productMapper.deleteProductById(id);
         productMapper.deleteProductCategoryById(id);
     }
 
     @Transactional(rollbackFor = SQLException.class)
     public void modifyProduct(ReqModifyProductDto dto) {
-        if (!(Optional.ofNullable(productMapper.findProductById(dto.getProductId()))).isPresent()) {
-            throw new InvalidInputException("해당 상품 정보가 존재하지 않습니다.");
-        }
         productMapper.updateProduct(dto.toProduct());
         productMapper.updateProductCategory(dto.getCategoryId());
     }

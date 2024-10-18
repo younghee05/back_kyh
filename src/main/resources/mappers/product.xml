@@ -15,6 +15,7 @@
         <result property="contentsImg" column="contents_img"></result>
         <result property="createdDate" column="created_date"></result>
         <collection property="productCategories" javaType="java.util.Set" resultMap="productCategoryResultMap"></collection>
+        <collection property="semiCategories" javaType="java.util.Set" resultMap="semiCategoryResultMap"></collection>
     </resultMap>
     <resultMap id="productCategoryResultMap" type="org.test.teamproject_back.entity.ProductCategory">
         <id property="productCategoryId" column="product_category_id"></id>
@@ -26,7 +27,10 @@
         <id property="categoryId" column="ct_category_id"></id>
         <result property="name" column="name"></result>
     </resultMap>
-
+    <resultMap id="semiCategoryResultMap" type="org.test.teamproject_back.entity.SemiCategory">
+        <id property="semiCategoryId" column="semi_category_id"></id>
+        <result property="name" column="sct_name"></result>
+    </resultMap>
     <insert id="addProduct" useGeneratedKeys="true" keyProperty="productId">
         insert into products_tb (product_id, title, price, stock, description, origin, thumbnail_img, contents_img, created_date)
         values(
@@ -37,9 +41,13 @@
         insert into categories_tb
         values (0, #{name})
     </insert>
+    <insert id="addSemiCategory" useGeneratedKeys="true" keyProperty="categoryId">
+        insert into semi_categories_tb
+        values(0, #{name}
+    </insert>
     <insert id="addProductCategory">
         insert into product_category_tb
-        values(0, #{productId}, #{categoryId})
+        values(0, #{productId}, #{categoryId}, #{semiCategoryId})
     </insert>
     <update id="updateProduct">
         update products_tb
@@ -85,11 +93,25 @@
             ct.name,
             pct.product_category_id,
             pct.product_id as pct_product_id,
-            pct.category_id as pct_category_id
+            pct.category_id as pct_category_id,
+            sct.semi_category_id,
+            sct.name as sct_name
         from
             products_tb pt
             left outer join product_category_tb pct on (pt.product_id = pct.product_id)
             left outer join categories_tb ct on (pct.category_id = ct.category_id)
+            left outer join semi_categories_tb sct on (sct.semi_category_id = pct.semi_category_id)
+        where
+            pt.title like concat('%',trim(ifnull(#{title},'')),'%')
+    </select>
+    <select id="findProductCountByTitle" resultType="java.lang.Integer">
+        select
+            count(*)
+        from
+            products_tb pt
+            left outer join product_category_tb pct on (pt.product_id = pct.product_id)
+            left outer join categories_tb ct on (pct.category_id = ct.category_id)
+            left outer join semi_categories_tb sct on (sct.semi_category_id = pct.semi_category_id)
         where
             pt.title like concat('%',trim(ifnull(#{title},'')),'%')
     </select>
@@ -117,10 +139,68 @@
             ct.name,
             pct.product_category_id,
             pct.product_id as pct_product_id,
-            pct.category_id as pct_category_id
+            pct.category_id as pct_category_id,
+            sct.semi_category_id,
+            sct.name as sct_name
         from
             products_tb pt
             left outer join product_category_tb pct on (pt.product_id = pct.product_id)
             left outer join categories_tb ct on (pct.category_id = ct.category_id)
+            left outer join semi_categories_tb sct on (sct.semi_category_id = pct.semi_category_id)
+    </select>
+    <select id="findProductByCategory" resultMap="productResultMap">
+        select
+            pt.product_id,
+            pt.title,
+            pt.price,
+            pt.stock,
+            pt.sales_count,
+            pt.description,
+            pt.origin,
+            pt.thumbnail_img,
+            pt.contents_img,
+            pt.created_date,
+            ct.category_id as ct_category_id,
+            ct.name,
+            pct.product_category_id,
+            pct.product_id as pct_product_id,
+            pct.category_id as pct_category_id,
+            sct.semi_category_id,
+            sct.name as sct_name
+        from
+            products_tb pt
+            left outer join product_category_tb pct on (pt.product_id = pct.product_id)
+            left outer join categories_tb ct on (pct.category_id = ct.category_id)
+            left outer join semi_categories_tb sct on (sct.semi_category_id = pct.semi_category_id)
+        where
+            ct.category_id = #{categoryId}
+    </select>
+    <select id="findProductBySemiCategory" resultType="org.test.teamproject_back.entity.Product">
+        select
+            pt.product_id,
+            pt.title,
+            pt.price,
+            pt.stock,
+            pt.sales_count,
+            pt.description,
+            pt.origin,
+            pt.thumbnail_img,
+            pt.contents_img,
+            pt.created_date,
+            ct.category_id as ct_category_id,
+            ct.name,
+            pct.product_category_id,
+            pct.product_id as pct_product_id,
+            pct.category_id as pct_category_id,
+            sct.semi_category_id,
+            sct.name as sct_name
+        from
+            products_tb pt
+            left outer join product_category_tb pct on (pt.product_id = pct.product_id)
+            left outer join categories_tb ct on (pct.category_id = ct.category_id)
+            left outer join semi_categories_tb sct on (sct.semi_category_id = pct.semi_category_id)
+        where
+            ct.category_id = #{cate}
+            and sct.semi_category_id = #{id}
     </select>
 </mapper>

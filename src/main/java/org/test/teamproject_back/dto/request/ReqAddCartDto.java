@@ -8,12 +8,11 @@ import org.test.teamproject_back.entity.CartItem;
 @Builder
 @Data
 public class ReqAddCartDto {
-    private Long userId;
     private Long productId;
     private int quantity;
     private int price;
 
-    public Cart toCart() {
+    public Cart toCart(Long userId) {
         return Cart.builder()
                 .userId(userId)
                 .build();

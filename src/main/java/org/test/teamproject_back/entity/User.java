@@ -20,6 +20,7 @@ public class User {
     private String email;
     private String password;
     private String phoneNumber;
+    private Long point;
     private String img;
 
     private Set<UserRoles> userRoles;

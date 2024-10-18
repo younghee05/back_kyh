@@ -38,14 +38,10 @@ public class CartService {
                 .getAuthentication()
                 .getPrincipal();
 
-        if (principalUser.getId() != dto.getUserId()) {
-            throw new UnauthorizedAccessException("잘못된 접근입니다. 다시 로그인 후 시도해 주세요");
-        }
-
-        Long cartId = cartMapper.findCartIdByUserId(dto.getUserId());
+        Long cartId = cartMapper.findCartIdByUserId(principalUser.getId());
 
         if (cartId == null) {
-            Cart cart = dto.toCart();
+            Cart cart = dto.toCart(principalUser.getId());
             cartMapper.addCart(cart);
             cartItemMapper.addCartItems(dto.toCartItem(cart.getCartId()));
             return;
@@ -53,18 +49,15 @@ public class CartService {
         cartItemMapper.addCartItems(dto.toCartItem(cartId));
     }
 
-    public RespSearchCartDto getCart(Long userId) {
+    // total amount로 수정
+    public RespSearchCartDto getCart() {
         PrincipalUser principalUser = (PrincipalUser) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
 
-        if (principalUser.getId() != userId || cartMapper.findCartIdByUserId(userId) == null) {
-            throw new UnauthorizedAccessException("잘못된 접근입니다. 다시 로그인 후 시도해 주세요");
-        }
-
-        List<Cart> cartList = cartItemMapper.findCartListByUserId(userId);
-        List<CartItem> cartItemList = cartItemMapper.findCartItemListByUserId(userId);
+        List<Cart> cartList = cartItemMapper.findCartListByUserId(principalUser.getId());
+        List<CartItem> cartItemList = cartItemMapper.findCartItemListByUserId(principalUser.getId());
 
         Long totalAmount = cartItemList.stream()
                 .mapToLong(
@@ -85,10 +78,6 @@ public class CartService {
                 .getAuthentication()
                 .getPrincipal();
 
-        if (principalUser.getId() != dto.getUserId() || cartMapper.findCartIdByUserId(dto.getUserId()) != dto.getCartId()) {
-            throw new UnauthorizedAccessException("잘못된 접근입니다. 다시 로그인 후 시도해 주세요");
-        }
-
         List<Long> cartItemsIdList = cartMapper.findCartItemIdByCartId(dto.getCartId()); // 카트에 해당하는 아이템
         List<Long> matchingCartItemIdList = cartItemsIdList.stream() // 해당 아이템 찾음
                 .filter(cartItemId -> cartItemId.equals(dto.getCartItemId()))
@@ -108,9 +97,6 @@ public class CartService {
                 .getAuthentication()
                 .getPrincipal();
 
-        if (principalUser.getId() != dto.getUserId() || cartMapper.findCartIdByUserId(dto.getUserId()) != dto.getCartId()) {
-            throw new UnauthorizedAccessException("잘못된 접근입니다. 다시 로그인 후 시도해 주세요");
-        }
         cartItemMapper.deleteCartItemByCartItemId(dto.getCartItemId());
     }
 }

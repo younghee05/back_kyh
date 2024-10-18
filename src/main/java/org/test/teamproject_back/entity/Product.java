@@ -23,4 +23,5 @@ public class Product {
     private String contentsImg;
     private String createdDate;
     private Set<ProductCategory> productCategories;
+    private Set<SemiCategory> semiCategories;
 }

@@ -21,7 +21,7 @@
     </resultMap>
     <resultMap id="roleResultMap" type="org.test.teamproject_back.entity.Role">
         <id property="roleId" column="role_id"></id>
-        <id property="name" column="role_name"></id>
+        <result property="name" column="role_name"></result>
     </resultMap>
     <update id="updateUserByUserId">
         update users_tb
