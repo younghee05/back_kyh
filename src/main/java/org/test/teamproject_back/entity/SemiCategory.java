@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ProductCategory {
-    private Long productCategoryId;
-    private Long productId;
-    private int categoryId;
-    private int semiCategoryId;
-    private Category category;
+public class SemiCategory {
+    private Long semiCategoryId;
+    private Long name;
 }

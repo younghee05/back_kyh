@@ -13,4 +13,5 @@ import java.util.Set;
 @Data
 public class RespSearchProductDto {
     private List<Product> products;
+    private int count;
 }

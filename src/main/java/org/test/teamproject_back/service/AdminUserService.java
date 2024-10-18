@@ -51,13 +51,9 @@ public class AdminUserService {
         List<User> user = null;
 
         if (role == 2) {
-            user = adminUserMapper.findAllUsersByRoleAndName(role, name);
+            user = adminUserMapper.findAllUsersByRoleAndName(role, name.trim());
         } else if (role == 3) {
-            user = adminUserMapper.findAllUsersByRoleAndName(role, name);
-        }
-
-        if (!(Optional.ofNullable(user).isPresent())) {
-            throw new InvalidInputException("해당 사용자 정보가 존재하지 않습니다.");
+            user = adminUserMapper.findAllUsersByRoleAndName(role, name.trim());
         }
 
         return RespAdminDto.builder()
@@ -79,9 +75,7 @@ public class AdminUserService {
         if (!authorities.contains("ROLE_ADMIN")) {
             throw new AuthenticationServiceException("삭제 할 수 있는 권한이 없습니다.");
         }
-        if (!(Optional.ofNullable(adminUserMapper.findUserById(userId))).isPresent()) {
-            throw new InvalidInputException("해당 사용자 정보가 존재하지 않습니다.");
-        }
+
         adminUserMapper.deleteUserByUserId(userId);
         userRolesMapper.deleteUserRolesByUserId(userId);
     }
@@ -101,9 +95,6 @@ public class AdminUserService {
             throw new AuthenticationServiceException("수정 할 수 있는 권한이 없습니다.");
         }
 
-        if (!(Optional.ofNullable(adminUserMapper.findUserById(dto.getUserId()))).isPresent()) {
-            throw new InvalidInputException("해당 사용자 정보가 존재하지 않습니다.");
-        }
         adminUserMapper.updateUserByUserId(dto.toEntity(bCryptPasswordEncoder));
     }
 

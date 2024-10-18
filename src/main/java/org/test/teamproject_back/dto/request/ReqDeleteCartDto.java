@@ -6,7 +6,6 @@ import lombok.Data;
 @Builder
 @Data
 public class ReqDeleteCartDto {
-    private Long userId;
     private Long cartId;
     private Long cartItemId;
 }

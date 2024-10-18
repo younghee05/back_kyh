@@ -15,7 +15,7 @@ public class CartController {
 
     @Autowired
     private CartService cartService;
-
+// add, search, modify
     @PostMapping("")
     public ResponseEntity<?> addCart(@RequestBody ReqAddCartDto dto) {
         cartService.addCart(dto);
@@ -23,8 +23,8 @@ public class CartController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> getCart(@RequestParam Long userId) {
-        return ResponseEntity.ok().body(cartService.getCart(userId));
+    public ResponseEntity<?> getCart() {
+        return ResponseEntity.ok().body(cartService.getCart());
     }
 
     @PutMapping("/{cartId}")

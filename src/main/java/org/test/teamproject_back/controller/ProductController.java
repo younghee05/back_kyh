@@ -14,13 +14,24 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/") // 전체
-    public ResponseEntity<?> get() {
+    public ResponseEntity<?> getAllProducts() {
         return ResponseEntity.ok().body(productService.getAllProducts());
     }
 
-    @GetMapping("/search") // 상품 조회
-    public ResponseEntity<?> searchProduct(@RequestParam String title) {
+    @GetMapping("/main/search") // 상품 조회
+    public ResponseEntity<?> searchProduct(@RequestParam(required = false) String title) {
         return ResponseEntity.ok().body(productService.searchProducts(title));
+    }
+
+    @GetMapping("/main/cate") //
+    public ResponseEntity<?> searchCategory(@RequestParam(required = false) Long cate) {
+        return ResponseEntity.ok().body(productService.searchCategory(cate));
+    }
+
+    @GetMapping("/main")
+    public ResponseEntity<?> searchSemiCategory(@RequestParam(required = false) Long cate
+            , @RequestParam(required = false) Long id) {
+        return ResponseEntity.ok().body(productService.searchSemiCategory(cate, id));
     }
 
 }
