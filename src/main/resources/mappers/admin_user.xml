@@ -3,6 +3,26 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.test.teamproject_back.repository.AdminUserMapper">
+    <resultMap id="userResultMap" type="org.test.teamproject_back.entity.User">
+        <id property="userId" column="user_id"></id>
+        <result property="username" column="username"></result>
+        <result property="name" column="name"></result>
+        <result property="email" column="email"></result>
+        <result property="password" column="password"></result>
+        <result property="phoneNumber" column="phone_number"></result>
+        <result property="img" column="img"></result>
+        <collection property="userRoles" javaType="java.util.Set" resultMap="userRolesResultMap"></collection>
+    </resultMap>
+    <resultMap id="userRolesResultMap" type="org.test.teamproject_back.entity.UserRoles">
+        <id property="userRolesId" column="user_roles_id"></id>
+        <result property="userId" column="user_id"></result>
+        <result property="roleId" column="role_id"></result>
+        <association property="role" resultMap="roleResultMap"></association>
+    </resultMap>
+    <resultMap id="roleResultMap" type="org.test.teamproject_back.entity.Role">
+        <id property="roleId" column="role_id"></id>
+        <id property="name" column="role_name"></id>
+    </resultMap>
     <update id="updateUserByUserId">
         update users_tb
         set
@@ -28,4 +48,47 @@
         where
             user_id = #{userId}
     </select>
+    <select id="findAllUsersByRole" resultMap="userResultMap">
+        select
+            ut.user_id,
+            ut.username,
+            ut.name,
+            ut.email,
+            ut.phone_number,
+            ut.password,
+            urt.user_roles_id,
+            urt.user_id,
+            urt.role_id,
+            rt.role_id,
+            rt.name as role_name
+        from
+            users_tb ut
+            left outer join user_roles_tb urt on (ut.user_id = urt.user_id)
+            left outer join roles_tb rt on (rt.role_id = urt.role_id)
+        where
+            rt.role_id = #{role}
+    </select>
+    <select id="findAllUsersByRoleAndName" resultMap="userResultMap">
+        select
+            ut.user_id,
+            ut.username,
+            ut.name,
+            ut.email,
+            ut.phone_number,
+            ut.password,
+            urt.user_roles_id,
+            urt.user_id,
+            urt.role_id,
+            rt.role_id,
+            rt.name as role_name
+        from
+            users_tb ut
+            left outer join user_roles_tb urt on (ut.user_id = urt.user_id)
+            left outer join roles_tb rt on (rt.role_id = urt.role_id)
+        where
+            rt.role_id = #{role}
+            and ut.name like concat('%',trim(ifnull(#{name},'')),'%')
+    </select>
+
+
 </mapper>

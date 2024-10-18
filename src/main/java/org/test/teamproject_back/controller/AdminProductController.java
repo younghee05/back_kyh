@@ -22,10 +22,14 @@ public class AdminProductController {
     }
 
     // 상품 전체 불러오기 기능
+    @GetMapping("/list")
+    public ResponseEntity<?> getAllProducts() {
+        return ResponseEntity.ok().body(productService.getAllProducts());
+    }
 
     @GetMapping("/search") // 상품 조회
-    public ResponseEntity<?> searchProduct(@RequestParam String title) {
-        return ResponseEntity.ok().body(productService.searchProduct(title));
+    public ResponseEntity<?> searchProducts(@RequestParam String title) {
+        return ResponseEntity.ok().body(productService.searchProducts(title));
     }
 
     @PutMapping("/{id}")

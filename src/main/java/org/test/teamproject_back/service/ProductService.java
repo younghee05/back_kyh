@@ -49,7 +49,19 @@ public class ProductService {
         productMapper.addProductCategory(productCategory);
     }
 
-    public RespSearchProductDto searchProduct(String title) {
+    public RespSearchProductDto getAllProducts() {
+        List<Product> productList = productMapper.getAllProductsList();
+
+        if (productList == null || productList.isEmpty()) {
+            throw new InvalidInputException("해당 상품 정보가 존재하지 않습니다.");
+        }
+
+        return RespSearchProductDto.builder()
+                .products(productList)
+                .build();
+    }
+
+    public RespSearchProductDto searchProducts(String title) {
 
         List<Product> response = productMapper.findProductByTitle(title.trim());
 
