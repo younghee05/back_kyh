@@ -8,7 +8,7 @@ import org.test.teamproject_back.dto.request.ReqSendMailDto;
 import org.test.teamproject_back.service.EmailService;
 
 @RestController
-@RequestMapping("/user/email")
+@RequestMapping("public/email")
 public class EmailController {
 
     @Autowired

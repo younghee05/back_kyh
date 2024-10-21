@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.test.teamproject_back.entity.Category;
 import org.test.teamproject_back.entity.Product;
+import org.test.teamproject_back.entity.ProductCategory;
 
 import java.util.List;
 import java.util.Set;
@@ -20,6 +21,7 @@ public class ReqModifyProductDto {
     private String thumbnailImg;
     private String contentsImg;
     private int categoryId;
+    private int semiCategoryId;
 
     public Product toProduct() {
         return Product.builder()
@@ -31,6 +33,14 @@ public class ReqModifyProductDto {
                 .origin(origin)
                 .thumbnailImg(thumbnailImg)
                 .contentsImg(contentsImg)
+                .build();
+    }
+
+    public ProductCategory toProductCategory() {
+        return ProductCategory.builder()
+                .categoryId(categoryId)
+                .semiCategoryId(semiCategoryId)
+                .productId(productId)
                 .build();
     }
 }

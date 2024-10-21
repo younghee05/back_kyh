@@ -5,24 +5,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.test.teamproject_back.dto.request.ReqAddProductDto;
 import org.test.teamproject_back.dto.request.ReqModifyProductDto;
+import org.test.teamproject_back.service.AdminProductService;
 import org.test.teamproject_back.service.ProductService;
 
 @RestController
-@RequestMapping("/admin/main/product")
+@RequestMapping("/admin/product")
 public class AdminProductController {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private AdminProductService adminProductService;
 
     @PostMapping("")
     public ResponseEntity<?> addProduct(@RequestBody ReqAddProductDto dto) {
-        System.out.println(dto);
-        productService.addProduct(dto);
+        adminProductService.addProduct(dto);
         return ResponseEntity.ok().body(true);
     }
 
-    // 상품 전체 불러오기 기능
-    @GetMapping("/list")
+    @GetMapping("")
     public ResponseEntity<?> getAllProducts() {
         return ResponseEntity.ok().body(productService.getAllProducts());
     }
@@ -34,13 +35,13 @@ public class AdminProductController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> modifyProduct(@RequestBody ReqModifyProductDto dto) {
-        productService.modifyProduct(dto);
+        adminProductService.modifyProduct(dto);
         return ResponseEntity.ok().body(true);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
+        adminProductService.deleteProduct(id);
         return ResponseEntity.ok().body(true);
     }
 

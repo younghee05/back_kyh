@@ -1,26 +1,21 @@
 package org.test.teamproject_back.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.test.teamproject_back.dto.request.ReqAddCartDto;
 import org.test.teamproject_back.dto.request.ReqDeleteCartDto;
 import org.test.teamproject_back.dto.request.ReqModifyCartDto;
-import org.test.teamproject_back.dto.request.ReqModifyProductDto;
 import org.test.teamproject_back.dto.response.RespSearchCartDto;
 import org.test.teamproject_back.entity.Cart;
 import org.test.teamproject_back.entity.CartItem;
-import org.test.teamproject_back.entity.Product;
-import org.test.teamproject_back.exception.UnauthorizedAccessException;
 import org.test.teamproject_back.repository.CartItemMapper;
 import org.test.teamproject_back.repository.CartMapper;
 import org.test.teamproject_back.security.principal.PrincipalUser;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,25 +44,16 @@ public class CartService {
         cartItemMapper.addCartItems(dto.toCartItem(cartId));
     }
 
-    // total amount로 수정
     public RespSearchCartDto getCart() {
         PrincipalUser principalUser = (PrincipalUser) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
-
+        System.out.println(principalUser.getId());
         List<Cart> cartList = cartItemMapper.findCartListByUserId(principalUser.getId());
-        List<CartItem> cartItemList = cartItemMapper.findCartItemListByUserId(principalUser.getId());
-
-        Long totalAmount = cartItemList.stream()
-                .mapToLong(
-                        cartItem -> cartItem.getPrice() * cartItem.getQuantity()
-                )
-                .sum();
 
         return RespSearchCartDto.builder()
                 .cartList(cartList)
-                .totalAmount(totalAmount)
                 .build();
     }
 

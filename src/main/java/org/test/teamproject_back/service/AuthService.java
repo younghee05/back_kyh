@@ -55,7 +55,6 @@ public class AuthService {
             user = dto.toEntity(bCryptPasswordEncoder, defaultProfileImg);
             userMapper.save(user);
 
-
             Role role = roleMapper.findByName(roleName);
             if (role == null) {
                 role = Role.builder()
@@ -82,7 +81,7 @@ public class AuthService {
 
     // username 중복 확인
     public boolean isDuplicateUsername(String username) {
-        return Optional.ofNullable(userMapper.findByUsername(username)).isPresent();
+        return Optional.ofNullable(userMapper.findUserByUsername(username)).isPresent();
     }
 
     // password, checkPassword 같은지 확인
@@ -99,7 +98,7 @@ public class AuthService {
     }
 
     public User checkUsernameAndPassword(String username, String password) {
-        User user = userMapper.findByUsername(username);
+        User user = userMapper.findUserByUsername(username);
 //        System.out.println(user);
         if (user == null) {;
             throw new UsernameNotFoundException("사용자 정보를 확인하세요.");

@@ -10,18 +10,14 @@ import java.util.List;
 
 @Mapper
 public interface ProductMapper {
-    int addProduct(Product product);
-    int addCategory(Category category);
-    int addSemiCategory(Category semiCategory);
-    int addProductCategory(ProductCategory productCategory);
-    List<Product> getAllProductsList();
+
+    List<Product> findAllProductsList();
     List<Product> findProductByTitle(String title);
     int findProductCountByTitle(String title);
-    List<Product> findProductByCategory(Long categoryId);
-    List<Product> findProductBySemiCategory(@Param("cate") Long categoryId, @Param("id") Long semiCategoryId);
+    int findAllProductCount();
+    int findProductCountByCategory(int categoryId);
+    int findProductCountBySemiCategory(int categoryId, int semiCategoryId);
+    List<Product> findProductByCategory(int categoryId);
+    List<Product> findProductBySemiCategory(@Param("main") int categoryId, @Param("sub") int semiCategoryId);
     Product findProductById(Long id);
-    int deleteProductById(Long productId);
-    int deleteProductCategoryById(Long productId);
-    int updateProduct(Product product);
-    int updateProductCategory(int categoryId);
 }

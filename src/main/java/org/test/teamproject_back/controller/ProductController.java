@@ -8,30 +8,29 @@ import org.test.teamproject_back.dto.request.ReqModifyProductDto;
 import org.test.teamproject_back.service.ProductService;
 
 @RestController
+@RequestMapping("/public/product")
 public class ProductController {
 
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/") // 전체
+    @GetMapping("") // 전체
     public ResponseEntity<?> getAllProducts() {
         return ResponseEntity.ok().body(productService.getAllProducts());
     }
 
-    @GetMapping("/main/search") // 상품 조회
-    public ResponseEntity<?> searchProduct(@RequestParam(required = false) String title) {
-        return ResponseEntity.ok().body(productService.searchProducts(title));
+    @GetMapping("/search") // 상품 조회
+    public ResponseEntity<?> searchProduct(@RequestParam(required = false) String keyword) {
+        return ResponseEntity.ok().body(productService.searchProducts(keyword));
     }
 
-    @GetMapping("/main/cate") //
-    public ResponseEntity<?> searchCategory(@RequestParam(required = false) Long cate) {
-        return ResponseEntity.ok().body(productService.searchCategory(cate));
-    }
-
-    @GetMapping("/main")
-    public ResponseEntity<?> searchSemiCategory(@RequestParam(required = false) Long cate
-            , @RequestParam(required = false) Long id) {
-        return ResponseEntity.ok().body(productService.searchSemiCategory(cate, id));
+    @GetMapping("/category")
+    public ResponseEntity<?> searchCategory(@RequestParam(required = false) int main
+            , @RequestParam(required = false, defaultValue = "0") int sub) {
+        if (sub == 0) {
+            return ResponseEntity.ok().body(productService.searchCategory(main));
+        }
+        return ResponseEntity.ok().body(productService.searchSemiCategory(main, sub));
     }
 
 }

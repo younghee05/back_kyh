@@ -11,7 +11,6 @@ import java.util.List;
 public interface CartItemMapper {
     int addCartItems(CartItem cartItem);
     List<Cart> findCartListByUserId(Long userId);
-    List<CartItem> findCartItemListByUserId(Long userId);
     int updateCartItems(CartItem cartItem);
     int deleteCartItemByCartItemId(Long cartItemId);
 }

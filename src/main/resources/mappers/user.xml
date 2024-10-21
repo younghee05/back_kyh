@@ -12,12 +12,14 @@
         <result property="phoneNumber" column="phone_number"></result>
         <result property="point" column="point"></result>
         <result property="img" column="img"></result>
+        <result property="point" column="point"></result>
+        <result property="createdAt" column="created_at"></result>
         <collection property="userRoles" javaType="java.util.Set" resultMap="userRolesResultMap"></collection>
     </resultMap>
     <resultMap id="userRolesResultMap" type="org.test.teamproject_back.entity.UserRoles">
         <id property="userRolesId" column="user_roles_id"></id>
-        <result property="userId" column="user_id"></result>
-        <result property="roleId" column="role_id"></result>
+        <result property="userId" column="urt_user_id"></result>
+        <result property="roleId" column="urt_role_id"></result>
         <association property="role" resultMap="roleResultMap"></association>
     </resultMap>
     <resultMap id="roleResultMap" type="org.test.teamproject_back.entity.Role">
@@ -25,10 +27,10 @@
         <id property="name" column="role_name"></id>
     </resultMap>
     <insert id="save" useGeneratedKeys="true" keyProperty="userId">
-        insert into users_tb
-        values(0, #{username}, #{name}, #{email}, #{password}, #{phoneNumber}, #{point}, #{img}, now())
+        insert into users_tb(user_id, username, name, email, password, phone_number, img, created_at)
+        values(0, #{username}, #{name}, #{email}, #{password}, #{phoneNumber}, #{img}, now())
     </insert>
-    <select id="findByUsername" resultMap="userResultMap">
+    <select id="findUserByUsername" resultMap="userResultMap">
         select
             ut.user_id,
             ut.username,
@@ -36,10 +38,12 @@
             ut.email,
             ut.phone_number,
             ut.point,
+            ut.img,
             ut.password,
+            ut.created_at,
             urt.user_roles_id,
-            urt.user_id,
-            urt.role_id,
+            urt.user_id as urt_user_id,
+            urt.role_id as urt_role_id,
             rt.role_id,
             rt.name as role_name
         from
@@ -49,7 +53,7 @@
         where
             ut.username = #{username}
     </select>
-    <select id="findById" resultMap="userResultMap">
+    <select id="findUserByUserId" resultMap="userResultMap">
         select
             ut.user_id,
             ut.username,
@@ -57,10 +61,12 @@
             ut.email,
             ut.phone_number,
             ut.point,
+            ut.img,
             ut.password,
+            ut.created_at,
             urt.user_roles_id,
-            urt.user_id,
-            urt.role_id,
+            urt.user_id as urt_user_id,
+            urt.role_id as urt_role_id,
             rt.role_id,
             rt.name as role_name
         from

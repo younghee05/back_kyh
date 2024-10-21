@@ -10,7 +10,9 @@
         <result property="email" column="email"></result>
         <result property="password" column="password"></result>
         <result property="phoneNumber" column="phone_number"></result>
+        <result property="point" column="point"></result>
         <result property="img" column="img"></result>
+        <result property="createdAt" column="created_at"></result>
         <collection property="userRoles" javaType="java.util.Set" resultMap="userRolesResultMap"></collection>
     </resultMap>
     <resultMap id="userRolesResultMap" type="org.test.teamproject_back.entity.UserRoles">
@@ -33,21 +35,13 @@
             phone_number = #{phoneNumber},
             img = #{img}
         where
-            user_id = #{id}
+            user_id = #{userId}
     </update>
     <delete id="deleteUserByUserId">
         delete from users_tb
         where
             user_id = #{userId}
     </delete>
-    <select id="findUserById" resultType="org.test.teamproject_back.entity.User">
-        select
-            *
-        from
-            users_tb
-        where
-            user_id = #{userId}
-    </select>
     <select id="findAllUsersByRole" resultMap="userResultMap">
         select
             ut.user_id,
@@ -55,7 +49,10 @@
             ut.name,
             ut.email,
             ut.phone_number,
+            ut.point,
+            ut.img,
             ut.password,
+            ut.created_at,
             urt.user_roles_id,
             urt.user_id,
             urt.role_id,
@@ -67,6 +64,7 @@
             left outer join roles_tb rt on (rt.role_id = urt.role_id)
         where
             rt.role_id = #{role}
+        order by created_at desc
     </select>
     <select id="findAllUsersByRoleAndName" resultMap="userResultMap">
         select
@@ -75,7 +73,10 @@
             ut.name,
             ut.email,
             ut.phone_number,
+            ut.point,
+            ut.img,
             ut.password,
+            ut.created_at,
             urt.user_roles_id,
             urt.user_id,
             urt.role_id,
@@ -88,6 +89,7 @@
         where
             rt.role_id = #{role}
             and ut.name like concat('%',trim(ifnull(#{name},'')),'%')
+        order by created_at desc
     </select>
 
 

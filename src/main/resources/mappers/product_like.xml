@@ -55,7 +55,7 @@
         pt.origin,
         pt.thumbnail_img,
         pt.contents_img,
-        pt.createcd_date
+        pt.created_date
         from
         products_like_tb plt
         left outer join products_tb pt on(pt.product_id = plt.product_id)
