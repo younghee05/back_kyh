@@ -10,14 +10,14 @@ public class ReqAddProductDto {
     private String title;
     private int price;
     private int stock;
-    private int category;
+    private int categoryId;
     private int semiCategory;
     private String description;
     private String origin;
     private String thumbnailImg;
     private String contentsImg;
 
-    public Product toProduct(String thumbnailImg) {
+    public Product toProduct() {
         return Product.builder()
                 .title(title)
                 .price(price)

@@ -2,15 +2,16 @@ package org.test.teamproject_back.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.test.teamproject_back.security.filter.JwtAccessTokenFilter;
-import org.test.teamproject_back.security.handler.AccessDeniedHandler;
 import org.test.teamproject_back.security.handler.AuthenticationHandler;
 
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -19,9 +20,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtAccessTokenFilter jwtAccessTokenFilter;
     @Autowired
     private AuthenticationHandler authenticationHandler;
-    @Autowired
-    private AccessDeniedHandler accessDeniedHandler;
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -37,21 +35,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/user/**", "/admin" , "/", "/main/**")
+                .antMatchers("/admin/signin" , "/public/**")
                 .permitAll()
-                .antMatchers("/product/**")
-                .hasRole("USER")
-                .antMatchers("/admin/signup")
-                .hasRole("ADMIN")
-                .antMatchers("/admin/main/**")
+                .antMatchers("/admin/**")
                 .hasAnyRole("ADMIN", "MANAGER")
+                .antMatchers("/user/**")
+                .hasRole("USER")
                 .anyRequest()
                 .authenticated();
 
         http.exceptionHandling()
                 .authenticationEntryPoint(authenticationHandler);
-        http.exceptionHandling()
-                .accessDeniedHandler(accessDeniedHandler);
 
         http.addFilterBefore(jwtAccessTokenFilter, UsernamePasswordAuthenticationFilter.class);
 

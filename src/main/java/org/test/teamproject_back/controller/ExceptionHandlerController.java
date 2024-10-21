@@ -4,11 +4,9 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.test.teamproject_back.exception.AccessTokenValidException;
-import org.test.teamproject_back.exception.InvalidInputException;
 import org.test.teamproject_back.exception.SignupException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
 import org.test.teamproject_back.exception.UnauthorizedAccessException;
 
 @RestControllerAdvice
@@ -34,13 +32,4 @@ public class ExceptionHandlerController {
         return ResponseEntity.status(403).body(e.getMessage());
     }
 
-    @ExceptionHandler(InvalidInputException.class)
-    public ResponseEntity<?> invalidInputException(InvalidInputException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
-    }
-
-    @ExceptionHandler(UnauthorizedAccessException.class)
-    public ResponseEntity<?> unauthorizedAccessException(UnauthorizedAccessException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
-    }
 }

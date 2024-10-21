@@ -21,9 +21,8 @@ public class ReqModifyUserDto {
     private String password;
     @Pattern(regexp = "^01[0-9]{1,2}-[0-9]{3,4}-[0-9]{4}$", message = "전화번호는 010-1234-5678 형식이어야합니다.")
     private String phoneNumber;
-    private String img;
 
-    public User toEntity(BCryptPasswordEncoder bycryptPasswordEncoder) {
+    public User toUser(BCryptPasswordEncoder bycryptPasswordEncoder) {
         return User.builder()
                 .userId(userId)
                 .username(username)
@@ -31,7 +30,6 @@ public class ReqModifyUserDto {
                 .email(email)
                 .password(bycryptPasswordEncoder.encode(password))
                 .phoneNumber(phoneNumber)
-                .img(img)
                 .build();
     }
 }

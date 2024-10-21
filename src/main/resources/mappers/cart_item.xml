@@ -76,33 +76,4 @@
         where
             ct.user_id = #{userId}
     </select>
-    <select id="findCartItemListByUserId" resultMap="cartItemsResultMap">
-        select
-            cit.cart_item_id,
-            cit.cart_id as cit_cart_id,
-            cit.product_id,
-            cit.quantity,
-            cit.price as cit_price,
-            cit.created_at as cit_created_at,
-            ct.cart_id,
-            ct.user_id,
-            ct.created_at,
-            pt.product_id as pt_product_id,
-            pt.title,
-            pt.price,
-            pt.stock,
-            pt.sales_count,
-            pt.description,
-            pt.origin,
-            pt.thumbnail_img,
-            pt.contents_img,
-            pt.created_date
-        from
-            cart_items_tb cit
-            left outer join products_tb pt on (pt.product_id = cit.product_id)
-            left outer join cart_tb ct on (ct.cart_id = cit.cart_id)
-            left outer join users_tb ut on (ct.user_id = ut.user_id)
-        where
-            ct.user_id = #{userId}
-    </select>
 </mapper>

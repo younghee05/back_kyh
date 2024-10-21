@@ -15,25 +15,25 @@ public class CartController {
 
     @Autowired
     private CartService cartService;
-// add, search, modify
-    @PostMapping("")
+
+    @PostMapping("/items")
     public ResponseEntity<?> addCart(@RequestBody ReqAddCartDto dto) {
         cartService.addCart(dto);
         return ResponseEntity.ok().body(true);
     }
 
-    @GetMapping("/search")
+    @GetMapping("")
     public ResponseEntity<?> getCart() {
         return ResponseEntity.ok().body(cartService.getCart());
     }
 
-    @PutMapping("/{cartId}")
+    @PutMapping("/items/{cartId}")
     public ResponseEntity<?> modifyCart(@RequestBody ReqModifyCartDto dto) {
         cartService.modifyCart(dto);
         return ResponseEntity.ok().body(true);
     }
 
-    @DeleteMapping("/{cartId}")
+    @DeleteMapping("/items/{cartId}")
     public ResponseEntity<?> deleteCart(@RequestBody ReqDeleteCartDto dto) {
         cartService.deleteCart(dto);
         return ResponseEntity.ok().body(true);

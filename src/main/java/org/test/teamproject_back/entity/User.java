@@ -22,6 +22,7 @@ public class User {
     private String phoneNumber;
     private Long point;
     private String img;
+    private String createdAt;
 
     private Set<UserRoles> userRoles;
 

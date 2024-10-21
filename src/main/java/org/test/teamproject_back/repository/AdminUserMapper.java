@@ -8,7 +8,6 @@ import java.util.List;
 
 @Mapper
 public interface AdminUserMapper {
-    User findUserById(Long userId);
     List<User> findAllUsersByRole(int role);
     List<User> findAllUsersByRoleAndName(@Param("role") int role, @Param("name")String name);
     int deleteUserByUserId(Long userId);

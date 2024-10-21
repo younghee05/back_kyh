@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.test.teamproject_back.repository.AdminProductMapper">
+    <insert id="addProduct" useGeneratedKeys="true" keyProperty="productId">
+        insert into products_tb(product_id, title, price, stock, description, origin, thumbnail_img, contents_img, created_date)
+        values(
+            0, #{title}, #{price}, #{stock}, #{description}, #{origin}, #{thumbnailImg}, #{contentsImg}, now()
+        )
+    </insert>
+    <insert id="addCategory" useGeneratedKeys="true" keyProperty="categoryId">
+        insert into categories_tb
+        values (0, #{name})
+    </insert>
+    <insert id="addSemiCategory" useGeneratedKeys="true" keyProperty="categoryId">
+        insert into semi_categories_tb
+        values(0, #{name}
+    </insert>
+    <insert id="addProductCategory">
+        insert into product_categories_tb
+        values(0, #{productId}, #{categoryId}, #{semiCategoryId})
+    </insert>
+    <update id="updateProduct">
+        update products_tb
+        set
+            title = #{title},
+            price = #{price},
+            stock = #{stock},
+            description = #{description},
+            origin = #{origin},
+            thumbnail_img = #{thumbnailImg},
+            contents_img = #{contentsImg}
+        where
+            product_id = #{productId}
+    </update>
+    <update id="updateProductCategory">
+        update product_categories_tb
+        set
+            category_id = #{categoryId},
+            semi_category_id = #{semiCategoryId}
+        where
+            product_id = #{productId}
+    </update>
+    <delete id="deleteProductById">
+        delete from products_tb
+        where
+            product_id = #{productId}
+    </delete>
+    <delete id="deleteProductCategoryById">
+        delete from product_categories_tb
+        where
+            product_id = #{productId}
+    </delete>
+</mapper>

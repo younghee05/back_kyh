@@ -13,7 +13,7 @@ import org.test.teamproject_back.service.TokenService;
 
 import javax.validation.Valid;
 
-@RequestMapping("/user")
+@RequestMapping("/public")
 @RestController
 public class AuthController {
 

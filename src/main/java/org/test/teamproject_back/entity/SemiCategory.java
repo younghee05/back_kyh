@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class SemiCategory {
     private Long semiCategoryId;
-    private Long name;
+    private String name;
 }
