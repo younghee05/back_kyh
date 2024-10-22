@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Address {
-    private Long addressId;
-    private Long userId;
-    private String address;
-    private String detailAddress;
+public class OrderItem {
+    private Long orderItemId;
+    private Long orderId;
+    private Long productId;
+    private int quantity;
+    private int price;
+    private Product product;
 }
