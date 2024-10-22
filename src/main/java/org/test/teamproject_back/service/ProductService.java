@@ -1,18 +1,13 @@
 package org.test.teamproject_back.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.test.teamproject_back.dto.request.ReqAddProductDto;
-import org.test.teamproject_back.dto.request.ReqModifyProductDto;
+import org.test.teamproject_back.dto.response.RespGetProductDto;
 import org.test.teamproject_back.dto.response.RespProductDetailDto;
 import org.test.teamproject_back.dto.response.RespSearchProductDto;
 import org.test.teamproject_back.entity.Product;
-import org.test.teamproject_back.entity.ProductCategory;
 import org.test.teamproject_back.repository.ProductMapper;
 
-import java.sql.SQLException;
 import java.util.*;
 
 @Service
@@ -66,6 +61,28 @@ public class ProductService {
 
         return RespProductDetailDto.builder()
                 .product(product)
+                .build();
+    }
+
+    public RespGetProductDto getNewProduct() {
+        Product product = productMapper.findNewProduct();
+
+        return RespGetProductDto.builder()
+                .productId(product.getProductId())
+                .title(product.getTitle())
+                .price(product.getPrice())
+                .thumbnailImg(product.getThumbnailImg())
+                .build();
+    }
+
+    public RespGetProductDto getPopularityProduct() {
+        Product product = productMapper.findPopularityProduct();
+
+        return RespGetProductDto.builder()
+                .productId(product.getProductId())
+                .title(product.getTitle())
+                .price(product.getPrice())
+                .thumbnailImg(product.getThumbnailImg())
                 .build();
     }
 }
