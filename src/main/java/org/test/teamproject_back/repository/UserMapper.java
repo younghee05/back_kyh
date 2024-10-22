@@ -13,4 +13,5 @@ public interface UserMapper {
     User findUserByUsername(String username);
     User findUserByUserId(Long userId);
     int findByName(String name);
+    int updateUserInfo(User user);
 }

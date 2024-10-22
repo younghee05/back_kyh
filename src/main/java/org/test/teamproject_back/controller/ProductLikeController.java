@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.test.teamproject_back.service.ProductLikeService;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/user/product")
 public class ProductLikeController {
     @Autowired
     private ProductLikeService productLikeService;
@@ -23,12 +23,12 @@ public class ProductLikeController {
         return ResponseEntity.ok().body(true);
     }
 
-    @GetMapping("/{productId}")
-    public ResponseEntity<?> getLikeCount(@PathVariable int productId) {
-        return ResponseEntity.ok().body(productLikeService.likeCount(productId));
-    }
+//    @GetMapping("/{productId}")
+//    public ResponseEntity<?> getLikeCount(@PathVariable int productId) {
+//        return ResponseEntity.ok().body(productLikeService.likeCount(productId));
+//    }
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<?> getWishList() {
         return ResponseEntity.ok().body(productLikeService.getWishList());
     }

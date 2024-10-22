@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.test.teamproject_back.dto.request.ReqModifyUserDto;
+import org.test.teamproject_back.dto.request.ReqModifyAdminUserDto;
 import org.test.teamproject_back.service.AdminUserService;
 
 import javax.validation.Valid;
@@ -36,7 +36,7 @@ public class AdminUserController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> modify(@Valid @RequestBody ReqModifyUserDto dto)  {
+    public ResponseEntity<?> modify(@Valid @RequestBody ReqModifyAdminUserDto dto)  {
         adminUserService.modifyUser(dto);
         return ResponseEntity.ok().body(true);
     }

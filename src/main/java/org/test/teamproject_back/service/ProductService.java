@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.test.teamproject_back.dto.request.ReqAddProductDto;
 import org.test.teamproject_back.dto.request.ReqModifyProductDto;
+import org.test.teamproject_back.dto.response.RespProductDetailDto;
 import org.test.teamproject_back.dto.response.RespSearchProductDto;
 import org.test.teamproject_back.entity.Product;
 import org.test.teamproject_back.entity.ProductCategory;
@@ -17,8 +18,6 @@ import java.util.*;
 @Service
 public class ProductService {
 
-    @Value("${user.profile.thumbnailImg.default}")
-    private String defaultThumbnailImg;
     @Autowired
     private ProductMapper productMapper;
 
@@ -59,6 +58,14 @@ public class ProductService {
         return RespSearchProductDto.builder()
                 .products(productList)
                 .count(productCount)
+                .build();
+    }
+
+    public RespProductDetailDto getProductDetail(Long productId) {
+        Product product = productMapper.findProductById(productId);
+
+        return RespProductDetailDto.builder()
+                .product(product)
                 .build();
     }
 }

@@ -8,13 +8,13 @@ import org.test.teamproject_back.dto.request.ReqSendMailDto;
 import org.test.teamproject_back.service.EmailService;
 
 @RestController
-@RequestMapping("public/email")
+@RequestMapping("/uesr/public/email")
 public class EmailController {
 
     @Autowired
     private EmailService emailService;
 
-    @PostMapping("")
+    @PostMapping("/send")
     public ResponseEntity<?> sendEmail(@RequestBody ReqSendMailDto dto) throws Exception {
         System.out.println(dto);
         emailService.sendEmail(dto);
