@@ -11,6 +11,7 @@ import org.test.teamproject_back.entity.Role;
 import org.test.teamproject_back.entity.User;
 import org.test.teamproject_back.entity.UserRoles;
 import org.test.teamproject_back.exception.SignupException;
+import org.test.teamproject_back.repository.AddressMapper;
 import org.test.teamproject_back.repository.UserMapper;
 import org.test.teamproject_back.repository.RoleMapper;
 import org.test.teamproject_back.repository.UserRolesMapper;
@@ -36,6 +37,8 @@ public class AuthService {
     private UserRolesMapper userRolesMapper;
     @Autowired
     private JwtProvider jwtProvider;
+    @Autowired
+    private AddressMapper addressMapper;
 
     @Value("${user.profile.img.default}")
     private String defaultProfileImg;
@@ -44,6 +47,7 @@ public class AuthService {
     public RespSignupDto signup(ReqSignupDto dto, String roleName) throws SignupException {
 
         User user = null;
+
         try {
             if (isDuplicateUsername(dto.getUsername())) {
                 throw new SignupException("이미 존재하는 사용자 입니다.");
@@ -70,6 +74,8 @@ public class AuthService {
                     .build();
             userRolesMapper.save(userRoles);
             user.setUserRoles(Set.of(userRoles));
+
+            addressMapper.addAddress(dto.toAddress(user.getUserId()));
         } catch (Exception e) {
             throw new SignupException(e.getMessage());
         }
@@ -99,8 +105,7 @@ public class AuthService {
 
     public User checkUsernameAndPassword(String username, String password) {
         User user = userMapper.findUserByUsername(username);
-//        System.out.println(user);
-        if (user == null) {;
+        if (user == null) {
             throw new UsernameNotFoundException("사용자 정보를 확인하세요.");
         }
         if (!bCryptPasswordEncoder.matches(password, user.getPassword())) {
@@ -108,5 +113,4 @@ public class AuthService {
         }
         return user;
     }
-
 }

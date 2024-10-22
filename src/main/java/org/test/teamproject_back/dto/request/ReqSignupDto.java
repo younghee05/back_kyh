@@ -1,5 +1,6 @@
 package org.test.teamproject_back.dto.request;
 
+import org.test.teamproject_back.entity.Address;
 import org.test.teamproject_back.entity.User;
 import lombok.Data;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,15 +25,25 @@ public class ReqSignupDto {
     private String checkPassword;
     @Pattern(regexp = "^01[0-9]{1,2}-[0-9]{3,4}-[0-9]{4}$", message = "전화번호는 010-1234-5678 형식이어야합니다.")
     private String phoneNumber;
+    private String address;
+    private String detailAddress;
 
-        public User toEntity(BCryptPasswordEncoder bycryptPasswordEncoder, String img) {
-            return User.builder()
-                    .username(username)
-                    .name(name)
-                    .email(email)
-                    .password(bycryptPasswordEncoder.encode(password))
-                    .phoneNumber(phoneNumber)
-                    .img(img)
-                    .build();
-        }
+    public User toEntity(BCryptPasswordEncoder bycryptPasswordEncoder, String img) {
+        return User.builder()
+                .username(username)
+                .name(name)
+                .email(email)
+                .password(bycryptPasswordEncoder.encode(password))
+                .phoneNumber(phoneNumber)
+                .img(img)
+                .build();
+    }
+
+    public Address toAddress(Long userId) {
+        return Address.builder()
+                .userId((userId))
+                .address(address)
+                .detailAddress(detailAddress)
+                .build();
+    }
 }

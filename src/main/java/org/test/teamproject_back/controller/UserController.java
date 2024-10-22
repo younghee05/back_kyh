@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.test.teamproject_back.dto.request.ReqModifyUserDto;
+import org.test.teamproject_back.exception.SignupException;
 import org.test.teamproject_back.service.UserService;
 
 @RestController
@@ -13,14 +14,15 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping()
+    @GetMapping("")
     public ResponseEntity<?> getUserInfo() {
         return ResponseEntity.ok().body(userService.getUserInfo());
     }
 
     // 비밀번호, 주소, 이메일 수정
-    @PutMapping()
-    public ResponseEntity<?> modifyUserInfo(@RequestBody ReqModifyUserDto dto) {
-        return ResponseEntity.ok().body(null);
+    @PutMapping("")
+    public ResponseEntity<?> modifyUserInfo(@RequestBody ReqModifyUserDto dto) throws SignupException {
+        userService.modifyUserInfo(dto);
+        return ResponseEntity.ok().body(true);
     }
 }

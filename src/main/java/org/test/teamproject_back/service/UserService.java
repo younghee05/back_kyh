@@ -5,12 +5,16 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.test.teamproject_back.dto.request.ReqModifyUserDto;
 import org.test.teamproject_back.dto.response.RespUserInfoDto;
 import org.test.teamproject_back.entity.User;
 import org.test.teamproject_back.exception.SignupException;
+import org.test.teamproject_back.repository.AddressMapper;
 import org.test.teamproject_back.repository.UserMapper;
 import org.test.teamproject_back.security.principal.PrincipalUser;
+
+import java.sql.SQLException;
 
 @Service
 public class UserService {
@@ -21,6 +25,8 @@ public class UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private AuthService authService;
+    @Autowired
+    private AddressMapper addressMapper;
 
     public RespUserInfoDto getUserInfo() {
         PrincipalUser principalUser = (PrincipalUser) SecurityContextHolder
@@ -36,6 +42,7 @@ public class UserService {
                 .build();
     }
 
+    @Transactional(rollbackFor = SQLException.class)
     public void modifyUserInfo(ReqModifyUserDto dto) throws SignupException {
         PrincipalUser principalUser = (PrincipalUser) SecurityContextHolder
                 .getContext()
@@ -51,5 +58,6 @@ public class UserService {
             throw new SignupException("비밀번호가 일치하지 않습니다.");
         }
         userMapper.updateUserInfo(dto.toUser(user.getUserId()));
+        addressMapper.updateAddress(dto.toAddress(user.getUserId()));
     }
 }

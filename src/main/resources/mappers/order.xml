@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.test.teamproject_back.repository.OrderMapper">
+    <resultMap id="orderResultMap" type="org.test.teamproject_back.entity.Order">
+        <id property="orderId" column="order_id"></id>
+        <result property="userId" column="user_id"></result>
+        <result property="orderStatus" column="order_status"></result>
+        <result property="totalAmount" column="total_amount"></result>
+        <result property="createdAt" column="created_at"></result>
+        <association property="user" resultMap="userResultMap"></association>
+        <collection property="orderItems" javaType="java.util.List" resultMap="orderItemResultmap"></collection>
+    </resultMap>
+    <resultMap id="orderItemResultmap" type="org.test.teamproject_back.entity.OrderItem">
+        <id property="orderItemId" column="order_item_id"></id>
+        <result property="quantity" column="quantity"></result>
+        <result property="price" column="price"></result>
+        <association property="product" resultMap="productResultMap"></association>
+    </resultMap>
+    <resultMap id="productResultMap" type="org.test.teamproject_back.entity.Product">
+        <id property="productId" column="product_id"></id>
+        <result property="title" column="title"></result>
+        <result property="thumbnailImg" column="thumbnail_img"></result>
+    </resultMap>
+    <resultMap id="userResultMap" type="org.test.teamproject_back.entity.User">
+        <id property="userId" column="user_id"></id>
+        <result property="name" column="name"></result>
+        <result property="email" column="email"></result>
+        <result property="phoneNumber" column="phone_number"></result>
+        <result property="point" column="point"></result>
+    </resultMap>
+    <select id="getOrderList" resultMap="orderResultMap">
+        select
+            ot.order_id,
+            ot.user_id,
+            ot.order_status,
+            ot.total_amount,
+            ot.created_at,
+            oit.quantity,
+            oit.price,
+            prt.product_id,
+            prt.title,
+            prt.thumbnail_img,
+            ut.name,
+            ut.email,
+            ut.phone_number,
+            ut.point
+        from
+            orders_tb ot
+            left outer join users_tb ut (ot.user_id = ut.user_id)
+            left outer join shipping_addresses_tb sat on (sat.user_id = ut.user_id)
+            left outer join order_items_tb oit on (oit.order_id = ot.order_id)
+            left outer join products_tb prt on (prt.product_id = oit.product_id)
+            left outer join payments_tb pt on (pt.order_id = ot.order_id)
+        where
+            ut.user_id = #{userId}
+    </select>
+</mapper>

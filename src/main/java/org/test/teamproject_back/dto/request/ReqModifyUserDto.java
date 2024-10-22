@@ -2,6 +2,7 @@ package org.test.teamproject_back.dto.request;
 
 import lombok.Builder;
 import lombok.Data;
+import org.test.teamproject_back.entity.Address;
 import org.test.teamproject_back.entity.User;
 
 @Builder
@@ -19,6 +20,14 @@ public class ReqModifyUserDto {
                 .userId(userId)
                 .password(changePassword)
                 .email(email)
+                .build();
+    }
+
+    public Address toAddress(Long userId) {
+        return Address.builder()
+                .userId((userId))
+                .address(address)
+                .detailAddress(detailAddress)
                 .build();
     }
 }
