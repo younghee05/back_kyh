@@ -2,9 +2,8 @@ package org.test.teamproject_back.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.test.teamproject_back.dto.request.ReqModifyUserDto;
 import org.test.teamproject_back.service.UserService;
 
 @RestController
@@ -15,8 +14,13 @@ public class UserController {
     private UserService userService;
 
     @GetMapping()
-    public ResponseEntity<?> getUserData() {
+    public ResponseEntity<?> getUserInfo() {
         return ResponseEntity.ok().body(userService.getUserInfo());
     }
 
+    // 비밀번호, 주소, 이메일 수정
+    @PutMapping()
+    public ResponseEntity<?> modifyUserInfo(@RequestBody ReqModifyUserDto dto) {
+        return ResponseEntity.ok().body(null);
+    }
 }

@@ -8,7 +8,7 @@ import org.test.teamproject_back.dto.request.ReqModifyProductDto;
 import org.test.teamproject_back.service.ProductService;
 
 @RestController
-@RequestMapping("/public/product")
+@RequestMapping("/user/public/product")
 public class ProductController {
 
     @Autowired
@@ -20,8 +20,8 @@ public class ProductController {
     }
 
     @GetMapping("/search") // 상품 조회
-    public ResponseEntity<?> searchProduct(@RequestParam(required = false) String keyword) {
-        return ResponseEntity.ok().body(productService.searchProducts(keyword));
+    public ResponseEntity<?> searchProduct(@RequestParam(required = false) String title) {
+        return ResponseEntity.ok().body(productService.searchProducts(title));
     }
 
     @GetMapping("/category")
@@ -31,6 +31,12 @@ public class ProductController {
             return ResponseEntity.ok().body(productService.searchCategory(main));
         }
         return ResponseEntity.ok().body(productService.searchSemiCategory(main, sub));
+    }
+
+    // 상품 디테일 페이지
+    @GetMapping("/{productId}")
+    public ResponseEntity<?> getProductDetail(@PathVariable Long productId) {
+        return ResponseEntity.ok().body(productService.getProductDetail(productId));
     }
 
 }

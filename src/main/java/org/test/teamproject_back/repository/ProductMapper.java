@@ -19,5 +19,5 @@ public interface ProductMapper {
     int findProductCountBySemiCategory(int categoryId, int semiCategoryId);
     List<Product> findProductByCategory(int categoryId);
     List<Product> findProductBySemiCategory(@Param("main") int categoryId, @Param("sub") int semiCategoryId);
-    Product findProductById(Long id);
+    Product findProductById(Long productId);
 }

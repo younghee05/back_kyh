@@ -1,24 +1,17 @@
 package org.test.teamproject_back.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.AuthenticationServiceException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.test.teamproject_back.dto.request.ReqModifyUserDto;
+import org.test.teamproject_back.dto.request.ReqModifyAdminUserDto;
 import org.test.teamproject_back.dto.response.RespUserDto;
 import org.test.teamproject_back.entity.User;
 import org.test.teamproject_back.repository.AdminUserMapper;
-import org.test.teamproject_back.repository.UserMapper;
 import org.test.teamproject_back.repository.UserRolesMapper;
-import org.test.teamproject_back.security.principal.PrincipalUser;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class AdminUserService {
@@ -65,7 +58,7 @@ public class AdminUserService {
     }
 
     @Transactional(rollbackFor = SQLException.class)
-    public void modifyUser(ReqModifyUserDto dto) {
+    public void modifyUser(ReqModifyAdminUserDto dto) {
         adminUserMapper.updateUserByUserId(dto.toUser(bCryptPasswordEncoder));
     }
 

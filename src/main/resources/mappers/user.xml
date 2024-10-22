@@ -30,6 +30,14 @@
         insert into users_tb(user_id, username, name, email, password, phone_number, img, created_at)
         values(0, #{username}, #{name}, #{email}, #{password}, #{phoneNumber}, #{img}, now())
     </insert>
+    <update id="updateUserInfo">
+        update users_tb
+        set
+            password = #{password},
+            email = #{email}
+        where
+            user_id = #{userId}
+    </update>
     <select id="findUserByUsername" resultMap="userResultMap">
         select
             ut.user_id,
