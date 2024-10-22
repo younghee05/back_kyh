@@ -209,4 +209,38 @@
             ct.category_id = #{categoryId}
             and sct.semi_category_id = #{semiCategoryId};
     </select>
+    <select id="findNewProduct" resultType="org.test.teamproject_back.entity.Product">
+        select
+            product_id,
+            title,
+            price,
+            stock,
+            sales_count,
+            description,
+            origin,
+            thumbnail_img,
+            contents_img,
+            created_date
+        from
+            products_tb
+        order by
+            created_date desc limit 8
+    </select>
+    <select id="findPopularityProduct" resultType="org.test.teamproject_back.entity.Product">
+        select
+            product_id,
+            title,
+            price,
+            stock,
+            sales_count,
+            description,
+            origin,
+            thumbnail_img,
+            contents_img,
+            created_date
+        from
+            products_tb
+        order by
+            stock desc limit 10
+    </select>
 </mapper>
