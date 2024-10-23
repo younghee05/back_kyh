@@ -38,6 +38,7 @@ public class JwtProvider {
         if (bearerToken == null) {
             throw new RuntimeException();
         }
+        System.out.println("몇번 도니");
 
         int bearerLength = "bearer ".length();
         return bearerToken.substring(bearerLength);
