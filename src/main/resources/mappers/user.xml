@@ -92,4 +92,16 @@
         where
             name = #{name}
     </select>
+    <select id="isProductOwned" resultType="java.lang.Integer">
+        select
+            count(*)
+        from
+            users_tb ut
+            left outer join orders_tb ot on (ut.user_id = ot.user_id)
+            left outer join order_items_tb oit on (oit.order_id = ot.order_id)
+            left outer join products_tb pt on (pt.product_id = oit.product_id)
+        where
+            ut.user_id = #{userId}
+            and oit.product_id = #{productId}
+    </select>
 </mapper>
