@@ -20,6 +20,6 @@ public interface ProductMapper {
     List<Product> findProductByCategory(int categoryId);
     List<Product> findProductBySemiCategory(@Param("main") int categoryId, @Param("sub") int semiCategoryId);
     Product findProductById(Long productId);
-    Product findNewProduct();
-    Product findPopularityProduct();
+    List<Product> findNewProduct();
+    List<Product> findPopularityProduct();
 }

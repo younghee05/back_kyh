@@ -14,4 +14,5 @@ public interface UserMapper {
     User findUserByUserId(Long userId);
     int findByName(String name);
     int updateUserInfo(User user);
+    int isProductOwned(Long userId, Long productId);
 }

@@ -64,25 +64,15 @@ public class ProductService {
                 .build();
     }
 
-    public RespGetProductDto getNewProduct() {
-        Product product = productMapper.findNewProduct();
+    public List<Product> getNewProduct() {
+        List<Product> productList = productMapper.findNewProduct();
 
-        return RespGetProductDto.builder()
-                .productId(product.getProductId())
-                .title(product.getTitle())
-                .price(product.getPrice())
-                .thumbnailImg(product.getThumbnailImg())
-                .build();
+        return productList;
     }
 
-    public RespGetProductDto getPopularityProduct() {
-        Product product = productMapper.findPopularityProduct();
+    public List<Product> getPopularityProduct() {
+        List<Product> productList = productMapper.findPopularityProduct();
 
-        return RespGetProductDto.builder()
-                .productId(product.getProductId())
-                .title(product.getTitle())
-                .price(product.getPrice())
-                .thumbnailImg(product.getThumbnailImg())
-                .build();
+        return productList;
     }
 }
