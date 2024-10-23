@@ -28,20 +28,17 @@ public class JwtAccessTokenFilter extends GenericFilter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
 
-        String requestURI = httpServletRequest.getRequestURI();
-        if (requestURI.equals("/admin")) {
-            filterChain.doFilter(servletRequest, servletResponse);
-            return;
-        }
-
         String bearerAccessToken = httpServletRequest.getHeader("Authorization");
 
-        if (bearerAccessToken == null || bearerAccessToken.isBlank()) {
+        if (bearerAccessToken == null || bearerAccessToken.equals("null") || bearerAccessToken.isBlank()) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
 
+
         String accessToken = jwtProvider.removeBearer(bearerAccessToken);
+
+        System.out.println(accessToken);
         Claims claims = null;
 
         try {
