@@ -15,4 +15,12 @@
         where
             userId = #{userId}
     </update>
+    <select id="findAddressByUserId" resultType="org.test.teamproject_back.entity.Address">
+        select
+            *
+        from
+            shipping_addresses_tb
+        where
+            user_id = #{userId}
+    </select>
 </mapper>

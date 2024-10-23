@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.test.teamproject_back.dto.request.ReqModifyUserDto;
 import org.test.teamproject_back.dto.response.RespUserInfoDto;
+import org.test.teamproject_back.entity.Address;
 import org.test.teamproject_back.entity.User;
 import org.test.teamproject_back.exception.SignupException;
 import org.test.teamproject_back.repository.AddressMapper;
@@ -35,10 +36,16 @@ public class UserService {
                 .getPrincipal();
 
         User user = userMapper.findUserByUserId(principalUser.getId());
-        System.out.println(user);
+        Address address = addressMapper.findAddressByUserId(principalUser.getId());
 
         return RespUserInfoDto.builder()
-                .user(user)
+                .username(user.getUsername())
+                .name(user.getName())
+                .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
+                .password(user.getPassword())
+                .img(user.getImg())
+                .address(address)
                 .build();
     }
 
