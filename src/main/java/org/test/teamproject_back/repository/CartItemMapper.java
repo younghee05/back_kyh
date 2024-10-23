@@ -10,7 +10,6 @@ import java.util.List;
 @Mapper
 public interface CartItemMapper {
     int addCartItems(CartItem cartItem);
-    List<Cart> findCartListByUserId(Long userId);
     int updateCartItems(CartItem cartItem);
     int deleteCartItemByCartItemId(Long cartItemId);
 }

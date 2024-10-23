@@ -6,5 +6,4 @@ import org.test.teamproject_back.entity.User;
 
 @Mapper
 public interface OrderMapper {
-    Order getOrderList(Long userId);
 }

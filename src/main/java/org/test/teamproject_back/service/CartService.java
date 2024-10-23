@@ -49,8 +49,8 @@ public class CartService {
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
-        System.out.println(principalUser.getId());
-        List<Cart> cartList = cartItemMapper.findCartListByUserId(principalUser.getId());
+
+        List<Cart> cartList = cartMapper.findCartListByUserId(principalUser.getId());
 
         return RespSearchCartDto.builder()
                 .cartList(cartList)
@@ -59,11 +59,6 @@ public class CartService {
 
     @Transactional(rollbackFor = SQLException.class)
     public void modifyCart(ReqModifyCartDto dto) {
-        PrincipalUser principalUser = (PrincipalUser) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
-
         List<Long> cartItemsIdList = cartMapper.findCartItemIdByCartId(dto.getCartId()); // 카트에 해당하는 아이템
         List<Long> matchingCartItemIdList = cartItemsIdList.stream() // 해당 아이템 찾음
                 .filter(cartItemId -> cartItemId.equals(dto.getCartItemId()))
@@ -78,11 +73,6 @@ public class CartService {
 
     @Transactional(rollbackFor = SQLException.class)
     public void deleteCart(ReqDeleteCartDto dto) {
-        PrincipalUser principalUser = (PrincipalUser) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
-
         cartItemMapper.deleteCartItemByCartItemId(dto.getCartItemId());
     }
 }

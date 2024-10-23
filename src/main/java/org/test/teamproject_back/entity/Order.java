@@ -19,7 +19,4 @@ public class Order {
     private String createdAt;
 
     private List<OrderItem> orderItems;
-    private User user;
-    private Payment payment;
-    private Address address;
 }
