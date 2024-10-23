@@ -209,7 +209,7 @@
             ct.category_id = #{categoryId}
             and sct.semi_category_id = #{semiCategoryId};
     </select>
-    <select id="findNewProduct" resultType="org.test.teamproject_back.entity.Product">
+    <select id="findNewProduct" resultMap="productResultMap">
         select
             product_id,
             title,
@@ -226,7 +226,7 @@
         order by
             created_date desc limit 8
     </select>
-    <select id="findPopularityProduct" resultType="org.test.teamproject_back.entity.Product">
+    <select id="findPopularityProduct" resultMap="productResultMap">
         select
             product_id,
             title,
