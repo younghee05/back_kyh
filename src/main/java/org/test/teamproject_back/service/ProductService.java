@@ -2,6 +2,7 @@ package org.test.teamproject_back.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.test.teamproject_back.dto.request.ReqSearchDto;
 import org.test.teamproject_back.dto.response.RespGetProductDto;
 import org.test.teamproject_back.dto.response.RespProductDetailDto;
 import org.test.teamproject_back.dto.response.RespSearchProductDto;
@@ -26,9 +27,17 @@ public class ProductService {
                 .build();
     }
 
-    public RespSearchProductDto searchProducts(String title) {
-        List<Product> productList = productMapper.findProductByTitle(title.trim());
-        int productCount = productMapper.findProductCountByTitle(title.trim());
+    public RespSearchProductDto searchProducts(ReqSearchDto dto) {
+        int startIndex = (dto.getPage() - 1) * dto.getLimit();
+
+        Map<String, Object> paging = Map.of(
+                "startIndex", startIndex,
+                "limit", dto.getLimit(),
+                "searchTitle", dto.getTitle() == null ? "" : dto.getTitle()
+        );
+
+        List<Product> productList = productMapper.findProductByTitle(paging);
+        int productCount = productMapper.findProductCountByTitle(dto.getTitle());
 
         return RespSearchProductDto.builder()
                 .products(productList)
@@ -36,9 +45,17 @@ public class ProductService {
                 .build();
     }
 
-    public RespSearchProductDto searchCategory(int categoryId) {
-        List<Product> productList = productMapper.findProductByCategory(categoryId);
-        int productCount = productMapper.findProductCountByCategory(categoryId);
+    public RespSearchProductDto searchCategory(ReqSearchDto dto) {
+        int startIndex = (dto.getPage() - 1) * dto.getLimit();
+
+        Map<String, Object> paging = Map.of(
+                "startIndex", startIndex,
+                "limit", dto.getLimit(),
+                "categoryId", dto.getCategoryId()
+        );
+
+        List<Product> productList = productMapper.findProductByCategory(paging);
+        int productCount = productMapper.findProductCountByCategory(Integer.parseInt(dto.getCategoryId()));
 
         return RespSearchProductDto.builder()
                 .products(productList)
@@ -46,14 +63,27 @@ public class ProductService {
                 .build();
     }
 
-    public RespSearchProductDto searchSemiCategory(int categoryId, int semiCategoryId) {
-        List<Product> productList = productMapper.findProductBySemiCategory(categoryId, semiCategoryId);
-        int productCount = productMapper.findProductCountBySemiCategory(categoryId, semiCategoryId);
+    public RespSearchProductDto searchSemiCategory(ReqSearchDto dto) {
+        int startIndex = (dto.getPage() - 1) * dto.getLimit();
+
+        int mainCategoryId = Integer.parseInt(dto.getCategoryId().substring(0, 1));
+        int semiCategoryId = Integer.parseInt(dto.getCategoryId().substring(2, 3));
+
+        Map<String, Object> paging = Map.of(
+                "startIndex", startIndex,
+                "limit", dto.getLimit(),
+                "categoryId", mainCategoryId,
+                "semiCategoryId", semiCategoryId
+        );
+
+        List<Product> productList = productMapper.findProductBySemiCategory(paging);
+        int productCount = productMapper.findProductCountBySemiCategory(mainCategoryId, semiCategoryId);
 
         return RespSearchProductDto.builder()
                 .products(productList)
                 .count(productCount)
                 .build();
+
     }
 
     public RespProductDetailDto getProductDetail(Long productId) {
@@ -65,14 +95,10 @@ public class ProductService {
     }
 
     public List<Product> getNewProduct() {
-        List<Product> productList = productMapper.findNewProduct();
-
-        return productList;
+        return productMapper.findNewProduct();
     }
 
     public List<Product> getPopularityProduct() {
-        List<Product> productList = productMapper.findPopularityProduct();
-
-        return productList;
+        return productMapper.findPopularityProduct();
     }
 }

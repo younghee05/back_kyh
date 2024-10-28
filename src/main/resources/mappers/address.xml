@@ -5,16 +5,23 @@
 <mapper namespace="org.test.teamproject_back.repository.AddressMapper">
     <insert id="addAddress">
         insert into shipping_addresses_tb
-        values( 0, #{userId}, #{address}, #{detailAddress} )
+        values( 0, #{userId}, #{address}, #{detailAddress} #{zipCode})
     </insert>
     <update id="updateAddress">
         update shipping_addresses_tb
         set
             address = #{address},
             detail_address = #{detailAddress}
+            zip_code = #{zipCode}
         where
-            userId = #{userId}
+            user_id = #{userId}
     </update>
+    <delete id="deleteAddress">
+        delete from shipping_addresses_tb
+        where
+            user_id = #{userId}
+            and shipping_addresses_id = #{addressId}
+    </delete>
     <select id="findAddressByUserId" resultType="org.test.teamproject_back.entity.Address">
         select
             *

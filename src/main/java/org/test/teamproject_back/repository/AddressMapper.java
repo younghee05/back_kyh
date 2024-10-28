@@ -10,6 +10,7 @@ import java.util.List;
 public interface AddressMapper {
     int addAddress(Address address);
     int updateAddress(Address address);
+    int deleteAddress(Long addressId, Long userId);
     Address findAddressByUserId(Long userId);
 }
 

@@ -58,7 +58,8 @@
             left outer join categories_tb ct on (pct.category_id = ct.category_id)
             left outer join semi_categories_tb sct on (sct.semi_category_id = pct.semi_category_id)
         where
-            pt.title like concat('%',trim(ifnull(#{title},'')),'%')
+            pt.title like concat('%',trim(ifnull(#{searchTitle},'')),'%')
+        limit #{startIndex},#{limit}
     </select>
     <select id="findProductCountByTitle" resultType="java.lang.Integer">
         select
@@ -151,6 +152,7 @@
             left outer join semi_categories_tb sct on (sct.semi_category_id = pct.semi_category_id)
         where
             ct.category_id = #{categoryId}
+        limit #{startIndex}, #{limit}
     </select>
     <select id="findProductBySemiCategory" resultMap="productResultMap">
         select
@@ -178,8 +180,9 @@
             left outer join categories_tb ct on (pct.category_id = ct.category_id)
             left outer join semi_categories_tb sct on (sct.semi_category_id = pct.semi_category_id)
         where
-            ct.category_id = #{main}
-            and sct.semi_category_id = #{sub}
+            ct.category_id = #{mainCategoryId}
+            and sct.semi_category_id = #{semiCategoryId}
+        limit #{startIndex}, #{limit}
     </select>
     <select id="findAllProductCount" resultType="java.lang.Integer">
         select
@@ -195,7 +198,7 @@
             left outer join product_categories_tb pct on (pt.product_id = pct.product_id)
             left outer join categories_tb ct on (pct.category_id = ct.category_id)
         where
-            ct.category_id = #{categoryId};
+            concat(ct.category_id, sct.semi_category_id) = #{categoryId}
     </select>
     <select id="findProductCountBySemiCategory" resultType="java.lang.Integer">
         select
@@ -207,7 +210,8 @@
             left outer join semi_categories_tb sct on (sct.semi_category_id = pct.semi_category_id)
         where
             ct.category_id = #{categoryId}
-            and sct.semi_category_id = #{semiCategoryId};
+            and sct.semi_category_id = #{semiCategoryId}
+        limit #{startIndex}, #{limit}
     </select>
     <select id="findNewProduct" resultMap="productResultMap">
         select

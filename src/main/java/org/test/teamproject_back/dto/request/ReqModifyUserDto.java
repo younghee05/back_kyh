@@ -14,6 +14,7 @@ public class ReqModifyUserDto {
     private String email;
     private String address;
     private String detailAddress;
+    private int zipCode;
 
     public User toUser(Long userId) {
         return User.builder()
@@ -28,6 +29,7 @@ public class ReqModifyUserDto {
                 .userId((userId))
                 .address(address)
                 .detailAddress(detailAddress)
+                .zipCode(zipCode)
                 .build();
     }
 }

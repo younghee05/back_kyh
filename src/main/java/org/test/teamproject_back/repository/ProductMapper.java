@@ -7,18 +7,19 @@ import org.test.teamproject_back.entity.Product;
 import org.test.teamproject_back.entity.ProductCategory;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.LongAdder;
 
 @Mapper
 public interface ProductMapper {
-
     List<Product> findAllProductsList();
-    List<Product> findProductByTitle(String title);
+    List<Product> findProductByTitle(Map<String, Object> paging);
     int findProductCountByTitle(String title);
     int findAllProductCount();
     int findProductCountByCategory(int categoryId);
-    int findProductCountBySemiCategory(int categoryId, int semiCategoryId);
-    List<Product> findProductByCategory(int categoryId);
-    List<Product> findProductBySemiCategory(@Param("main") int categoryId, @Param("sub") int semiCategoryId);
+    int findProductCountBySemiCategory(int mainCategoryId, int semiCategoryId);
+    List<Product> findProductByCategory(Map<String, Object> paging);
+    List<Product> findProductBySemiCategory(Map<String, Object> paging);
     Product findProductById(Long productId);
     List<Product> findNewProduct();
     List<Product> findPopularityProduct();
