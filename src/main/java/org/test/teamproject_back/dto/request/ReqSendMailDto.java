@@ -1,12 +1,13 @@
 package org.test.teamproject_back.dto.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class ReqSendMailDto {
     private String toEmail;
-    private String subject;
-    private String content;
 }

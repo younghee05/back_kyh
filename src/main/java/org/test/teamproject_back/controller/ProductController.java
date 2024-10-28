@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.test.teamproject_back.dto.request.ReqAddProductDto;
 import org.test.teamproject_back.dto.request.ReqModifyProductDto;
+import org.test.teamproject_back.dto.request.ReqSearchDto;
 import org.test.teamproject_back.service.ProductService;
 
 @RestController
@@ -20,22 +21,22 @@ public class ProductController {
     }
 
     @GetMapping("/product/search") // 상품 조회
-    public ResponseEntity<?> searchProduct(@RequestParam(required = false) String title) {
-        return ResponseEntity.ok().body(productService.searchProducts(title));
+    public ResponseEntity<?> searchProduct(ReqSearchDto dto) {
+        return ResponseEntity.ok().body(productService.searchProducts(dto));
     }
 
     @GetMapping("/product/category")
-    public ResponseEntity<?> searchCategory(@RequestParam(required = false) int main
-            , @RequestParam(required = false, defaultValue = "0") int sub) {
-        if (sub == 0) {
-            return ResponseEntity.ok().body(productService.searchCategory(main));
+    public ResponseEntity<?> searchCategory(ReqSearchDto dto) {
+        if ((dto.getCategoryId()).length() == 2) {
+            System.out.println(dto.getCategoryId());
+            return ResponseEntity.ok().body(productService.searchCategory(dto));
         }
-        return ResponseEntity.ok().body(productService.searchSemiCategory(main, sub));
+        return ResponseEntity.ok().body(productService.searchSemiCategory(dto));
     }
 
     // 상품 디테일 페이지
-    @GetMapping("/product/{productId}")
-    public ResponseEntity<?> getProductDetail(@PathVariable Long productId) {
+    @GetMapping("/product/detail")
+    public ResponseEntity<?> getProductDetail(@RequestParam Long productId) {
         return ResponseEntity.ok().body(productService.getProductDetail(productId));
     }
 
@@ -46,7 +47,7 @@ public class ProductController {
     }
 
     // 인기상품(판매량순)
-    @GetMapping("/popularity")
+    @GetMapping("/best")
     public ResponseEntity<?> getPopularityProduct() {
         return ResponseEntity.ok().body(productService.getPopularityProduct());
     }

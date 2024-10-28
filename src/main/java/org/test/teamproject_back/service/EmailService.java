@@ -16,10 +16,10 @@ public class EmailService {
     private String senderEmail;
     @Autowired
     private JavaMailSender javaMailSender;
-    private int verifyCode;
+    private Double verifyCode;
 
     public void sendEmail(ReqSendMailDto dto) throws Exception {
-        verifyCode = (int) (Math.random() * (90000)) + 100000;
+        verifyCode = (Math.random() * (90000)) + 100000;
         try {
             StringBuilder htmlContent = new StringBuilder();
             MimeMessage mail = javaMailSender.createMimeMessage();
@@ -35,8 +35,8 @@ public class EmailService {
 
             mailHelper.setFrom(senderEmail);
             mailHelper.setTo(dto.getToEmail());
-            mailHelper.setSubject(dto.getSubject());
-            mailHelper.setText(dto.getContent(), true);
+            mailHelper.setSubject("인증 번호 안내");
+            mailHelper.setText(htmlContent.toString(), true);
 
             javaMailSender.send(mail);
 
@@ -45,9 +45,9 @@ public class EmailService {
         }
     }
 
-    public boolean authEmail(int checkNum) {
+    public boolean authEmail(String checkNum) {
 
-        if (checkNum == verifyCode) {
+        if (checkNum.equals(verifyCode.toString())) {
             return true;
         }
         return false;

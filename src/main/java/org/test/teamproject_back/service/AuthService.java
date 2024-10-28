@@ -37,8 +37,6 @@ public class AuthService {
     private UserRolesMapper userRolesMapper;
     @Autowired
     private JwtProvider jwtProvider;
-    @Autowired
-    private AddressMapper addressMapper;
 
     @Value("${user.profile.img.default}")
     private String defaultProfileImg;
@@ -75,7 +73,6 @@ public class AuthService {
             userRolesMapper.save(userRoles);
             user.setUserRoles(Set.of(userRoles));
 
-            addressMapper.addAddress(dto.toAddress(user.getUserId()));
         } catch (Exception e) {
             throw new SignupException(e.getMessage());
         }

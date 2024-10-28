@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.test.teamproject_back.dto.request.ReqAddProductDto;
 import org.test.teamproject_back.dto.request.ReqModifyProductDto;
+import org.test.teamproject_back.dto.request.ReqSearchDto;
 import org.test.teamproject_back.service.AdminProductService;
 import org.test.teamproject_back.service.ProductService;
 
@@ -29,8 +30,8 @@ public class AdminProductController {
     }
 
     @GetMapping("/search") // 상품 조회
-    public ResponseEntity<?> searchProducts(@RequestParam String title) {
-        return ResponseEntity.ok().body(productService.searchProducts(title));
+    public ResponseEntity<?> searchProducts(ReqSearchDto dto) {
+        return ResponseEntity.ok().body(productService.searchProducts(dto));
     }
 
     @PutMapping("/{id}")
