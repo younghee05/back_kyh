@@ -17,8 +17,14 @@ public class ProductService {
     @Autowired
     private ProductMapper productMapper;
 
-    public RespSearchProductDto getAllProducts() {
-        List<Product> productList = productMapper.findAllProductsList();
+    public RespSearchProductDto getAllProducts(ReqSearchDto dto) {
+        int startIndex = (dto.getPage() - 1) * dto.getLimit();
+
+        Map<String, Object> paging = Map.of(
+                "startIndex", startIndex,
+                "limit", dto.getLimit()
+        );
+        List<Product> productList = productMapper.findAllProductsList(paging);
         int productCount = productMapper.findAllProductCount();
 
         return RespSearchProductDto.builder()
@@ -47,36 +53,21 @@ public class ProductService {
 
     public RespSearchProductDto searchCategory(ReqSearchDto dto) {
         int startIndex = (dto.getPage() - 1) * dto.getLimit();
+        int mainCategoryId = Integer.parseInt(dto.getCategoryId().substring(0, 2));
+        int semiCategoryId = 0;
+
+        if (dto.getCategoryId().length() == 4) {
+            semiCategoryId = Integer.parseInt((dto.getCategoryId()).substring(2, 4));
+        }
 
         Map<String, Object> paging = Map.of(
                 "startIndex", startIndex,
                 "limit", dto.getLimit(),
-                "categoryId", dto.getCategoryId()
-        );
-
-        List<Product> productList = productMapper.findProductByCategory(paging);
-        int productCount = productMapper.findProductCountByCategory(Integer.parseInt(dto.getCategoryId()));
-
-        return RespSearchProductDto.builder()
-                .products(productList)
-                .count(productCount)
-                .build();
-    }
-
-    public RespSearchProductDto searchSemiCategory(ReqSearchDto dto) {
-        int startIndex = (dto.getPage() - 1) * dto.getLimit();
-
-        int mainCategoryId = Integer.parseInt(dto.getCategoryId().substring(0, 1));
-        int semiCategoryId = Integer.parseInt(dto.getCategoryId().substring(2, 3));
-
-        Map<String, Object> paging = Map.of(
-                "startIndex", startIndex,
-                "limit", dto.getLimit(),
-                "categoryId", mainCategoryId,
+                "mainCategoryId", mainCategoryId,
                 "semiCategoryId", semiCategoryId
         );
 
-        List<Product> productList = productMapper.findProductBySemiCategory(paging);
+        List<Product> productList = productMapper.findProductByCategory(paging);
         int productCount = productMapper.findProductCountBySemiCategory(mainCategoryId, semiCategoryId);
 
         return RespSearchProductDto.builder()

@@ -125,36 +125,9 @@
             left outer join product_categories_tb pct on (pt.product_id = pct.product_id)
             left outer join categories_tb ct on (pct.category_id = ct.category_id)
             left outer join semi_categories_tb sct on (sct.semi_category_id = pct.semi_category_id)
-    </select>
-    <select id="findProductByCategory" resultMap="productResultMap">
-        select
-            pt.product_id,
-            pt.title,
-            pt.price,
-            pt.stock,
-            pt.sales_count,
-            pt.description,
-            pt.origin,
-            pt.thumbnail_img,
-            pt.contents_img,
-            pt.created_date,
-            ct.category_id as ct_category_id,
-            ct.name,
-            pct.product_category_id,
-            pct.product_id as pct_product_id,
-            pct.category_id as pct_category_id,
-            sct.semi_category_id,
-            sct.name as sct_name
-        from
-            products_tb pt
-            left outer join product_categories_tb pct on (pt.product_id = pct.product_id)
-            left outer join categories_tb ct on (pct.category_id = ct.category_id)
-            left outer join semi_categories_tb sct on (sct.semi_category_id = pct.semi_category_id)
-        where
-            ct.category_id = #{categoryId}
         limit #{startIndex}, #{limit}
     </select>
-    <select id="findProductBySemiCategory" resultMap="productResultMap">
+    <select id="findProductByCategory" resultMap="productResultMap">
         select
             pt.product_id,
             pt.title,
@@ -175,13 +148,17 @@
             sct.semi_category_id,
             sct.name as sct_name
         from
-            products_tb pt
-            left outer join product_categories_tb pct on (pt.product_id = pct.product_id)
-            left outer join categories_tb ct on (pct.category_id = ct.category_id)
+            categories_tb ct
+            left outer join product_categories_tb pct on (ct.category_id = pct.category_id)
             left outer join semi_categories_tb sct on (sct.semi_category_id = pct.semi_category_id)
-        where
-            ct.category_id = #{mainCategoryId}
-            and sct.semi_category_id = #{semiCategoryId}
+            left outer join products_tb pt on (pct.product_id = pt.product_id)
+        where 1=1
+            <if test="mainCategoryId != 0">
+                and ct.category_id = #{mainCategoryId}
+            </if>
+            <if test="semiCategoryId != 0">
+                and sct.semi_category_id = #{semiCategoryId}
+            </if>
         limit #{startIndex}, #{limit}
     </select>
     <select id="findAllProductCount" resultType="java.lang.Integer">
@@ -190,28 +167,21 @@
         from
             products_tb
     </select>
-    <select id="findProductCountByCategory" resultType="java.lang.Integer">
-        select
-            count(*)
-        from
-            products_tb pt
-            left outer join product_categories_tb pct on (pt.product_id = pct.product_id)
-            left outer join categories_tb ct on (pct.category_id = ct.category_id)
-        where
-            concat(ct.category_id, sct.semi_category_id) = #{categoryId}
-    </select>
     <select id="findProductCountBySemiCategory" resultType="java.lang.Integer">
         select
             count(*)
         from
-            products_tb pt
-            left outer join product_categories_tb pct on (pt.product_id = pct.product_id)
-            left outer join categories_tb ct on (pct.category_id = ct.category_id)
+            categories_tb ct
+            left outer join product_categories_tb pct on (ct.category_id = pct.category_id)
             left outer join semi_categories_tb sct on (sct.semi_category_id = pct.semi_category_id)
-        where
-            ct.category_id = #{categoryId}
-            and sct.semi_category_id = #{semiCategoryId}
-        limit #{startIndex}, #{limit}
+            left outer join products_tb pt on (pct.product_id = pt.product_id)
+        where 1=1
+            <if test="mainCategoryId != 0">
+                and ct.category_id = #{mainCategoryId}
+            </if>
+            <if test="semiCategoryId != 0">
+                and sct.semi_category_id = #{semiCategoryId}
+            </if>
     </select>
     <select id="findNewProduct" resultMap="productResultMap">
         select

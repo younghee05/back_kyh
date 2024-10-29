@@ -25,8 +25,8 @@ public class AdminProductController {
     }
 
     @GetMapping("")
-    public ResponseEntity<?> getAllProducts() {
-        return ResponseEntity.ok().body(productService.getAllProducts());
+    public ResponseEntity<?> getAllProducts(ReqSearchDto dto) {
+        return ResponseEntity.ok().body(productService.getAllProducts(dto));
     }
 
     @GetMapping("/search") // 상품 조회
