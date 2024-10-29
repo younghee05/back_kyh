@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.test.teamproject_back.dto.request.ReqCartListDto;
 import org.test.teamproject_back.service.OrderService;
 
 @RestController
@@ -20,8 +21,8 @@ public class OrderController {
         return ResponseEntity.ok().body(orderService.getOrderList(id));
     }
 
-    @GetMapping("/cart/order")
-    public ResponseEntity<?> getCartOrder() {
-        return ResponseEntity.ok().body(orderService.getCartOrderList());
+    @GetMapping("/cart/order") // 장바구니에서 체크 한 상품만 결제창으로
+    public ResponseEntity<?> getCartOrder(ReqCartListDto dto) {
+        return ResponseEntity.ok().body(orderService.getCartOrderList(dto));
     }
 }

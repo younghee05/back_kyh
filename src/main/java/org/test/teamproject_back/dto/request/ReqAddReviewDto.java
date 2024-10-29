@@ -6,11 +6,12 @@ import org.test.teamproject_back.entity.Review;
 
 @Builder
 @Data
-public class ReqReviewDto {
+public class ReqAddReviewDto {
     private Long productId;
     private int rating;
     private String title;
     private String content;
+    private String reviewImg;
 
     public Review toReview(Long userId) {
         return Review.builder()
@@ -19,6 +20,7 @@ public class ReqReviewDto {
                 .rating(rating)
                 .title(title)
                 .content(content)
+                .reviewImg(reviewImg)
                 .build();
     }
 }

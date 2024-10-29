@@ -16,51 +16,49 @@
         <result property="description" column="description" />
         <result property="origin" column="origin" />
         <result property="thumbnailImg" column="thumbnail_img" />
-        <result property="contentsImg" column="contents_img" />
+        <result property="contentsImg1" column="contents_img1" />
+        <result property="contentsImg2" column="contents_img2" />
+        <result property="contentsImg3" column="contents_img3" />
+        <result property="contentsImg4" column="contents_img4" />
         <result property="createdDate" column="create_date" />
     </resultMap>
 
     <insert id="addProductLike">
         insert into products_like_tb
-        values(0, #{productId}, #{userId})
+        values(0, #{userId}, #{productId})
     </insert>
 
     <delete id="deleteProductLike">
         delete from products_like_tb
         where
-        product_id = #{productId}
-        and user_id = #{userId}
+            product_id = #{productId}
+            and user_id = #{userId}
     </delete>
 
     <select id="getLikeCountByProductId" resultType="java.lang.Integer">
         select
-        count(product_id)
+            count(product_id)
         from
-        products_like_tb
+            products_like_tb
         where
-        product_id = #{productId}
+            product_id = #{productId}
     </select>
 
     <select id="SearchProductLikeByUserId" resultMap="productLikeProductResultMap">
         select
-        plt.product_like_id,
-        plt.product_id,
-        plt.user_id,
-        pt.product_id as product_id,
-        pt.title,
-        pt.price,
-        pt.stock,
-        pt.sales_count,
-        pt.description,
-        pt.origin,
-        pt.thumbnail_img,
-        pt.contents_img,
-        pt.created_date
+            plt.product_like_id,
+            plt.product_id,
+            plt.user_id,
+            pt.product_id as product_id,
+            pt.title,
+            pt.price,
+            pt.description,
+            pt.thumbnail_img
         from
-        products_like_tb plt
-        left outer join products_tb pt on(pt.product_id = plt.product_id)
+            products_like_tb plt
+            left outer join products_tb pt on(pt.product_id = plt.product_id)
         where
-        plt.user_id = #{userId}
+            plt.user_id = #{userId}
     </select>
 
 </mapper>

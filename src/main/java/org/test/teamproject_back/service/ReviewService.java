@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.test.teamproject_back.dto.request.ReqReviewDto;
+import org.test.teamproject_back.dto.request.ReqAddReviewDto;
+import org.test.teamproject_back.dto.request.ReqModifyReviewDto;
 import org.test.teamproject_back.entity.Review;
 import org.test.teamproject_back.repository.ReviewMapper;
 import org.test.teamproject_back.repository.UserMapper;
@@ -19,7 +20,7 @@ public class ReviewService {
     private ReviewMapper reviewMapper;
 
     @Transactional(rollbackFor = Exception.class)
-    public void addReview(ReqReviewDto dto) {
+    public void addReview(ReqAddReviewDto dto) {
         PrincipalUser principalUser = (PrincipalUser) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
@@ -37,5 +38,13 @@ public class ReviewService {
                 .getPrincipal();
 
         return reviewMapper.findReviewByUserId(principalUser.getId());
+    }
+
+    public void modifyReview(ReqModifyReviewDto dto) {
+
+    }
+
+    public void deleteReview(int reviewId) {
+        reviewMapper.deleteReview(reviewId);
     }
 }

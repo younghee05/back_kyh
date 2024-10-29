@@ -5,8 +5,24 @@
 <mapper namespace="org.test.teamproject_back.repository.ReviewMapper">
     <insert id="addReview">
         insert into reviews_tb
-        values(0, #{userId}, #{productId}, #{rating}, #{title}, #{content}, 0)
+        values(0, #{userId}, #{productId}, #{rating}, #{title}, #{content}, #{reviewImg}, now())
     </insert>
+    <update id="updateReview">
+        update reviews_tb
+        set
+            rating = #{rating},
+            title = #{title},
+            content = #{content},
+            review_img = #{reviewImg}
+        where
+            review_id = #{reviewId}
+            and user_id = #{userId}
+    </update>
+    <delete id="deleteReview">
+        delete from reviews_tb
+        where
+            review_id = #{reviewId}
+    </delete>
     <select id="findReviewByUserId" resultType="org.test.teamproject_back.entity.Review">
         select
             *
