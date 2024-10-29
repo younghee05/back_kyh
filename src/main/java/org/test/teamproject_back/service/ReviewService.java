@@ -1,6 +1,7 @@
 package org.test.teamproject_back.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +11,11 @@ import org.test.teamproject_back.entity.Review;
 import org.test.teamproject_back.repository.ReviewMapper;
 import org.test.teamproject_back.repository.UserMapper;
 import org.test.teamproject_back.security.principal.PrincipalUser;
+
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
 
 @Service
 public class ReviewService {
@@ -25,9 +31,7 @@ public class ReviewService {
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
-        if (userMapper.isProductOwned(principalUser.getId(), dto.getProductId()) == 0) {
-            //리뷰 못씀
-        }
+
         reviewMapper.addReview(dto.toReview(principalUser.getId()));
     }
 
@@ -40,10 +44,12 @@ public class ReviewService {
         return reviewMapper.findReviewByUserId(principalUser.getId());
     }
 
+    @Transactional(rollbackFor = SQLException.class)
     public void modifyReview(ReqModifyReviewDto dto) {
-
+        reviewMapper.updateReview(dto.toReview());
     }
 
+    @Transactional(rollbackFor = SQLException.class)
     public void deleteReview(int reviewId) {
         reviewMapper.deleteReview(reviewId);
     }
