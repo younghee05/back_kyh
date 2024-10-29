@@ -16,7 +16,6 @@
             review_img = #{reviewImg}
         where
             review_id = #{reviewId}
-            and user_id = #{userId}
     </update>
     <delete id="deleteReview">
         delete from reviews_tb
@@ -30,5 +29,13 @@
             reviews_tb
         where
             user_id = #{userId}
+    </select>
+    <select id="findReviewDate" resultType="java.time.LocalDate">
+        select
+            created_at
+        from
+            reviews_tb
+        where
+            review_id = #{reviewId}
     </select>
 </mapper>

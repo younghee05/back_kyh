@@ -3,7 +3,6 @@ package org.test.teamproject_back.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.test.teamproject_back.dto.request.ReqSearchDto;
-import org.test.teamproject_back.dto.response.RespGetProductDto;
 import org.test.teamproject_back.dto.response.RespProductDetailDto;
 import org.test.teamproject_back.dto.response.RespSearchProductDto;
 import org.test.teamproject_back.entity.Product;
@@ -26,7 +25,7 @@ public class ProductService {
         );
         List<Product> productList = productMapper.findAllProductsList(paging);
         int productCount = productMapper.findAllProductCount();
-
+        productList.removeIf(Objects::isNull);
         return RespSearchProductDto.builder()
                 .products(productList)
                 .count(productCount)

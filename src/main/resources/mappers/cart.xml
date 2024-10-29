@@ -27,7 +27,6 @@
         <result property="description" column="description"></result>
         <result property="origin" column="origin"></result>
         <result property="thumbnailImg" column="pt_thumbnail_img"></result>
-        <result property="contentsImg" column="contents_img"></result>
         <result property="createdDate" column="created_date"></result>
     </resultMap>
     <insert id="addCart" useGeneratedKeys="true" keyProperty="cartId">

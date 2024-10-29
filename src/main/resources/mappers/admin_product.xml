@@ -4,12 +4,11 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.test.teamproject_back.repository.AdminProductMapper">
     <insert id="addProduct" useGeneratedKeys="true" keyProperty="productId">
-        insert into products_tb(product_id, title, price, stock, description, origin, thumbnail_img,
-                                contents_img1, contents_img2, contents_img3, contents_img4, created_date)
+        insert into products_tb
         values(
             0, #{title}, #{price}, #{stock}, #{description}, #{origin}, #{thumbnailImg},
                 #{contentsImg1}, #{contentsImg2}, #{contentsImg3}, #{contentsImg4}, now()
-        )
+            )
     </insert>
     <insert id="addCategory" useGeneratedKeys="true" keyProperty="categoryId">
         insert into categories_tb
@@ -17,7 +16,7 @@
     </insert>
     <insert id="addSemiCategory" useGeneratedKeys="true" keyProperty="categoryId">
         insert into semi_categories_tb
-        values(0, #{name}
+        values(0, #{name})
     </insert>
     <insert id="addProductCategory">
         insert into product_categories_tb
