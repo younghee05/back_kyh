@@ -27,13 +27,13 @@ public class CartController {
         return ResponseEntity.ok().body(cartService.getCart());
     }
 
-    @PutMapping("/{cartId}")
+    @PutMapping("")
     public ResponseEntity<?> modifyCart(@RequestBody ReqModifyCartDto dto) {
         cartService.modifyCart(dto);
         return ResponseEntity.ok().body(true);
     }
 
-    @DeleteMapping("/{cartId}")
+    @DeleteMapping("")
     public ResponseEntity<?> deleteCart(@RequestBody ReqDeleteCartDto dto) {
         cartService.deleteCart(dto);
         return ResponseEntity.ok().body(true);

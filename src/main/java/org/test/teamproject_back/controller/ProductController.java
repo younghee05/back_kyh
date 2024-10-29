@@ -15,11 +15,6 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/product") // 전체
-    public ResponseEntity<?> getAllProducts() {
-        return ResponseEntity.ok().body(productService.getAllProducts());
-    }
-
     @GetMapping("/product/search") // 상품 조회
     public ResponseEntity<?> searchProduct(ReqSearchDto dto) {
         return ResponseEntity.ok().body(productService.searchProducts(dto));
@@ -27,11 +22,8 @@ public class ProductController {
 
     @GetMapping("/product/category")
     public ResponseEntity<?> searchCategory(ReqSearchDto dto) {
-        if ((dto.getCategoryId()).length() == 2) {
-            System.out.println(dto.getCategoryId());
-            return ResponseEntity.ok().body(productService.searchCategory(dto));
-        }
-        return ResponseEntity.ok().body(productService.searchSemiCategory(dto));
+        System.out.println(dto);
+        return ResponseEntity.ok().body(productService.searchCategory(dto));
     }
 
     // 상품 디테일 페이지
