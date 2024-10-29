@@ -7,4 +7,6 @@ import org.test.teamproject_back.entity.Review;
 public interface ReviewMapper {
     int addReview(Review review);
     Review findReviewByUserId(Long userId);
+    int updateReview(int reviewId, Long userId);
+    int deleteReview(int reviewId);
 }

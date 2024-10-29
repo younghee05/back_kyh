@@ -15,7 +15,10 @@ public class ReqAddProductDto {
     private String description;
     private String origin;
     private String thumbnailImg;
-    private String contentsImg;
+    private String contentsImg1;
+    private String contentsImg2;
+    private String contentsImg3;
+    private String contentsImg4;
 
     public Product toProduct() {
         return Product.builder()
@@ -25,7 +28,10 @@ public class ReqAddProductDto {
                 .description(description)
                 .origin(origin)
                 .thumbnailImg(thumbnailImg)
-                .contentsImg(contentsImg)
+                .contentsImg1(contentsImg1)
+                .contentsImg2(contentsImg2)
+                .contentsImg3(contentsImg3)
+                .contentsImg4(contentsImg4)
                 .build();
     }
 }

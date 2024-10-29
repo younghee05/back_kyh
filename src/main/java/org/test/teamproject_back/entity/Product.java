@@ -20,7 +20,10 @@ public class Product {
     private String description;
     private String origin;
     private String thumbnailImg;
-    private String contentsImg;
+    private String contentsImg1;
+    private String contentsImg2;
+    private String contentsImg3;
+    private String contentsImg4;
     private String createdDate;
     private Set<ProductCategory> productCategories;
     private Set<SemiCategory> semiCategories;

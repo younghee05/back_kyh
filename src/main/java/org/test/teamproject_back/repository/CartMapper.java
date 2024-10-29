@@ -11,4 +11,5 @@ public interface CartMapper {
     Long findCartIdByUserId(Long userId);
     List<Long> findCartItemIdByCartId(Long cartId);
     List<Cart> findCartListByUserId(Long userId);
+    List<Cart> findCartListByCartItemId(Long cartItemId);
 }
