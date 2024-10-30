@@ -58,19 +58,17 @@ public class OrderService {
         User user = userMapper.findUserByUserId(principalUser.getId());
 
         List<Long> cartItemsIdList = cartMapper.findCartItemIdByCartId(dto.getCartId()); // 카트에 해당하는 아이템
-        System.out.println(cartItemsIdList); // 나옴
         List<Long> matchingCartItemIdList = cartItemsIdList.stream() // 해당 아이템 찾음
                 .filter(cartItemId -> cartItemId.equals(dto.getCartItemId()))
                 .collect(Collectors.toList());
         List<Cart> cartList = null;
-        System.out.println(matchingCartItemIdList); // 나옴
 
         if (!matchingCartItemIdList.isEmpty()) {
             for (Long cartItemId : matchingCartItemIdList) {
                 cartList = cartMapper.findCartListByCartItemId(cartItemId);
             }
         }
-        System.out.println(cartList);
+
         Address address = addressMapper.findAddressByUserId(principalUser.getId());
 
         return RespCartOrderDto.builder()

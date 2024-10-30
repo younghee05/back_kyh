@@ -15,7 +15,7 @@ public class Order {
     private Long orderId;
     private Long userId;
     private String orderStatus;
-    private int totalAmount;
+    private Long totalAmount;
     private String createdAt;
 
     private List<OrderItem> orderItems;
