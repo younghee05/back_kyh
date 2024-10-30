@@ -14,6 +14,6 @@ public class Payment {
     private Long orderId;
     private String paymentMethod;
     private String paymentStatus;
-    private int amount;
+    private Long amount;
     private String paymentDate;
 }
