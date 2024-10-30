@@ -9,6 +9,7 @@ import org.test.teamproject_back.exception.SignupException;
 import org.test.teamproject_back.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.test.teamproject_back.service.OAuth2Service;
 import org.test.teamproject_back.service.TokenService;
 
 import javax.validation.Valid;
@@ -21,6 +22,8 @@ public class AuthController {
     private AuthService authService;
     @Autowired
     private TokenService tokenService;
+    @Autowired
+    private OAuth2Service oAuth2Service;
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@Valid @RequestBody ReqSignupDto dto) throws SignupException {
@@ -37,5 +40,11 @@ public class AuthController {
     public ResponseEntity<?> access(ReqAccessDto dto) {
         return ResponseEntity.ok().body(tokenService.isValidAccessToken(dto.getAccessToken()));
     }
+
+//    @PostMapping("")
+//    public ResponseEntity<?> oAuth2Signup(@Valid @RequestBody dto, BindingResult bindingResult) throws SignupException {
+//        oAuth2Service.
+//                return null;
+//    }
 
 }

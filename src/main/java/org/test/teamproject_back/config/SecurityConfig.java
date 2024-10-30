@@ -10,6 +10,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.test.teamproject_back.security.filter.JwtAccessTokenFilter;
 import org.test.teamproject_back.security.handler.AuthenticationHandler;
+import org.test.teamproject_back.security.handler.OAuth2SuccessHandler;
+import org.test.teamproject_back.service.OAuth2Service;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
@@ -20,6 +22,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtAccessTokenFilter jwtAccessTokenFilter;
     @Autowired
     private AuthenticationHandler authenticationHandler;
+    @Autowired
+    private OAuth2Service oAuth2Service;
+    @Autowired
+    private OAuth2SuccessHandler oAuth2SuccessHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -49,5 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.addFilterBefore(jwtAccessTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
+//        http.oauth2Login()
+//                .successHandler(oAuth2SuccessHandler)
+//                .userInfoEndpoint()
+//                .userService(oAuth2Service);
     }
 }
