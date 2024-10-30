@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.test.teamproject_back.repository.PaymentsMapper">
+    <resultMap id="paymentResultMap" type="org.test.teamproject_back.entity.Payment">
+        <id property="paymentId" column="payment_id"></id>
+        <result property="paymentMethod" column="payment_method"></result>
+        <result property="paymentStatus" column="payment_status"></result>
+        <result property="paymentStatus" column="payment_status"></result>
+        <result property="amount" column="amount"></result>
+        <result property="paymentDate" column="payment_date"></result>
+    </resultMap>
+    <select id="getPaymentList" resultMap="paymentResultMap">
+        select
+            *
+        from
+            payments_tb
+        where
+            payment_status = #{paymentStatus}
+            and payment_date = date_format(now(),'%Y-%m-%d')
+    </select>
+    <select id="getMonthPaymentList" resultMap="paymentResultMap">
+        select
+            *
+        from
+            payments_tb
+        where
+            payment_status = #{paymentStatus}
+            and date_format(payment_date,'%Y-%m') = date_format(#{date},'%Y-%m')
+    </select>
+    <select id="getYearPaymentList" resultMap="paymentResultMap">
+        select
+            prt.title,
+            oit.quantity,
+            pt.amount
+        from
+            payments_tb
+            left outer join order_items_tb oit on (pt.order_id = oit.order_id)
+            left outer join products_tb prt on (oit.product_id = prt.product_id)
+        where
+            payment_status = #{paymentStatus}
+            and date_format(payment_date,'%Y') = date_format(#{date},'%Y')
+    </select>
+</mapper>
