@@ -5,6 +5,8 @@ import org.test.teamproject_back.entity.Category;
 import org.test.teamproject_back.entity.Product;
 import org.test.teamproject_back.entity.ProductCategory;
 
+import java.util.List;
+
 @Mapper
 public interface AdminProductMapper {
     int addProduct(Product product);
@@ -13,6 +15,6 @@ public interface AdminProductMapper {
     int addProductCategory(ProductCategory productCategory);
     int updateProduct(Product product);
     int updateProductCategory(ProductCategory productCategory);
-    int deleteProductById(Long productId);
-    int deleteProductCategoryById(Long productId);
+    int deleteProductById(List<Long> checkedIds);
+    int deleteProductCategoryById(List<Long> checkedIds);
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.test.teamproject_back.dto.request.ReqDeleteCheckDto;
 import org.test.teamproject_back.dto.request.ReqModifyAdminUserDto;
 import org.test.teamproject_back.dto.response.RespUserDto;
 import org.test.teamproject_back.entity.User;
@@ -52,9 +53,9 @@ public class AdminUserService {
     }
 
     @Transactional(rollbackFor = SQLException.class)
-    public void deleteUser(Long userId) {
-        adminUserMapper.deleteUserByUserId(userId);
-        userRolesMapper.deleteUserRolesByUserId(userId);
+    public void deleteUser(ReqDeleteCheckDto dto) {
+        adminUserMapper.deleteUserByUserId(dto.getCheckedIds());
+        userRolesMapper.deleteUserRolesByUserId(dto.getCheckedIds());
     }
 
     @Transactional(rollbackFor = SQLException.class)

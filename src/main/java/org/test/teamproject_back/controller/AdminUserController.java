@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.test.teamproject_back.dto.request.ReqDeleteCheckDto;
 import org.test.teamproject_back.dto.request.ReqModifyAdminUserDto;
 import org.test.teamproject_back.service.AdminUserService;
 
@@ -27,10 +28,10 @@ public class AdminUserController {
         return ResponseEntity.ok().body(adminUserService.searchUsers(role, name));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        adminUserService.deleteUser(id);
+    public ResponseEntity<?> delete(@RequestBody ReqDeleteCheckDto dto) {
+        adminUserService.deleteUser(dto);
         return ResponseEntity.ok().body(true);
     }
 

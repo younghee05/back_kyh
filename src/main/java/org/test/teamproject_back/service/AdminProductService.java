@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.test.teamproject_back.dto.request.ReqAddProductDto;
+import org.test.teamproject_back.dto.request.ReqDeleteCheckDto;
 import org.test.teamproject_back.dto.request.ReqModifyProductDto;
 import org.test.teamproject_back.entity.Product;
 import org.test.teamproject_back.entity.ProductCategory;
@@ -22,7 +23,20 @@ public class AdminProductService {
 
     @Transactional(rollbackFor = SQLException.class)
     public void addProduct(ReqAddProductDto dto) {
-        Product product = dto.toProduct();
+        String[] images = dto.getContentsImg().stream()
+                .toArray(String[]::new);
+
+        String img1 = images.length > 0 ? images[0] : null;
+        String img2 = images.length > 1 ? images[1] : null;
+        String img3 = images.length > 2 ? images[2] : null;
+        String img4 = images.length > 3 ? images[3] : null;
+
+        System.out.println(img1);
+        System.out.println(img2);
+        System.out.println(img3);
+        System.out.println(img4);
+
+        Product product = dto.toProduct(img1, img2, img3, img4);
         adminProductMapper.addProduct(product);
 
         ProductCategory productCategory = ProductCategory.builder()
@@ -40,8 +54,8 @@ public class AdminProductService {
     }
 
     @Transactional(rollbackFor = SQLException.class)
-    public void deleteProduct(Long id) {
-        adminProductMapper.deleteProductById(id);
-        adminProductMapper.deleteProductCategoryById(id);
+    public void deleteProduct(ReqDeleteCheckDto dto) {
+        adminProductMapper.deleteProductById(dto.getCheckedIds());
+        adminProductMapper.deleteProductCategoryById(dto.getCheckedIds());
     }
 }

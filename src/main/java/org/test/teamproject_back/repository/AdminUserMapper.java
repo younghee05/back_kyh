@@ -10,6 +10,6 @@ import java.util.List;
 public interface AdminUserMapper {
     List<User> findAllUsersByRole(int role);
     List<User> findAllUsersByRoleAndName(@Param("role") int role, @Param("name")String name);
-    int deleteUserByUserId(Long userId);
+    int deleteUserByUserId(List<Long> checkedIds);
     int updateUserByUserId(User user);
 }

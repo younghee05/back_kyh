@@ -26,6 +26,7 @@ public class ProductService {
         List<Product> productList = productMapper.findAllProductsList(paging);
         int productCount = productMapper.findAllProductCount();
         productList.removeIf(Objects::isNull);
+
         return RespSearchProductDto.builder()
                 .products(productList)
                 .count(productCount)

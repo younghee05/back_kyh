@@ -39,8 +39,10 @@
     </update>
     <delete id="deleteUserByUserId">
         delete from users_tb
-        where
-            user_id = #{userId}
+        where user_id in
+        <foreach item="id" collection="checkedIds" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </delete>
     <select id="findAllUsersByRole" resultMap="userResultMap">
         select

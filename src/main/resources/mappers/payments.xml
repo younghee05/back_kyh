@@ -31,13 +31,9 @@
     </select>
     <select id="getYearPaymentList" resultMap="paymentResultMap">
         select
-            prt.title,
-            oit.quantity,
-            pt.amount
+            *
         from
-            payments_tb
-            left outer join order_items_tb oit on (pt.order_id = oit.order_id)
-            left outer join products_tb prt on (oit.product_id = prt.product_id)
+            payments_tb pt
         where
             payment_status = #{paymentStatus}
             and date_format(payment_date,'%Y') = date_format(#{date},'%Y')
