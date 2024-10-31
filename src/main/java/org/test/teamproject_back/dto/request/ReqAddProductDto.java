@@ -3,6 +3,7 @@ package org.test.teamproject_back.dto.request;
 import lombok.Data;
 import org.test.teamproject_back.entity.Product;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -15,12 +16,9 @@ public class ReqAddProductDto {
     private String description;
     private String origin;
     private String thumbnailImg;
-    private String contentsImg1;
-    private String contentsImg2;
-    private String contentsImg3;
-    private String contentsImg4;
+    private List<String> contentsImg;
 
-    public Product toProduct() {
+    public Product toProduct(String contentsImg1, String contentsImg2, String contentsImg3, String contentsImg4) {
         return Product.builder()
                 .title(title)
                 .price(price)

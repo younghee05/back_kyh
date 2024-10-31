@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.test.teamproject_back.dto.request.ReqAddProductDto;
+import org.test.teamproject_back.dto.request.ReqDeleteCheckDto;
 import org.test.teamproject_back.dto.request.ReqModifyProductDto;
 import org.test.teamproject_back.dto.request.ReqSearchDto;
 import org.test.teamproject_back.service.AdminProductService;
 import org.test.teamproject_back.service.ProductService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin/product")
@@ -18,7 +21,7 @@ public class AdminProductController {
     @Autowired
     private AdminProductService adminProductService;
 
-    @PostMapping("")
+    @PostMapping("/add")
     public ResponseEntity<?> addProduct(@RequestBody ReqAddProductDto dto) {
         adminProductService.addProduct(dto);
         return ResponseEntity.ok().body(true);
@@ -40,9 +43,10 @@ public class AdminProductController {
         return ResponseEntity.ok().body(true);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
-        adminProductService.deleteProduct(id);
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteProduct(@RequestBody ReqDeleteCheckDto dto) {
+        System.out.println(dto);
+        adminProductService.deleteProduct(dto);
         return ResponseEntity.ok().body(true);
     }
 
