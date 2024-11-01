@@ -2,8 +2,9 @@ package org.test.teamproject_back.dto.request;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class ReqCartListDto {
-    private Long cartId;
-    private Long cartItemId;
+    private List<Long> cartItemId;
 }

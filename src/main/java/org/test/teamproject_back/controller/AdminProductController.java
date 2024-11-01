@@ -29,11 +29,13 @@ public class AdminProductController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllProducts(ReqSearchDto dto) {
+        System.out.println(dto);
         return ResponseEntity.ok().body(productService.getAllProducts(dto));
     }
 
     @GetMapping("/search") // 상품 조회
     public ResponseEntity<?> searchProducts(ReqSearchDto dto) {
+        System.out.println(dto);
         return ResponseEntity.ok().body(productService.searchProducts(dto));
     }
 

@@ -56,6 +56,8 @@ public class OrderService {
                 .getPrincipal();
 
         User user = userMapper.findUserByUserId(principalUser.getId());
+// 유저 아이디로 카트 찾기
+
 
         List<Long> cartItemsIdList = cartMapper.findCartItemIdByCartId(dto.getCartId()); // 카트에 해당하는 아이템
         List<Long> matchingCartItemIdList = cartItemsIdList.stream() // 해당 아이템 찾음
