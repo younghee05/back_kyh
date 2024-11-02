@@ -3,6 +3,16 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.test.teamproject_back.repository.CartItemMapper">
+    <resultMap id="cartItemResultMap" type="org.test.teamproject_back.entity.CartItem">
+        <id property="cartItemId" column="cart_item_id"></id>
+        <result property="quantity" column="quantity"></result>
+        <association property="product" resultMap="productResultMap"></association>
+    </resultMap>
+    <resultMap id="productResultMap" type="org.test.teamproject_back.entity.Product">
+        <result property="title" column="title"></result>
+        <result property="price" column="price"></result>
+        <result property="thumbnailImg" column="thumbnail_img"></result>
+    </resultMap>
     <insert id="addCartItems" useGeneratedKeys="true" keyProperty="cartItemId">
         insert into cart_items_tb
         values(0, #{cartId}, #{productId}, #{quantity}, #{price}, now())
@@ -20,4 +30,23 @@
         where
             cart_item_id = #{cartItemId}
     </delete>
+    <select id="findCartItemList" resultMap="cartItemResultMap">
+        select
+            cit.cart_item_id,
+            cit.quantity,
+            pt.title,
+            pt.price,
+            pt.thumbnail_img
+        from
+            cart_items_tb cit
+            left outer join cart_tb ct on (cit.cart_id = ct.cart_id)
+            left outer join products_tb pt on (cit.product_id = pt.product_id)
+            left outer join users_tb ut on (ut.user_id = ct.user_id)
+        where
+            ut.user_id = #{userId}
+            and cit.cart_item_id in
+            <foreach item="id" index="index" collection="cartItemIdList" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+    </select>
 </mapper>

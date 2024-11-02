@@ -28,7 +28,7 @@ public class AdminUserController {
         return ResponseEntity.ok().body(adminUserService.searchUsers(role, name));
     }
 
-    @DeleteMapping("")
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> delete(@RequestBody ReqDeleteCheckDto dto) {
         adminUserService.deleteUser(dto);

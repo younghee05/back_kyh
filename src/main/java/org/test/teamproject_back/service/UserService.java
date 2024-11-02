@@ -43,7 +43,6 @@ public class UserService {
                 .name(user.getName())
                 .email(user.getEmail())
                 .phoneNumber(user.getPhoneNumber())
-                .password(user.getPassword())
                 .img(user.getImg())
                 .address(address)
                 .build();

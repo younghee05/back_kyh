@@ -11,15 +11,15 @@ public class ProductLikeController {
     @Autowired
     private ProductLikeService productLikeService;
 
-    @PostMapping("/like/{productId}")
-    public ResponseEntity<?> productLike(@PathVariable Long productId) {
-        productLikeService.productLike(productId);
+    @PostMapping("/like/{id}")
+    public ResponseEntity<?> productLike(@PathVariable Long id) {
+        productLikeService.productLike(id);
         return ResponseEntity.ok().body(true);
     }
 
-    @DeleteMapping("/dislike/{productId}")
-    public ResponseEntity<?> productDislike(@PathVariable Long productId) {
-        productLikeService.productDislike(productId);
+    @DeleteMapping("/dislike/{id}")
+    public ResponseEntity<?> productDislike(@PathVariable Long id) {
+        productLikeService.productDislike(id);
         return ResponseEntity.ok().body(true);
     }
 

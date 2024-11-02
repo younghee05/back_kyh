@@ -3,6 +3,7 @@ package org.test.teamproject_back.dto.response;
 import lombok.Builder;
 import lombok.Data;
 import org.test.teamproject_back.entity.Cart;
+import org.test.teamproject_back.entity.CartItem;
 
 import java.util.List;
 
@@ -16,5 +17,6 @@ public class RespCartOrderDto {
     private Long addressId;
     private String address;
     private String detailAddress;
-    private List<Cart> cartList;
+    private int zipCode;
+    private List<CartItem> cartItemList;
 }
