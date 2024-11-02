@@ -44,7 +44,9 @@ public class OrderService {
                 .addressId(address.getAddressId())
                 .address(address.getAddress())
                 .detailAddress(address.getDetailAddress())
+                .zipCode(address.getZipCode())
                 .title(product.getTitle())
+                .price(product.getPrice())
                 .thumbnailImg(product.getThumbnailImg())
                 .build();
     }
@@ -56,21 +58,7 @@ public class OrderService {
                 .getPrincipal();
 
         User user = userMapper.findUserByUserId(principalUser.getId());
-// 유저 아이디로 카트 찾기
-
-
-        List<Long> cartItemsIdList = cartMapper.findCartItemIdByCartId(dto.getCartId()); // 카트에 해당하는 아이템
-        List<Long> matchingCartItemIdList = cartItemsIdList.stream() // 해당 아이템 찾음
-                .filter(cartItemId -> cartItemId.equals(dto.getCartItemId()))
-                .collect(Collectors.toList());
-        List<Cart> cartList = null;
-
-        if (!matchingCartItemIdList.isEmpty()) {
-            for (Long cartItemId : matchingCartItemIdList) {
-                cartList = cartMapper.findCartListByCartItemId(cartItemId);
-            }
-        }
-
+        List<CartItem> cartItemList = cartItemMapper.findCartItemList(principalUser.getId(), dto.getId());
         Address address = addressMapper.findAddressByUserId(principalUser.getId());
 
         return RespCartOrderDto.builder()
@@ -81,7 +69,8 @@ public class OrderService {
                 .addressId(address.getAddressId())
                 .address(address.getAddress())
                 .detailAddress(address.getDetailAddress())
-                .cartList(cartList)
+                .zipCode(address.getZipCode())
+                .cartItemList(cartItemList)
                 .build();
     }
 }

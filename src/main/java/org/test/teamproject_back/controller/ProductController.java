@@ -17,6 +17,7 @@ public class ProductController {
 
     @GetMapping("/product/search") // 상품 조회
     public ResponseEntity<?> searchProduct(ReqSearchDto dto) {
+        System.out.println(dto);
         return ResponseEntity.ok().body(productService.searchProducts(dto));
     }
 
@@ -28,8 +29,8 @@ public class ProductController {
 
     // 상품 디테일 페이지
     @GetMapping("/product/detail")
-    public ResponseEntity<?> getProductDetail(@RequestParam Long productId) {
-        return ResponseEntity.ok().body(productService.getProductDetail(productId));
+    public ResponseEntity<?> getProductDetail(@RequestParam Long id) {
+        return ResponseEntity.ok().body(productService.getProductDetail(id));
     }
 
     // 신상품(최근 등록순)

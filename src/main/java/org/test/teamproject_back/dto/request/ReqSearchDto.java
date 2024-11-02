@@ -7,5 +7,5 @@ public class ReqSearchDto {
     private int page;
     private String title;
     private int limit;
-    private String categoryId;
+    private String id;
 }

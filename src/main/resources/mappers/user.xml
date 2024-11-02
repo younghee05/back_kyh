@@ -70,7 +70,6 @@
             ut.phone_number,
             ut.point,
             ut.img,
-            ut.password,
             ut.created_at,
             urt.user_roles_id,
             urt.user_id as urt_user_id,

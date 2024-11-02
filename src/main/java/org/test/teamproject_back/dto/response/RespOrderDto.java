@@ -14,6 +14,8 @@ public class RespOrderDto {
     private Long addressId;
     private String address;
     private String detailAddress;
+    private int zipCode;
     private String title;
+    private int price;
     private String thumbnailImg;
 }

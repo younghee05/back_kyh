@@ -20,7 +20,7 @@ public class UserController {
     }
 
     // 비밀번호, 주소, 이메일 수정
-    @PutMapping("")
+    @PutMapping("/{id}")
     public ResponseEntity<?> modifyUserInfo(@RequestBody ReqModifyUserDto dto) throws SignupException {
         userService.modifyUserInfo(dto);
         return ResponseEntity.ok().body(true);
