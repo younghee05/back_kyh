@@ -94,9 +94,11 @@ public class AuthService {
 
     public RespSigninDto signin(ReqSigninDto dto) {
        User user = checkUsernameAndPassword(dto.getUsername(), dto.getPassword());
+
         return RespSigninDto.builder()
                 .expireDate(jwtProvider.getExpireDate().toLocaleString())
                 .accessToken(jwtProvider.generateAccessToken(user))
+                .role(roleMapper.findRoleByUsername(dto.getUsername()))
                 .build();
     }
 

@@ -60,7 +60,7 @@ public class UserService {
             throw new BadCredentialsException("사용자 정보를 확인하세요.");
         }
 
-        if (!authService.checkPassword(dto.getPassword(), dto.getCheckPassword())) {
+        if (!authService.checkPassword(dto.getChangePassword(), dto.getCheckPassword())) {
             throw new SignupException("비밀번호가 일치하지 않습니다.");
         }
         userMapper.updateUserInfo(dto.toUser(user.getUserId()));
