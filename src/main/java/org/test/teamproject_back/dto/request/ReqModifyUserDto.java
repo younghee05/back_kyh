@@ -2,6 +2,7 @@ package org.test.teamproject_back.dto.request;
 
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.test.teamproject_back.entity.Address;
 import org.test.teamproject_back.entity.User;
 
@@ -16,18 +17,18 @@ public class ReqModifyUserDto {
     private String detailAddress;
     private int zipCode;
 
-    public User toUpdateUser(Long userId) {
+    public User toUpdateUser(Long userId, BCryptPasswordEncoder bycryptPasswordEncoder) {
         return User.builder()
                 .userId(userId)
-                .password(changePassword)
+                .password(bycryptPasswordEncoder.encode(changePassword))
                 .email(email)
                 .build();
     }
 
-    public User toUser(Long userId) {
+    public User toUser(Long userId, BCryptPasswordEncoder bycryptPasswordEncoder) {
         return User.builder()
                 .userId(userId)
-                .password(password)
+                .password(bycryptPasswordEncoder.encode(password))
                 .email(email)
                 .build();
     }
