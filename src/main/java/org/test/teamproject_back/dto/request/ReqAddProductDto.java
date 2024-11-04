@@ -14,7 +14,7 @@ public class ReqAddProductDto {
     private String description;
     private String origin;
     private int categoryId;
-    private int semiCategory;
+    private int semiCategoryId;
     private String thumbnailImg;
     private List<String> contentsImg;
 
