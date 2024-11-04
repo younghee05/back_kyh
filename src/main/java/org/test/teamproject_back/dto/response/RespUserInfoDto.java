@@ -8,6 +8,7 @@ import org.test.teamproject_back.entity.User;
 @Builder
 @Data
 public class RespUserInfoDto {
+    private Long userId;
     private String username;
     private String name;
     private String email;

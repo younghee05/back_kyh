@@ -39,6 +39,7 @@ public class UserService {
         Address address = addressMapper.findAddressByUserId(principalUser.getId());
 
         return RespUserInfoDto.builder()
+                .userId(user.getUserId())
                 .username(user.getUsername())
                 .name(user.getName())
                 .email(user.getEmail())
