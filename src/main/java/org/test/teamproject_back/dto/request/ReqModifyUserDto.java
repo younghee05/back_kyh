@@ -25,10 +25,10 @@ public class ReqModifyUserDto {
                 .build();
     }
 
-    public User toUser(Long userId, BCryptPasswordEncoder bycryptPasswordEncoder) {
+    public User toUser(Long userId, String password) {
         return User.builder()
                 .userId(userId)
-                .password(bycryptPasswordEncoder.encode(password))
+                .password(password)
                 .email(email)
                 .build();
     }
