@@ -44,6 +44,7 @@ public class UserService {
                 .name(user.getName())
                 .email(user.getEmail())
                 .phoneNumber(user.getPhoneNumber())
+                .point(user.getPoint())
                 .img(user.getImg())
                 .address(address)
                 .build();
