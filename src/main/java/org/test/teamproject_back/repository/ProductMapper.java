@@ -21,4 +21,5 @@ public interface ProductMapper {
     Product findProductById(Long productId);
     List<Product> findNewProduct();
     List<Product> findPopularityProduct();
+    List<Product> findRecommendedProduct();
 }

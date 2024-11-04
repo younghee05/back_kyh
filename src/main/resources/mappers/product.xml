@@ -189,4 +189,16 @@
         order by
             stock desc limit 10
     </select>
+    <select id="findRecommendedProduct" resultMap="productResultMap">
+        select
+            product_id,
+            title,
+            price,
+            description,
+            thumbnail_img
+        from
+            products_tb
+        order by
+            stock desc limit 5;
+    </select>
 </mapper>

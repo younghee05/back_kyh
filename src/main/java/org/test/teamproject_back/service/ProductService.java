@@ -91,4 +91,8 @@ public class ProductService {
     public List<Product> getPopularityProduct() {
         return productMapper.findPopularityProduct();
     }
+
+    public List<Product> getRecommendedProduct() {
+        return productMapper.findRecommendedProduct();
+    }
 }
