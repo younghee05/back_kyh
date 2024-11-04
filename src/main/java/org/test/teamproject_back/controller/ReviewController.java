@@ -3,6 +3,8 @@ package org.test.teamproject_back.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.test.teamproject_back.dto.request.ReqDeleteCheckDto;
+import org.test.teamproject_back.dto.request.ReqDeleteReviewDto;
 import org.test.teamproject_back.dto.request.ReqModifyReviewDto;
 import org.test.teamproject_back.dto.request.ReqAddReviewDto;
 import org.test.teamproject_back.repository.ReviewMapper;
@@ -12,7 +14,6 @@ import java.time.LocalDate;
 import java.time.Period;
 
 @RestController
-@RequestMapping("/user/review")
 public class ReviewController {
 
     @Autowired
@@ -20,18 +21,23 @@ public class ReviewController {
     @Autowired
     private ReviewMapper reviewMapper;
 
-    @PostMapping("")
+    @PostMapping("/user/review")
     public ResponseEntity<?> addReview(@RequestBody ReqAddReviewDto dto) {
         reviewService.addReview(dto);
         return ResponseEntity.ok().body(true);
     }
 
-    @GetMapping("")
-    public ResponseEntity<?> getAllReviews() {
+    @GetMapping("/user/review")
+    public ResponseEntity<?> getAllMyReviews() { // 마이 페이지 리뷰
+        return ResponseEntity.ok().body(reviewService.getAllMyReviews());
+    }
+
+    @GetMapping("/user/public/review")
+    public ResponseEntity<?> getAllReviews() { // 전체 페이지 리뷰
         return ResponseEntity.ok().body(reviewService.getAllReviews());
     }
 
-    @GetMapping("/check")
+    @GetMapping("/user/review/check")
     public ResponseEntity<?> checkDate(@RequestParam int id) {
         LocalDate reviewDate = reviewMapper.findReviewDate(id);
         Period period = Period.between(reviewDate, LocalDate.now());
@@ -42,15 +48,15 @@ public class ReviewController {
         return ResponseEntity.ok().body(true);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/user/review/{id}")
     public ResponseEntity<?> modifyReview(@RequestBody ReqModifyReviewDto dto) {
         reviewService.modifyReview(dto);
         return ResponseEntity.ok().body(true);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteReview(@PathVariable int id) {
-        reviewService.deleteReview(id);
+    @DeleteMapping("/user/review")
+    public ResponseEntity<?> deleteReview(@RequestBody ReqDeleteReviewDto dto) {
+        reviewService.deleteReview(dto);
         return ResponseEntity.ok().body(true);
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.test.teamproject_back.dto.request.ReqAddReviewDto;
+import org.test.teamproject_back.dto.request.ReqDeleteReviewDto;
 import org.test.teamproject_back.dto.request.ReqModifyReviewDto;
 import org.test.teamproject_back.entity.Review;
 import org.test.teamproject_back.repository.ReviewMapper;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.List;
 
 @Service
 public class ReviewService {
@@ -35,13 +37,16 @@ public class ReviewService {
         reviewMapper.addReview(dto.toReview(principalUser.getId()));
     }
 
-    public Review getAllReviews() {
+    public List<Review> getAllMyReviews() {
         PrincipalUser principalUser = (PrincipalUser) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
 
-        return reviewMapper.findReviewByUserId(principalUser.getId());
+        return reviewMapper.findMyReviewByUserId(principalUser.getId());
+    }
+    public List<Review> getAllReviews() {
+        return reviewMapper.findAllReview();
     }
 
     @Transactional(rollbackFor = SQLException.class)
@@ -50,7 +55,7 @@ public class ReviewService {
     }
 
     @Transactional(rollbackFor = SQLException.class)
-    public void deleteReview(int reviewId) {
-        reviewMapper.deleteReview(reviewId);
+    public void deleteReview(ReqDeleteReviewDto dto) {
+        reviewMapper.deleteReview(dto.getCheckedIds());
     }
 }

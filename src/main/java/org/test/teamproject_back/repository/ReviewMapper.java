@@ -5,12 +5,14 @@ import org.test.teamproject_back.entity.Review;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Mapper
 public interface ReviewMapper {
     int addReview(Review review);
-    Review findReviewByUserId(Long userId);
+    List<Review> findMyReviewByUserId(Long userId);
+    List<Review> findAllReview();
     LocalDate findReviewDate(int reviewId);
     int updateReview(Review review);
-    int deleteReview(int reviewId);
+    int deleteReview(List<Long> checkedIds);
 }

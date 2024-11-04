@@ -3,32 +3,55 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.test.teamproject_back.repository.ReviewMapper">
+    <resultMap id="reviewResultMap" type="org.test.teamproject_back.entity.Review">
+        <id property="reviewId" column="review_id"></id>
+        <result property="userId" column="user_id"></result>
+        <result property="productId" column="product_id"></result>
+        <result property="rating" column="rating"></result>
+        <result property="title" column="title"></result>
+        <result property="content" column="content"></result>
+        <association property="product" resultMap="productResultMap"></association>
+    </resultMap>
+    <resultMap id="productResultMap" type="org.test.teamproject_back.entity.Product">
+        <result property="thumbnailImg" column="thumbnail_img"></result>
+    </resultMap>
     <insert id="addReview">
         insert into reviews_tb
-        values(0, #{userId}, #{productId}, #{rating}, #{title}, #{content}, #{reviewImg}, now())
+        values(0, #{userId}, #{productId}, #{rating}, #{title}, #{content}, now())
     </insert>
     <update id="updateReview">
         update reviews_tb
         set
             rating = #{rating},
             title = #{title},
-            content = #{content},
-            review_img = #{reviewImg}
+            content = #{content}
         where
             review_id = #{reviewId}
     </update>
     <delete id="deleteReview">
         delete from reviews_tb
-        where
-            review_id = #{reviewId}
+        where review_id in
+        <foreach item="id" index="index" collection="checkedIds" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </delete>
-    <select id="findReviewByUserId" resultType="org.test.teamproject_back.entity.Review">
+    <select id="findMyReviewByUserId" resultMap="reviewResultMap">
         select
-            *
+            rt.review_id,
+            rt.user_id,
+            rt.product_id,
+            rt.rating,
+            rt.title,
+            rt.content,
+            rt.created_at,
+            pt.thumbnail_img
         from
-            reviews_tb
+            reviews_tb rt
+            left outer join users_tb ut on (rt.user_id = ut.user_id)
+            left outer join products_tb pt on (rt.product_id = pt.product_id)
         where
-            user_id = #{userId}
+            ut.user_id = #{userId}
+        order by rt.created_at desc
     </select>
     <select id="findReviewDate" resultType="java.time.LocalDate">
         select
@@ -37,5 +60,21 @@
             reviews_tb
         where
             review_id = #{reviewId}
+    </select>
+    <select id="findAllReview" resultMap="reviewResultMap">
+        select
+            rt.review_id,
+            rt.user_id,
+            rt.product_id,
+            rt.rating,
+            rt.title,
+            rt.content,
+            rt.created_at,
+            pt.thumbnail_img
+        from
+            reviews_tb rt
+            left outer join users_tb ut on (rt.user_id = ut.user_id)
+            left outer join products_tb pt on (rt.product_id = pt.product_id)
+        order by rt.created_at desc
     </select>
 </mapper>

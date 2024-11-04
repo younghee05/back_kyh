@@ -11,7 +11,6 @@ public class ReqAddReviewDto {
     private int rating;
     private String title;
     private String content;
-    private String reviewImg;
 
     public Review toReview(Long userId) {
         return Review.builder()
@@ -20,7 +19,6 @@ public class ReqAddReviewDto {
                 .rating(rating)
                 .title(title)
                 .content(content)
-                .reviewImg(reviewImg)
                 .build();
     }
 }
