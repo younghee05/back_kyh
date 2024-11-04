@@ -12,6 +12,7 @@ import java.util.Set;
 @Builder
 @Data
 public class ReqModifyProductDto {
+    private Long checkedIds;
     private String title;
     private int price;
     private int stock;
@@ -22,9 +23,9 @@ public class ReqModifyProductDto {
     private int categoryId;
     private int semiCategoryId;
 
-    public Product toProduct(Long productId, String contentsImg1, String contentsImg2, String contentsImg3, String contentsImg4) {
+    public Product toProduct(String contentsImg1, String contentsImg2, String contentsImg3, String contentsImg4) {
         return Product.builder()
-                .productId(productId)
+                .productId(checkedIds)
                 .title(title)
                 .price(price)
                 .stock(stock)
@@ -38,11 +39,11 @@ public class ReqModifyProductDto {
                 .build();
     }
 
-    public ProductCategory toProductCategory(Long producntId) {
+    public ProductCategory toProductCategory() {
         return ProductCategory.builder()
                 .categoryId(categoryId)
                 .semiCategoryId(semiCategoryId)
-                .productId(producntId)
+                .productId(checkedIds)
                 .build();
     }
 }

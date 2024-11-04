@@ -23,6 +23,7 @@ public class AdminProductController {
 
     @PostMapping("/add")
     public ResponseEntity<?> addProduct(@RequestBody ReqAddProductDto dto) {
+        System.out.println(dto);
         adminProductService.addProduct(dto);
         return ResponseEntity.ok().body(true);
     }
@@ -39,9 +40,10 @@ public class AdminProductController {
         return ResponseEntity.ok().body(productService.searchProducts(dto));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> modifyProduct(@PathVariable @RequestBody Long producntId, ReqModifyProductDto dto) {
-        adminProductService.modifyProduct(producntId, dto);
+    @PutMapping("/edit")
+    public ResponseEntity<?> modifyProduct(@RequestBody ReqModifyProductDto dto) {
+        System.out.println(dto);
+        adminProductService.modifyProduct(dto);
         return ResponseEntity.ok().body(true);
     }
 

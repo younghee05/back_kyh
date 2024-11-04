@@ -42,13 +42,13 @@ public class AdminProductService {
         ProductCategory productCategory = ProductCategory.builder()
                 .productId(product.getProductId())
                 .categoryId(dto.getCategoryId())
-                .semiCategoryId(dto.getSemiCategory())
+                .semiCategoryId(dto.getSemiCategoryId())
                 .build();
         adminProductMapper.addProductCategory(productCategory);
     }
 
     @Transactional(rollbackFor = SQLException.class)
-    public void modifyProduct(Long producntId, ReqModifyProductDto dto) {
+    public void modifyProduct(ReqModifyProductDto dto) {
         String[] images = dto.getContentsImg().stream()
                 .toArray(String[]::new);
 
@@ -62,9 +62,9 @@ public class AdminProductService {
         System.out.println(img3);
         System.out.println(img4);
 
-        Product product = dto.toProduct(producntId, img1, img2, img3, img4);
+        Product product = dto.toProduct(img1, img2, img3, img4);
         adminProductMapper.updateProduct(product);
-        adminProductMapper.updateProductCategory(dto.toProductCategory(producntId));
+        adminProductMapper.updateProductCategory(dto.toProductCategory());
     }
 
     @Transactional(rollbackFor = SQLException.class)
