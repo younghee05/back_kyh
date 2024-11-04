@@ -17,7 +17,7 @@
         update shipping_addresses_tb
         set
             address = #{address},
-            detail_address = #{detailAddress}
+            detail_address = #{detailAddress},
             zip_code = #{zipCode}
         where
             user_id = #{userId}

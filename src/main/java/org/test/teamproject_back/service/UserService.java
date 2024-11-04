@@ -62,14 +62,17 @@ public class UserService {
         if (!bCryptPasswordEncoder.matches(dto.getPassword(), user.getPassword())) {
             throw new BadCredentialsException("사용자 정보를 확인하세요.");
         }
+        System.out.println(user.getPassword());
 
         if (dto.getChangePassword() != null && dto.getCheckPassword() != null) {
             if (!authService.checkPassword(dto.getChangePassword(), dto.getCheckPassword())) {
                 throw new SignupException("비밀번호가 일치하지 않습니다.");
             }
-            userMapper.updateUserInfo(dto.toUpdateUser(user.getUserId()));
+            userMapper.updateUserInfo(dto.toUpdateUser(user.getUserId(), bCryptPasswordEncoder));
         }
-        userMapper.updateUserInfo(dto.toUser(user.getUserId()));
-        addressMapper.updateAddress(dto.toAddress(user.getUserId()));
+        userMapper.updateUserInfo(dto.toUser(user.getUserId(), bCryptPasswordEncoder));
+
+        if (dto.getAddress() != null || dto.getDetailAddress() != null || dto.getZipCode() != 0)
+            addressMapper.updateAddress(dto.toAddress(user.getUserId()));
     }
 }
