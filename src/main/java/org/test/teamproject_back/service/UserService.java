@@ -63,10 +63,11 @@ public class UserService {
             throw new BadCredentialsException("사용자 정보를 확인하세요.");
         }
 
-        if(dto.getChangePassword() != null && dto.getCheckPassword() != null) {
+        if (dto.getChangePassword() != null && dto.getCheckPassword() != null) {
             if (!authService.checkPassword(dto.getChangePassword(), dto.getCheckPassword())) {
                 throw new SignupException("비밀번호가 일치하지 않습니다.");
             }
+            userMapper.updateUserInfo(dto.toUpdateUser(user.getUserId()));
         }
         userMapper.updateUserInfo(dto.toUser(user.getUserId()));
         addressMapper.updateAddress(dto.toAddress(user.getUserId()));
