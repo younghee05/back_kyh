@@ -48,9 +48,23 @@ public class AdminProductService {
     }
 
     @Transactional(rollbackFor = SQLException.class)
-    public void modifyProduct(ReqModifyProductDto dto) {
-        adminProductMapper.updateProduct(dto.toProduct());
-        adminProductMapper.updateProductCategory(dto.toProductCategory());
+    public void modifyProduct(Long producntId, ReqModifyProductDto dto) {
+        String[] images = dto.getContentsImg().stream()
+                .toArray(String[]::new);
+
+        String img1 = images.length > 0 ? images[0] : null;
+        String img2 = images.length > 1 ? images[1] : null;
+        String img3 = images.length > 2 ? images[2] : null;
+        String img4 = images.length > 3 ? images[3] : null;
+
+        System.out.println(img1);
+        System.out.println(img2);
+        System.out.println(img3);
+        System.out.println(img4);
+
+        Product product = dto.toProduct(producntId, img1, img2, img3, img4);
+        adminProductMapper.updateProduct(product);
+        adminProductMapper.updateProductCategory(dto.toProductCategory(producntId));
     }
 
     @Transactional(rollbackFor = SQLException.class)

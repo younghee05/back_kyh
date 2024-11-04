@@ -40,8 +40,8 @@ public class AdminProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> modifyProduct(@RequestBody ReqModifyProductDto dto) {
-        adminProductService.modifyProduct(dto);
+    public ResponseEntity<?> modifyProduct(@PathVariable @RequestBody Long producntId, ReqModifyProductDto dto) {
+        adminProductService.modifyProduct(producntId, dto);
         return ResponseEntity.ok().body(true);
     }
 
