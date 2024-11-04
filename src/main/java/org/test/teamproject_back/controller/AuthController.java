@@ -33,6 +33,7 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> signin(@Valid @RequestBody ReqSigninDto dto) {
+        System.out.println(dto);
         return ResponseEntity.ok().body(authService.signin(dto));
     }
 
