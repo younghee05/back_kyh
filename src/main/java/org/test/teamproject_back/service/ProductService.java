@@ -38,11 +38,11 @@ public class ProductService {
         Map<String, Object> paging = Map.of(
                 "startIndex", startIndex,
                 "limit", dto.getLimit(),
-                "searchTitle", dto.getTitle() == null ? "" : dto.getTitle()
+                "keyword", dto.getKeyword() == null ? "" : dto.getKeyword()
         );
 
         List<Product> productList = productMapper.findProductByTitle(paging);
-        int productCount = productMapper.findProductCountByTitle(dto.getTitle());
+        int productCount = productMapper.findProductCountByTitle(dto.getKeyword());
 
         return RespSearchProductDto.builder()
                 .products(productList)
@@ -52,11 +52,11 @@ public class ProductService {
 
     public RespSearchProductDto searchCategory(ReqSearchDto dto) {
         int startIndex = (dto.getPage() - 1) * dto.getLimit();
-        int mainCategoryId = Integer.parseInt(dto.getId().substring(0, 2));
+        int mainCategoryId = Integer.parseInt(dto.getCategoryId().substring(0, 2));
         int semiCategoryId = 0;
 
-        if (dto.getId().length() == 4) {
-            semiCategoryId = Integer.parseInt((dto.getId()).substring(2, 4));
+        if (dto.getCategoryId().length() == 4) {
+            semiCategoryId = Integer.parseInt((dto.getCategoryId()).substring(2, 4));
         }
 
         Map<String, Object> paging = Map.of(
