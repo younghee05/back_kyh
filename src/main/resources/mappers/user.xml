@@ -67,6 +67,7 @@
             ut.username,
             ut.name,
             ut.email,
+            ut.password,
             ut.phone_number,
             ut.point,
             ut.img,
