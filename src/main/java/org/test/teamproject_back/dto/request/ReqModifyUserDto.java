@@ -16,10 +16,18 @@ public class ReqModifyUserDto {
     private String detailAddress;
     private int zipCode;
 
-    public User toUser(Long userId) {
+    public User toUpdateUser(Long userId) {
         return User.builder()
                 .userId(userId)
                 .password(changePassword)
+                .email(email)
+                .build();
+    }
+
+    public User toUser(Long userId) {
+        return User.builder()
+                .userId(userId)
+                .password(password)
                 .email(email)
                 .build();
     }
