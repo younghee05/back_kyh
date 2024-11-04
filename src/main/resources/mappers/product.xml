@@ -53,7 +53,7 @@
             left outer join categories_tb ct on (pct.category_id = ct.category_id)
             left outer join semi_categories_tb sct on (sct.semi_category_id = pct.semi_category_id)
         where
-            pt.title like concat('%',trim(ifnull(#{searchTitle},'')),'%')
+            pt.title like concat('%',trim(ifnull(#{keyword},'')),'%')
         limit #{startIndex},#{limit}
     </select>
     <select id="findProductCountByTitle" resultType="java.lang.Integer">

@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ReqSearchDto {
     private int page;
-    private String title;
+    private String keyword;
     private int limit;
-    private String id;
+    private String categoryId;
 }
