@@ -11,7 +11,7 @@
     <resultMap id="productResultMap" type="org.test.teamproject_back.entity.Product">
         <id property="productId" column="product_id"/>
         <result property="title" column="title" />
-        <result property="price" column="stock" />
+        <result property="price" column="price" />
         <result property="salesCount" column="sales_count" />
         <result property="description" column="description" />
         <result property="origin" column="origin" />
@@ -47,12 +47,10 @@
     <select id="SearchProductLikeByUserId" resultMap="productLikeProductResultMap">
         select
             plt.product_like_id,
-            plt.product_id,
             plt.user_id,
-            pt.product_id as product_id,
+            pt.product_id,
             pt.title,
             pt.price,
-            pt.description,
             pt.thumbnail_img
         from
             products_like_tb plt
