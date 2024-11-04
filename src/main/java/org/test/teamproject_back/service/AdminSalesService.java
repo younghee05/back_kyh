@@ -4,18 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.test.teamproject_back.dto.response.RespSalesDto;
 import org.test.teamproject_back.entity.Payment;
-import org.test.teamproject_back.repository.OrderMapper;
+import org.test.teamproject_back.repository.AdminOrderMapper;
 import org.test.teamproject_back.repository.PaymentsMapper;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @Service
 public class AdminSalesService {
 
-    @Autowired
-    private OrderMapper orderMapper;
     @Autowired
     private PaymentsMapper paymentsMapper;
 

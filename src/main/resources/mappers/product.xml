@@ -43,6 +43,7 @@
             pt.description,
             pt.origin,
             pt.thumbnail_img,
+            pt.created_date,
             ct.category_id as ct_category_id,
             ct.name,
             sct.semi_category_id,
