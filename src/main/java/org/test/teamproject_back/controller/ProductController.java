@@ -44,4 +44,9 @@ public class ProductController {
     public ResponseEntity<?> getPopularityProduct() {
         return ResponseEntity.ok().body(productService.getPopularityProduct());
     }
+
+    @GetMapping("/recom")
+    public ResponseEntity<?> getRecommendedProduct() {
+        return ResponseEntity.ok().body(productService.getRecommendedProduct());
+    }
 }
