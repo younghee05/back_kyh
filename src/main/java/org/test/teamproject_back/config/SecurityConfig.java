@@ -55,9 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.addFilterBefore(jwtAccessTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
-//        http.oauth2Login()
-//                .successHandler(oAuth2SuccessHandler)
-//                .userInfoEndpoint()
-//                .userService(oAuth2Service);
+        http.oauth2Login()
+                .successHandler(oAuth2SuccessHandler)
+                .userInfoEndpoint()
+                .userService(oAuth2Service);
     }
 }

@@ -14,4 +14,5 @@ public interface UserMapper {
     User findUserByUserId(Long userId);
     int findByName(String name);
     int updateUserInfo(User user);
+    User findByOAuth2Name(String oAuth2Name);
 }
