@@ -67,6 +67,7 @@
         where
             rt.role_id = #{role}
         order by created_at desc
+        limit #{startIndex},#{limit}
     </select>
     <select id="findAllUsersByRoleAndName" resultMap="userResultMap">
         select
