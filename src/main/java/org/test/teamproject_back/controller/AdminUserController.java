@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.test.teamproject_back.dto.request.ReqDeleteCheckDto;
 import org.test.teamproject_back.dto.request.ReqModifyAdminUserDto;
+import org.test.teamproject_back.dto.request.ReqUserDto;
 import org.test.teamproject_back.service.AdminUserService;
 
 import javax.validation.Valid;
@@ -19,8 +20,8 @@ public class AdminUserController {
     private AdminUserService adminUserService;
 
     @GetMapping("")
-    public ResponseEntity<?> getAllUsers(@RequestParam(required = false) int role) {
-        return ResponseEntity.ok().body(adminUserService.getAllUsers(role));
+    public ResponseEntity<?> getAllUsers(ReqUserDto dto) {
+        return ResponseEntity.ok().body(adminUserService.getAllUsers(dto));
     }
 
     @GetMapping("/search")
