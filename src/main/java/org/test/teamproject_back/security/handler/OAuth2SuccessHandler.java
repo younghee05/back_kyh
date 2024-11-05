@@ -26,15 +26,17 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         DefaultOAuth2User defaultOAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
         Map<String, Object> attributes = defaultOAuth2User.getAttributes();
+
         String oAuth2Name = attributes.get("id").toString();
         String provider = attributes.get("provider").toString();
 
-        User user = userMapper.findByOAuth2Name(oAuth2Name);
-        if(user == null) {
-            response.sendRedirect("http://localhost:3000/user/join/oauth2?oAuth2Name=" + oAuth2Name + "&provider=" + provider);
-            return;
-        }
+        User user = userMapper.findUserByUsername(oAuth2Name);
+        System.out.println(user);
+//        if(user == null) {
+//            response.sendRedirect("http://localhost:3000/user/join/oauth2?oAuth2Name=" + oAuth2Name + "&provider=" + provider);
+//            return;
+//        }
         String accessToken = jwtProvider.generateAccessToken(user);
-        response.sendRedirect("http://localhost:3000/user/login/oauth2?accessToken=" + accessToken);
+        response.sendRedirect("http://localhost:3000/user/signin/oauth2?accessToken=" + accessToken);
     }
 }

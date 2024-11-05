@@ -15,5 +15,6 @@ public class UserRoles {
     private Long userRolesId;
     private Long userId;
     private int roleId;
+
     private Role role;
 }
