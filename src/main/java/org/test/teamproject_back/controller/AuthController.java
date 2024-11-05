@@ -42,10 +42,4 @@ public class AuthController {
         return ResponseEntity.ok().body(tokenService.isValidAccessToken(dto.getAccessToken()));
     }
 
-//    @PostMapping("")
-//    public ResponseEntity<?> oAuth2Signup(@Valid @RequestBody dto, BindingResult bindingResult) throws SignupException {
-//        oAuth2Service.
-//                return null;
-//    }
-
 }

@@ -3,10 +3,12 @@ package org.test.teamproject_back.service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.test.teamproject_back.dto.request.ReqOAuth2MergeDto;
 import org.test.teamproject_back.dto.request.ReqSigninDto;
 import org.test.teamproject_back.dto.request.ReqSignupDto;
 import org.test.teamproject_back.dto.response.RespSigninDto;
 import org.test.teamproject_back.dto.response.RespSignupDto;
+import org.test.teamproject_back.entity.OAuth2User;
 import org.test.teamproject_back.entity.Role;
 import org.test.teamproject_back.entity.User;
 import org.test.teamproject_back.entity.UserRoles;
@@ -111,5 +113,14 @@ public class AuthService {
             throw new BadCredentialsException("사용자 정보를 확인하세요.");
         }
         return user;
+    }
+
+    public OAuth2User mergeSignin(ReqOAuth2MergeDto dto) {
+        User user = checkUsernameAndPassword(dto.getUsername(), dto.getPassword());
+        return OAuth2User.builder()
+                .userId(user.getUserId())
+                .oAuth2Name(dto.getOauth2Name())
+                .provider(dto.getProvider())
+                .build();
     }
 }

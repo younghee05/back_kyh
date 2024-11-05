@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.test.teamproject_back.dto.request.ReqModifyUserDto;
 import org.test.teamproject_back.dto.response.RespUserInfoDto;
 import org.test.teamproject_back.entity.Address;
+import org.test.teamproject_back.entity.OAuth2User;
 import org.test.teamproject_back.entity.User;
 import org.test.teamproject_back.exception.SignupException;
 import org.test.teamproject_back.repository.AddressMapper;
@@ -75,4 +76,5 @@ public class UserService {
         if (dto.getAddress() != null || dto.getDetailAddress() != null || dto.getZipCode() != 0)
             addressMapper.updateAddress(dto.toAddress(user.getUserId()));
     }
+
 }

@@ -1,7 +1,6 @@
 package org.test.teamproject_back.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -10,10 +9,6 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-import org.test.teamproject_back.dto.request.ReqOAuth2SignupDto;
-import org.test.teamproject_back.entity.Role;
-import org.test.teamproject_back.entity.User;
-import org.test.teamproject_back.entity.UserRoles;
 import org.test.teamproject_back.repository.OAuth2UserMapper;
 import org.test.teamproject_back.repository.RoleMapper;
 import org.test.teamproject_back.repository.UserMapper;
@@ -59,22 +54,9 @@ public class OAuth2Service implements OAuth2UserService {
         return new DefaultOAuth2User(new HashSet<>(), oAuth2Attributes, "id");
     }
 
-//    public ResponseEntity<?> signup(ReqOAuth2SignupDto dto) {
-//        User user = dto.toEntity(passwordEncoder);
-//        userMapper.save(user);
-//        Role role = roleMapper.findByName("ROLE_USER");
-//        if (role == null) {
-//            role = Role.builder().name("ROLE_USER").build();
-//            roleMapper.save(role);
-//        }
-//        userRolesMapper.save(UserRoles.builder()
-//                .userId(user.getUserId())
-//                .roleId(role.getRoleId())
-//                .build());
-//        oAuth2UserMapper.save(org.test.teamproject_back.entity.OAuth2User.builder()
-//                        .userId(user.getUserId())
-//                        .oAuth2Name(dto.getOauth2Name())
-//                        .provider(dto.getProvider())
-//                .build())
-//    }
+    public void merge(org.test.teamproject_back.entity.OAuth2User oAuth2User) {
+        oAuth2UserMapper.save(oAuth2User);
+    }
+
+
 }
