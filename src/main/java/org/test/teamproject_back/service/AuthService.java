@@ -115,12 +115,5 @@ public class AuthService {
         return user;
     }
 
-    public OAuth2User mergeSignin(ReqOAuth2MergeDto dto) {
-        User user = checkUsernameAndPassword(dto.getUsername(), dto.getPassword());
-        return OAuth2User.builder()
-                .userId(user.getUserId())
-                .oAuth2Name(dto.getOauth2Name())
-                .provider(dto.getProvider())
-                .build();
-    }
+
 }

@@ -92,15 +92,14 @@
         where
             name = #{name}
     </select>
-    <select id="findByOAuth2Name" resultMap="userResultMap">
+
+    <select id="findById" resultType="java.lang.Integer">
         select
-            ut.user_id
+            user_id
         from
-            users_tb ut
-            left outer join oauth2_users_tb ot on(ot.user_id = ut.user_id)
-            left outer join user_roles_tb urt on(urt.user_id = ut.user_id)
-            left outer join roles_tb rt on(rt.role_id = urt.role_id
+            users_tb
         where
-            ot.oauth2_name = #{oAuth2Name}
+            username = #{username}
     </select>
+
 </mapper>
