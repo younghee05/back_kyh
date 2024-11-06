@@ -135,16 +135,16 @@
             sct.semi_category_id,
             sct.name as sct_name
         from
-            categories_tb ct
-            left outer join product_categories_tb pct on (ct.category_id = pct.category_id)
+            products_tb pt
+            left outer join product_categories_tb pct on(pt.product_id = pct.product_id)
             left outer join semi_categories_tb sct on (sct.semi_category_id = pct.semi_category_id)
-            left outer join products_tb pt on (pct.product_id = pt.product_id)
+            left outer join categories_tb ct on (ct.category_id = pct.category_id)
         where 1=1
             <if test="mainCategoryId != 0">
-                and ct.category_id = #{mainCategoryId}
+                and pct.category_id = #{mainCategoryId}
             </if>
             <if test="semiCategoryId != 0">
-                and sct.semi_category_id = #{semiCategoryId}
+                and pct.semi_category_id = #{semiCategoryId}
             </if>
         limit #{startIndex}, #{limit}
     </select>

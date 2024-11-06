@@ -27,4 +27,9 @@ public class OrderController {
     public ResponseEntity<?> modify( ) {
         return ResponseEntity.ok().body(null);
     }
+
+    @GetMapping("/order/record")
+    public ResponseEntity<?> getOrderRecord() {
+        return ResponseEntity.ok().body(orderService.getOrderRecord());
+    }
 }
