@@ -30,7 +30,7 @@ public class AdminProductController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllProducts(ReqSearchDto dto) {
-//        System.out.println(dto);
+        System.out.println(dto);
         return ResponseEntity.ok().body(productService.getAllProducts(dto));
     }
 
