@@ -23,7 +23,7 @@ public class OrderService {
     @Autowired
     private AddressMapper addressMapper;
     @Autowired
-    private CartMapper cartMapper;
+    private OrderMapper orderMapper;
     @Autowired
     private CartItemMapper cartItemMapper;
 
@@ -72,5 +72,14 @@ public class OrderService {
                 .zipCode(address.getZipCode())
                 .cartItemList(cartItemList)
                 .build();
+    }
+
+    public List<Order> getOrderRecord() {
+        PrincipalUser principalUser = (PrincipalUser) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        return orderMapper.findUserOrder(principalUser.getId());
     }
 }

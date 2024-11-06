@@ -58,5 +58,15 @@
         where
             plt.user_id = #{userId}
     </select>
-
+    <select id="isProductLike" resultType="java.lang.Boolean">
+        select
+        exists(
+        select
+            1
+        from
+            products_like_tb
+        where
+            user_id = #{userId}
+            and product_id = #{productId})
+    </select>
 </mapper>
