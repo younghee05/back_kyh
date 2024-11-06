@@ -12,4 +12,5 @@ public interface ProductLikeMapper {
     Long deleteProductLike(ProductLike dislike);
     int getLikeCountByProductId(int productId);
     List<ProductLike> SearchProductLikeByUserId(Long userId);
+    Boolean isProductLike(Long userId, Long productId);
 }
