@@ -8,4 +8,5 @@ import org.test.teamproject_back.entity.Product;
 @Data
 public class RespProductDetailDto {
     private Product product;
+    private Boolean likeCheck;
 }

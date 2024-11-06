@@ -1,12 +1,15 @@
 package org.test.teamproject_back.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.test.teamproject_back.dto.request.ReqSearchDto;
 import org.test.teamproject_back.dto.response.RespProductDetailDto;
 import org.test.teamproject_back.dto.response.RespSearchProductDto;
 import org.test.teamproject_back.entity.Product;
+import org.test.teamproject_back.repository.ProductLikeMapper;
 import org.test.teamproject_back.repository.ProductMapper;
+import org.test.teamproject_back.security.principal.PrincipalUser;
 
 import java.util.*;
 
@@ -15,6 +18,8 @@ public class ProductService {
 
     @Autowired
     private ProductMapper productMapper;
+    @Autowired
+    private ProductLikeMapper productLikeMapper;
 
     public RespSearchProductDto getAllProducts(ReqSearchDto dto) {
         int startIndex = (dto.getPage() - 1) * dto.getLimit();
@@ -82,10 +87,17 @@ public class ProductService {
     }
 
     public RespProductDetailDto getProductDetail(Long productId) {
+        PrincipalUser principalUser = (PrincipalUser) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
         Product product = productMapper.findProductById(productId);
+        Boolean likeCheck = productLikeMapper.isProductLike(principalUser.getId(), productId);
 
         return RespProductDetailDto.builder()
                 .product(product)
+                .likeCheck(likeCheck)
                 .build();
     }
 
