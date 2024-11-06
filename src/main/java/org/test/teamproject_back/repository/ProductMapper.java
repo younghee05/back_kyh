@@ -12,8 +12,9 @@ import java.util.concurrent.atomic.LongAdder;
 
 @Mapper
 public interface ProductMapper {
-    List<Product> findAllProductsList(Map<String, Object> paging);
-    List<Product> findProductByTitle(Map<String, Object> paging);
+//    List<Product> findAllProductsList(Map<String, Object> paging);
+    List<Product> findAllProductsList(int startIndex, int limit);
+    List<Product> findProduct(Map<String, Object> paging);
     int findProductCountByTitle(String title);
     int findAllProductCount();
     int findProductCountBySemiCategory(int mainCategoryId, int semiCategoryId);

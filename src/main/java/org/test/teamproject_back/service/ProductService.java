@@ -18,12 +18,16 @@ public class ProductService {
 
     public RespSearchProductDto getAllProducts(ReqSearchDto dto) {
         int startIndex = (dto.getPage() - 1) * dto.getLimit();
+        System.out.println("startIndex>>>>>>>>" + startIndex);
+        System.out.println("limit>>>>>>>>" + dto.getLimit());
 
         Map<String, Object> paging = Map.of(
                 "startIndex", startIndex,
                 "limit", dto.getLimit()
         );
-        List<Product> productList = productMapper.findAllProductsList(paging);
+//        List<Product> productList = productMapper.findAllProductsList(paging);
+        List<Product> productList = productMapper.findAllProductsList(startIndex, dto.getLimit());
+        System.out.println(productList);
         int productCount = productMapper.findAllProductCount();
 
         return RespSearchProductDto.builder()
@@ -41,7 +45,7 @@ public class ProductService {
                 "keyword", dto.getKeyword() == null ? "" : dto.getKeyword()
         );
 
-        List<Product> productList = productMapper.findProductByTitle(paging);
+        List<Product> productList = productMapper.findProduct(paging);
         int productCount = productMapper.findProductCountByTitle(dto.getKeyword());
 
         return RespSearchProductDto.builder()

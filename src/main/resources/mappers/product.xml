@@ -35,7 +35,7 @@
         <id property="semiCategoryId" column="semi_category_id"></id>
         <result property="name" column="sct_name"></result>
     </resultMap>
-    <select id="findProductByTitle" resultMap="productResultMap">
+    <select id="findProduct" resultMap="productResultMap">
         select
             pt.product_id,
             pt.title,
@@ -55,7 +55,9 @@
             left outer join semi_categories_tb sct on (sct.semi_category_id = pct.semi_category_id)
         where
             pt.title like concat('%',trim(ifnull(#{keyword},'')),'%')
-        limit #{startIndex},#{limit}
+        group by
+            pt.product_id
+        limit #{startIndex},20
     </select>
     <select id="findProductCountByTitle" resultType="java.lang.Integer">
         select
@@ -97,10 +99,10 @@
             pt.product_id,
             pt.title,
             pt.price,
-            pt.description,
-            pt.origin,
             pt.stock,
             pt.sales_count,
+            pt.description,
+            pt.origin,
             pt.thumbnail_img,
             pt.contents_img1,
             pt.contents_img2,
@@ -116,6 +118,8 @@
             left outer join product_categories_tb pct on (pt.product_id = pct.product_id)
             left outer join categories_tb ct on (pct.category_id = ct.category_id)
             left outer join semi_categories_tb sct on (sct.semi_category_id = pct.semi_category_id)
+        group by
+            pt.product_id
         limit #{startIndex}, #{limit}
     </select>
     <select id="findProductByCategory" resultMap="productResultMap">
