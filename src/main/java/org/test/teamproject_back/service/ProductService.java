@@ -70,6 +70,7 @@ public class ProductService {
                 "semiCategoryId", semiCategoryId
         );
 
+        System.out.println(startIndex);
         List<Product> productList = productMapper.findProductByCategory(paging);
         int productCount = productMapper.findProductCountBySemiCategory(mainCategoryId, semiCategoryId);
 
