@@ -26,4 +26,10 @@ public class UserController {
         userService.modifyUserInfo(dto);
         return ResponseEntity.ok().body(true);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser() {
+        userService.deleteUser();
+        return ResponseEntity.ok().body(true);
+    }
 }

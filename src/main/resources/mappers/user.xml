@@ -38,6 +38,11 @@
         where
             user_id = #{userId}
     </update>
+    <delete id="deleteByUserId">
+        delete from users_tb
+        where
+            user_id = #{userId}
+    </delete>
     <select id="findUserByUsername" resultMap="userResultMap">
         select
             ut.user_id,
@@ -92,7 +97,6 @@
         where
             name = #{name}
     </select>
-
     <select id="findById" resultType="java.lang.Integer">
         select
             user_id
