@@ -45,19 +45,4 @@ public class AdminSalesService {
                 .build();
     }
 
-    public RespSalesDto getYearSalesList(String date) {
-        String paymentStatus = "결제완료";
-        LocalDate formatDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
-
-        Long amount = paymentsMapper.getYearPaymentList(formatDate, paymentStatus.trim())
-                .stream()
-                .mapToLong(Payment::getAmount)
-                .sum();
-
-        return RespSalesDto.builder()
-                .paymentList(paymentsMapper.getYearPaymentList(formatDate, paymentStatus.trim()))
-                .amount(amount)
-                .build();
-    }
-
 }

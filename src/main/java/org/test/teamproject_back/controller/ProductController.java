@@ -30,6 +30,7 @@ public class ProductController {
     // 상품 디테일 페이지
     @GetMapping("/product/detail")
     public ResponseEntity<?> getProductDetail(@RequestParam Long id) {
+        System.out.println(id);
         return ResponseEntity.ok().body(productService.getProductDetail(id));
     }
 
