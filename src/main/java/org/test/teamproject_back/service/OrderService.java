@@ -56,10 +56,15 @@ public class OrderService {
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
-
+        Address address = null;
         User user = userMapper.findUserByUserId(principalUser.getId());
         List<CartItem> cartItemList = cartItemMapper.findCartItemList(principalUser.getId(), dto.getId());
-        Address address = addressMapper.findAddressByUserId(principalUser.getId());
+
+        if (dto.getAddress() == null && dto.getDetailAddress() == null) {
+            addressMapper.addAddress(dto.toAddress(principalUser.getId()));
+        }
+
+        address = addressMapper.findAddressByUserId(principalUser.getId());
 
         return RespCartOrderDto.builder()
                 .userId(user.getUserId())

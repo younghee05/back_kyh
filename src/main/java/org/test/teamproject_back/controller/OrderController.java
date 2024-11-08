@@ -13,13 +13,14 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("/order")
-    public ResponseEntity<?> getOrder(@RequestParam Long id) {
-        return ResponseEntity.ok().body(orderService.getOrderList(id));
-    }
+//    @GetMapping("/order")
+//    public ResponseEntity<?> getOrder(@RequestParam Long id) {
+//        return ResponseEntity.ok().body(orderService.getOrderList(id));
+//    }
 
     @GetMapping("/cart/order") // 장바구니에서 체크 한 상품만 결제창으로
     public ResponseEntity<?> getCartOrder(ReqCartListDto dto) {
+        System.out.println(dto);
         return ResponseEntity.ok().body(orderService.getCartOrderList(dto));
     }
 
