@@ -8,8 +8,13 @@
         <result property="orderStatus" column="order_status"></result>
         <result property="createdAt" column="created_at"></result>
         <result property="totalAmount" column="total_amount"></result>
+        <association property="payment" resultMap="paymentResultMap"></association>
         <association property="user" resultMap="userResultMap"></association>
         <collection property="orderItems" resultMap="orderItemResultMap"></collection>
+    </resultMap>
+    <resultMap id="paymentResultMap" type="org.test.teamproject_back.entity.Payment">
+        <result property="paymentMethod" column="payment_method"></result>
+        <result property="paymentStatus" column="payment_status"></result>
     </resultMap>
     <resultMap id="userResultMap" type="org.test.teamproject_back.entity.User">
         <id property="userId" column="user_id"></id>

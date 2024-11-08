@@ -60,7 +60,7 @@ public class OrderService {
         User user = userMapper.findUserByUserId(principalUser.getId());
         List<CartItem> cartItemList = cartItemMapper.findCartItemList(principalUser.getId(), dto.getId());
 
-        if (dto.getAddress() == null && dto.getDetailAddress() == null) {
+        if (dto.getAddress() == null && dto.getDetailAddress() == null && dto.getZipCode() == 0) {
             addressMapper.addAddress(dto.toAddress(principalUser.getId()));
         }
 

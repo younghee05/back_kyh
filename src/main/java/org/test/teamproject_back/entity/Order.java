@@ -18,5 +18,7 @@ public class Order {
     private Long totalAmount;
     private String createdAt;
     private User user;
+
+    private Payment payment;
     private List<OrderItem> orderItems;
 }
