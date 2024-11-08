@@ -15,4 +15,5 @@ public interface UserMapper {
     int findByName(String name);
     int updateUserInfo(User user);
     Integer findById(String username);
+    int deleteByUserId(Long userId);
 }

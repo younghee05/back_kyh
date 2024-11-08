@@ -12,4 +12,5 @@ public interface UserRolesMapper {
     UserRoles findUserRolesByUserId(Long userId);
     int deleteUserRolesByUserId(List<Long> checkedIds);
     int updateUserRoles(Long userId, int roleId);
+    int deleteUserRole(Long userId);
 }

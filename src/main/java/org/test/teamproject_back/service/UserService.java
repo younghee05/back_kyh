@@ -14,6 +14,7 @@ import org.test.teamproject_back.entity.User;
 import org.test.teamproject_back.exception.SignupException;
 import org.test.teamproject_back.repository.AddressMapper;
 import org.test.teamproject_back.repository.UserMapper;
+import org.test.teamproject_back.repository.UserRolesMapper;
 import org.test.teamproject_back.security.principal.PrincipalUser;
 
 import java.sql.SQLException;
@@ -29,6 +30,8 @@ public class UserService {
     private AuthService authService;
     @Autowired
     private AddressMapper addressMapper;
+    @Autowired
+    private UserRolesMapper userRolesMapper;
 
     public RespUserInfoDto getUserInfo() {
         PrincipalUser principalUser = (PrincipalUser) SecurityContextHolder
@@ -75,6 +78,17 @@ public class UserService {
 
         if (dto.getAddress() != null || dto.getDetailAddress() != null || dto.getZipCode() != 0)
             addressMapper.updateAddress(dto.toAddress(user.getUserId()));
+    }
+
+    @Transactional(rollbackFor = SQLException.class)
+    public void deleteUser() {
+        PrincipalUser principalUser = (PrincipalUser) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        userMapper.deleteByUserId(principalUser.getId());
+        userRolesMapper.deleteUserRole(principalUser.getId());
     }
 
 }
