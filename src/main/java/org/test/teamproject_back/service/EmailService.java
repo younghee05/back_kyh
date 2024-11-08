@@ -16,10 +16,10 @@ public class EmailService {
     private String senderEmail;
     @Autowired
     private JavaMailSender javaMailSender;
-    private Double verifyCode;
+    private String verifyCode;
 
     public void sendEmail(ReqSendMailDto dto) throws Exception {
-        verifyCode = (Math.random() * (90000)) + 100000;
+        verifyCode = String.format("%.0f",(Math.random() * (90000)) + 100000);
         try {
             StringBuilder htmlContent = new StringBuilder();
             MimeMessage mail = javaMailSender.createMimeMessage();
@@ -47,7 +47,7 @@ public class EmailService {
 
     public boolean authEmail(String checkNum) {
 
-        if (checkNum.equals(verifyCode.toString())) {
+        if (checkNum.equals(verifyCode)) {
             return true;
         }
         return false;
