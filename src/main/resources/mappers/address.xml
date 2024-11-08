@@ -11,7 +11,7 @@
     </resultMap>
     <insert id="addAddress">
         insert into shipping_addresses_tb
-        values( 0, #{userId}, #{address}, #{detailAddress} #{zipCode})
+        values(default, #{userId}, #{address}, #{detailAddress}, #{zipCode})
     </insert>
     <update id="updateAddress">
         update shipping_addresses_tb

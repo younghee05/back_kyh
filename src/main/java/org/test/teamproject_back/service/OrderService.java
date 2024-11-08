@@ -59,6 +59,8 @@ public class OrderService {
 
         User user = userMapper.findUserByUserId(principalUser.getId());
         List<CartItem> cartItemList = cartItemMapper.findCartItemList(principalUser.getId(), dto.getId());
+        System.out.println(">>>>>>>>>>>>>>>>>>"+cartItemList);
+        System.out.println(">>>>>>>>>>>>>>>>>>"+principalUser.getId());
         Address address = addressMapper.findAddressByUserId(principalUser.getId());
 
         return RespCartOrderDto.builder()

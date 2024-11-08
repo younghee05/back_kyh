@@ -76,8 +76,12 @@ public class UserService {
             userMapper.updateUserInfo(dto.toUser(user.getUserId(), user.getPassword()));
         }
 
-        if (dto.getAddress() != null || dto.getDetailAddress() != null || dto.getZipCode() != 0)
+        if(addressMapper.findAddressByUserId(user.getUserId()) != null) {
             addressMapper.updateAddress(dto.toAddress(user.getUserId()));
+            return;
+        }
+
+        addressMapper.addAddress(dto.toAddress(user.getUserId()));
     }
 
     @Transactional(rollbackFor = SQLException.class)
