@@ -10,6 +10,7 @@
         <result property="rating" column="rating"></result>
         <result property="title" column="title"></result>
         <result property="content" column="content"></result>
+        <result property="createdAt" column="created_at"></result>
         <association property="product" resultMap="productResultMap"></association>
     </resultMap>
     <resultMap id="productResultMap" type="org.test.teamproject_back.entity.Product">
