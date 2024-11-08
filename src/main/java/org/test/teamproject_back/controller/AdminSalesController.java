@@ -25,9 +25,8 @@ public class AdminSalesController {
         return ResponseEntity.ok().body(adminSalesService.getMonthSalesList(date));
     }
 
-    @GetMapping("/year") // 월 별 매출 목록 및 합
-    public ResponseEntity<?> getYearSales(@RequestParam String date) {
-        return ResponseEntity.ok().body(adminSalesService.getYearSalesList(date));
-    }
+//    @GetMapping("/category")
+//    public ResponseEntity<?> getCategorySales(@RequestParam String category) {
+//    }
 
 }

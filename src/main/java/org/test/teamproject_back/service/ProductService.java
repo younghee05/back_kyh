@@ -1,6 +1,7 @@
 package org.test.teamproject_back.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.test.teamproject_back.dto.request.ReqSearchDto;
@@ -87,13 +88,19 @@ public class ProductService {
     }
 
     public RespProductDetailDto getProductDetail(Long productId) {
-        PrincipalUser principalUser = (PrincipalUser) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
+        Long userId = 0l;
+
+        Authentication authentication = SecurityContextHolder
+        .getContext()
+        .getAuthentication();
+
+        if(!authentication.getPrincipal().toString().equals("anonymousUser")) {
+            PrincipalUser principalUser = (PrincipalUser) authentication.getPrincipal();
+            userId = principalUser.getId();
+        }
 
         Product product = productMapper.findProductById(productId);
-        Boolean likeCheck = productLikeMapper.isProductLike(principalUser.getId(), productId);
+        Boolean likeCheck = productLikeMapper.isProductLike(userId, productId);
 
         return RespProductDetailDto.builder()
                 .product(product)

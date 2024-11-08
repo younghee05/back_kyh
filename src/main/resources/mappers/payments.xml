@@ -7,7 +7,6 @@
         <id property="paymentId" column="payment_id"></id>
         <result property="paymentMethod" column="payment_method"></result>
         <result property="paymentStatus" column="payment_status"></result>
-        <result property="paymentStatus" column="payment_status"></result>
         <result property="amount" column="amount"></result>
         <result property="paymentDate" column="payment_date"></result>
     </resultMap>
@@ -21,21 +20,36 @@
             and payment_date = date_format(now(),'%Y-%m-%d')
     </select>
     <select id="getMonthPaymentList" resultMap="paymentResultMap">
+<!--        select-->
+<!--            *-->
+<!--        from-->
+<!--            payments_tb-->
+<!--        where-->
+<!--            payment_status = #{paymentStatus}-->
+<!--            and date_format(payment_date,'%Y-%m') = date_format(#{date},'%Y-%m')-->
+
         select
-            *
+            months.month as payment as payment_date,
+            ifnull(sum(pt.amount),0) as amount
         from
-            payments_tb
-        where
-            payment_status = #{paymentStatus}
-            and date_format(payment_date,'%Y-%m') = date_format(#{date},'%Y-%m')
-    </select>
-    <select id="getYearPaymentList" resultMap="paymentResultMap">
-        select
-            *
-        from
-            payments_tb pt
-        where
-            payment_status = #{paymentStatus}
-            and date_format(payment_date,'%Y') = date_format(#{date},'%Y')
+            (select
+            1 as month union all
+            select 2 union all
+            select 3 union all
+            select 4 union all
+            select 5 union all
+            select 6 union all
+            select 7 union all
+            select 8 union all
+            select 9 union all
+            select 10 union all
+            select 11 union all
+            select 12) as months
+            left join payments_tb pt on MONTH(pt.payment_date) = months.month
+            and year(payment_date) = '2024'
+        GROUP BY
+            months.month
+        ORDER BY
+            months.month asc;
     </select>
 </mapper>
