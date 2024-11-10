@@ -12,6 +12,7 @@ public class ReqOrderDto {
     private Long totalAmount;
     private List<OrderItem> products;
     private String payMethod;
+    private String paymentId;
     private int orderItemCount;
 
     public Order toOrder() {
@@ -25,7 +26,8 @@ public class ReqOrderDto {
         return Payment.builder()
                 .orderId(orderId)
                 .paymentMethod(payMethod)
-                 .paymentStatus("결제 완료")
+                .paymentStatus("completed")
+                .paymentNum(paymentId)
                 .amount(totalAmount)
                 .build();
     }

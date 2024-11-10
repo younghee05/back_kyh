@@ -31,11 +31,6 @@ public class OrderController {
         return ResponseEntity.ok().body(orderService.getCartOrderList(dto));
     }
 
-    @PutMapping("/order")
-    public ResponseEntity<?> modify( ) {
-        return ResponseEntity.ok().body(null);
-    }
-
     @GetMapping("/order/record")
     public ResponseEntity<?> getOrderRecord() {
         return ResponseEntity.ok().body(orderService.getOrderRecord());

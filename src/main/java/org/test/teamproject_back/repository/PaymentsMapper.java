@@ -8,7 +8,9 @@ import java.util.List;
 
 @Mapper
 public interface PaymentsMapper {
-    List<Payment> getPaymentList(String paymentStatus); // 일 별 매출 목록
-    List<Payment> getMonthPaymentList(LocalDate date, String paymentStatus); // 월 별 매출 총합
+    List<Payment> findPaymentList(String paymentStatus); // 일 별 매출 목록
+    List<Payment> findMonthPaymentList(LocalDate date, String paymentStatus); // 월 별 매출 총합
     int addPayment (Payment payment);
+    String findPaymentNumByOrderId (Long orderId);
+    int updatePaymentStatus(String paymentStatus, Long orderId);
 }
