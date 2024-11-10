@@ -12,9 +12,16 @@
     </resultMap>
     <insert id="addPayment">
         insert into payments_tb
-        values (0, #{orderId}, #{paymentMethod}, #{paymentStatus}, #{amount}, now())
+        values (0, #{orderId}, #{paymentMethod}, #{paymentStatus}, #{amount}, #{paymentNum}, now())
     </insert>
-    <select id="getPaymentList" resultMap="paymentResultMap">
+    <update id="updatePaymentStatus">
+        update payments_tb
+        set
+            payment_status = #{paymentStatus}
+        where
+            order_id = #{orderId}
+    </update>
+    <select id="findPaymentList" resultMap="paymentResultMap">
         select
             *
         from
@@ -23,7 +30,7 @@
             payment_status = #{paymentStatus}
             and payment_date = date_format(now(),'%Y-%m-%d')
     </select>
-    <select id="getMonthPaymentList" resultMap="paymentResultMap">
+    <select id="findMonthPaymentList" resultMap="paymentResultMap">
 <!--        select-->
 <!--            *-->
 <!--        from-->
@@ -55,5 +62,13 @@
             months.month
         ORDER BY
             months.month asc;
+    </select>
+    <select id="findPaymentNumByOrderId" resultType="java.lang.String">
+        select
+            payment_num
+        from
+            payments_tb
+        where
+            order_id = #{orderId}
     </select>
 </mapper>

@@ -18,13 +18,13 @@ public class AdminSalesService {
 
     public RespSalesDto getSalesList() {
         String paymentStatus = "결제완료";
-        Long amount = paymentsMapper.getPaymentList(paymentStatus.trim())
+        Long amount = paymentsMapper.findPaymentList(paymentStatus.trim())
                 .stream()
                 .mapToLong(Payment::getAmount)
                 .sum();
 
         return RespSalesDto.builder()
-                .paymentList(paymentsMapper.getPaymentList(paymentStatus.trim()))
+                .paymentList(paymentsMapper.findPaymentList(paymentStatus.trim()))
                 .amount(amount)
                 .build();
 
@@ -34,13 +34,13 @@ public class AdminSalesService {
         String paymentStatus = "결제완료";
         LocalDate formatDate = LocalDate.parse(date,  DateTimeFormatter.ISO_DATE);
 
-        Long amount = paymentsMapper.getMonthPaymentList(formatDate, paymentStatus.trim())
+        Long amount = paymentsMapper.findMonthPaymentList(formatDate, paymentStatus.trim())
                 .stream()
                 .mapToLong(Payment::getAmount)
                 .sum();
 
         return RespSalesDto.builder()
-                .paymentList(paymentsMapper.getMonthPaymentList(formatDate, paymentStatus.trim()))
+                .paymentList(paymentsMapper.findMonthPaymentList(formatDate, paymentStatus.trim()))
                 .amount(amount)
                 .build();
     }

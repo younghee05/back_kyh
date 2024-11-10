@@ -15,5 +15,6 @@ public class Payment {
     private String paymentMethod;
     private String paymentStatus;
     private Long amount;
+    private String paymentNum;
     private String paymentDate;
 }
