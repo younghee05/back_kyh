@@ -3,13 +3,16 @@ package org.test.teamproject_back.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.test.teamproject_back.dto.request.ReqCartListDto;
+import org.test.teamproject_back.dto.request.ReqOrderDto;
 import org.test.teamproject_back.dto.response.RespCartOrderDto;
 import org.test.teamproject_back.dto.response.RespOrderDto;
 import org.test.teamproject_back.entity.*;
 import org.test.teamproject_back.repository.*;
 import org.test.teamproject_back.security.principal.PrincipalUser;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +29,18 @@ public class OrderService {
     private OrderMapper orderMapper;
     @Autowired
     private CartItemMapper cartItemMapper;
+    @Autowired
+    private OrderItemMapper orderItemMapper;
+    @Autowired
+    private PaymentsMapper paymentsMapper;
+
+    @Transactional(rollbackFor = SQLException.class)
+    public void addOrder(ReqOrderDto dto) {
+        Order order = dto.toOrder();
+        orderMapper.addOrder(order);
+        orderItemMapper.addOrderItem(order.getOrderId(), dto.getProducts());
+        paymentsMapper.addPayment(dto.toPayment(order.getOrderId()));
+    }
 
     public RespOrderDto getOrderList(Long productId) {
         PrincipalUser principalUser = (PrincipalUser) SecurityContextHolder

@@ -10,4 +10,5 @@ import java.util.List;
 public interface PaymentsMapper {
     List<Payment> getPaymentList(String paymentStatus); // 일 별 매출 목록
     List<Payment> getMonthPaymentList(LocalDate date, String paymentStatus); // 월 별 매출 총합
+    int addPayment (Payment payment);
 }

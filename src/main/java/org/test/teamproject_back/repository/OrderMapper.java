@@ -8,4 +8,5 @@ import java.util.List;
 @Mapper
 public interface OrderMapper {
     List<Order> findUserOrder(Long userId);
+    int addOrder(Order order);
 }

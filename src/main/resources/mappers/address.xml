@@ -38,5 +38,6 @@
             shipping_addresses_tb
         where
             user_id = #{userId}
+        limit 1
     </select>
 </mapper>

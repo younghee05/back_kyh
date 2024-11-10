@@ -10,6 +10,10 @@
         <result property="amount" column="amount"></result>
         <result property="paymentDate" column="payment_date"></result>
     </resultMap>
+    <insert id="addPayment">
+        insert into payments_tb
+        values (0, #{orderId}, #{paymentMethod}, #{paymentStatus}, #{amount}, now())
+    </insert>
     <select id="getPaymentList" resultMap="paymentResultMap">
         select
             *

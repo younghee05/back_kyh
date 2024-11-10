@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.test.teamproject_back.dto.request.ReqCartListDto;
+import org.test.teamproject_back.dto.request.ReqOrderDto;
 import org.test.teamproject_back.service.OrderService;
 
 @RestController
@@ -12,11 +13,17 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
-
+//
 //    @GetMapping("/order")
 //    public ResponseEntity<?> getOrder(@RequestParam Long id) {
 //        return ResponseEntity.ok().body(orderService.getOrderList(id));
 //    }
+    @PostMapping("/order")
+    public ResponseEntity<?> addOrder(@RequestBody ReqOrderDto dto) {
+        System.out.println(dto);
+        orderService.addOrder(dto);
+        return ResponseEntity.ok().body(true);
+    }
 
     @GetMapping("/cart/order") // 장바구니에서 체크 한 상품만 결제창으로
     public ResponseEntity<?> getCartOrder(ReqCartListDto dto) {
@@ -33,4 +40,5 @@ public class OrderController {
     public ResponseEntity<?> getOrderRecord() {
         return ResponseEntity.ok().body(orderService.getOrderRecord());
     }
+
 }

@@ -19,6 +19,10 @@
         <id property="productId" column="product_id"></id>
         <result property="title" column="title"></result>
     </resultMap>
+    <insert id="addOrder" useGeneratedKeys="true" keyProperty="orderId">
+        insert into orders_tb (order_id, user_id, total_amount, created_at)
+        values(0, #{userId}, #{totalAmount}, now())
+    </insert>
     <select id="findUserOrder" resultMap="orderResultMap">
         select
             ot.order_id,
