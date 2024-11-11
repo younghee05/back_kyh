@@ -2,8 +2,10 @@ package org.test.teamproject_back.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.test.teamproject_back.dto.request.ReqSearchSalesDto;
 import org.test.teamproject_back.dto.response.RespGraphDataDto;
 import org.test.teamproject_back.dto.response.RespSalesDto;
+import org.test.teamproject_back.dto.response.RespSearchSalesDto;
 import org.test.teamproject_back.entity.Payment;
 import org.test.teamproject_back.entity.Product;
 import org.test.teamproject_back.repository.AdminOrderMapper;
@@ -19,18 +21,19 @@ public class AdminSalesService {
     @Autowired
     private PaymentsMapper paymentsMapper;
 
-    public RespSalesDto getSalesList() {
-        String paymentStatus = "결제완료";
+    public RespSearchSalesDto getSalesList(ReqSearchSalesDto dto) {
+        String paymentStatus = "completed";
+        int startIndex = (dto.getPage() - 1) * dto.getLimit();
         Long amount = paymentsMapper.findPaymentList(paymentStatus.trim())
                 .stream()
                 .mapToLong(Payment::getAmount)
                 .sum();
 
-        return RespSalesDto.builder()
+        return RespSearchSalesDto.builder()
                 .paymentList(paymentsMapper.findPaymentList(paymentStatus.trim()))
                 .amount(amount)
+                .count(paymentsMapper.findPaymentCount(dto.getLimit(), paymentStatus, startIndex))
                 .build();
-
     }
 
     public RespSalesDto getMonthSalesList(String date) {

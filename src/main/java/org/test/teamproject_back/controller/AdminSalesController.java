@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.test.teamproject_back.dto.request.ReqSearchSalesDto;
 import org.test.teamproject_back.service.AdminSalesService;
 
 @RequestMapping("/admin/sales")
@@ -16,8 +17,8 @@ public class AdminSalesController {
     private AdminSalesService adminSalesService;
 
     @GetMapping("/day") // 일 별 매출 목록 및 합
-    public ResponseEntity<?> getSales() {
-        return ResponseEntity.ok().body(adminSalesService.getSalesList());
+    public ResponseEntity<?> getSales(ReqSearchSalesDto dto) {
+        return ResponseEntity.ok().body(adminSalesService.getSalesList(dto));
     }
 
     @GetMapping("/month") // 월 별 매출 목록 및 합
