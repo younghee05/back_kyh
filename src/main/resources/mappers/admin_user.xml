@@ -30,9 +30,7 @@
             username = #{username},
             name = #{name},
             email = #{email},
-            password = #{password},
-            phone_number = #{phoneNumber},
-            img = #{img}
+            phone_number = #{phoneNumber}
         where
             user_id = #{userId}
     </update>
@@ -51,7 +49,6 @@
             ut.email,
             ut.phone_number,
             ut.img,
-            ut.password,
             ut.created_at,
             urt.user_roles_id,
             urt.user_id,
@@ -90,6 +87,7 @@
             rt.role_id = #{role}
             and ut.name like concat('%',trim(ifnull(#{name},'')),'%')
         order by created_at desc
+        limit #{startIndex},#{limit}
     </select>
 
 

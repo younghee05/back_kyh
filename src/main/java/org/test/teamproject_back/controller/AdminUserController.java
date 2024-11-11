@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.test.teamproject_back.dto.request.ReqDeleteCheckDto;
 import org.test.teamproject_back.dto.request.ReqModifyAdminUserDto;
+import org.test.teamproject_back.dto.request.ReqSearchUserDto;
 import org.test.teamproject_back.dto.request.ReqUserDto;
 import org.test.teamproject_back.service.AdminUserService;
 
@@ -25,8 +26,8 @@ public class AdminUserController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> search(@RequestParam(required = false) int role, @RequestParam(required = false) String name) {
-        return ResponseEntity.ok().body(adminUserService.searchUsers(role, name));
+    public ResponseEntity<?> search(ReqSearchUserDto dto) {
+        return ResponseEntity.ok().body(adminUserService.searchUsers(dto));
     }
 
     @DeleteMapping("/{id}")
@@ -39,6 +40,7 @@ public class AdminUserController {
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> modify(@Valid @RequestBody ReqModifyAdminUserDto dto)  {
+        System.out.println(dto);
         adminUserService.modifyUser(dto);
         return ResponseEntity.ok().body(true);
     }

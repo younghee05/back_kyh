@@ -10,7 +10,7 @@ import java.util.Map;
 @Mapper
 public interface AdminUserMapper {
     List<User> findAllUsersByRole(Map<String, Object> paging);
-    List<User> findAllUsersByRoleAndName(@Param("role") int role, @Param("name")String name);
+    List<User> findAllUsersByRoleAndName(Map<String, Object> paging);
     int deleteUserByUserId(List<Long> checkedIds);
     int updateUserByUserId(User user);
 }
