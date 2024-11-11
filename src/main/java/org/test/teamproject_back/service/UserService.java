@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.test.teamproject_back.dto.request.ReqImgDto;
 import org.test.teamproject_back.dto.request.ReqModifyUserDto;
 import org.test.teamproject_back.dto.response.RespUserInfoDto;
 import org.test.teamproject_back.entity.Address;
@@ -92,6 +93,16 @@ public class UserService {
 
         userMapper.deleteByUserId(principalUser.getId());
         userRolesMapper.deleteUserRole(principalUser.getId());
+    }
+
+    @Transactional(rollbackFor = SQLException.class)
+    public void modifyImgProfile(ReqImgDto dto) {
+        PrincipalUser principalUser = (PrincipalUser) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        userMapper.updateUserProfile(principalUser.getId(), dto.getImgUrl());
     }
 
 }

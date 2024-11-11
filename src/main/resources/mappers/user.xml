@@ -36,6 +36,22 @@
         where
             user_id = #{userId}
     </update>
+    <update id="updateUserProfile">
+        update users_tb
+        set
+            img = #{imgUrl}
+        where
+            user_id = #{userId}
+    </update>
+    <update id="updatePassword">
+        update users_tb
+        set
+            password = #{password}
+        where
+            name = #{name}
+        and username = #{username}
+        and phone_number = #{phoneNumber}
+    </update>
     <delete id="deleteByUserId">
         delete from users_tb
         where
@@ -100,6 +116,15 @@
             users_tb
         where
             username = #{username}
+    </select>
+    <select id="findUsername" resultType="java.lang.String">
+        select
+            username
+        from
+            users_tb
+        where
+            name = #{name}
+            and phone_number = #{phoneNumber}
     </select>
 
 </mapper>
