@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.test.teamproject_back.dto.request.ReqDeleteCheckDto;
 import org.test.teamproject_back.dto.request.ReqModifyAdminUserDto;
+import org.test.teamproject_back.dto.request.ReqSearchUserDto;
 import org.test.teamproject_back.dto.request.ReqUserDto;
 import org.test.teamproject_back.dto.response.RespUserDto;
 import org.test.teamproject_back.entity.User;
@@ -48,13 +49,21 @@ public class AdminUserService {
                 .build();
     }
 
-    public RespUserDto searchUsers(int role, String name) {
+    public RespUserDto searchUsers(ReqSearchUserDto dto) {
         List<User> user = null;
+        int startIndex = (dto.getPage() - 1) * dto.getLimit();
 
-        if (role == 2) {
-            user = adminUserMapper.findAllUsersByRoleAndName(role, name.trim());
-        } else if (role == 3) {
-            user = adminUserMapper.findAllUsersByRoleAndName(role, name.trim());
+        Map<String, Object> paging = Map.of(
+                "startIndex", startIndex,
+                "limit", dto.getLimit(),
+                "role", dto.getRole(),
+                "name", dto.getName()
+        );
+
+        if (dto.getRole() == 2) {
+            user = adminUserMapper.findAllUsersByRoleAndName(paging);
+        } else if (dto.getRole() == 3) {
+            user = adminUserMapper.findAllUsersByRoleAndName(paging);
         }
 
         return RespUserDto.builder()
@@ -70,7 +79,6 @@ public class AdminUserService {
 
     @Transactional(rollbackFor = SQLException.class)
     public void modifyUser(ReqModifyAdminUserDto dto) {
-        adminUserMapper.updateUserByUserId(dto.toUser(bCryptPasswordEncoder));
+        adminUserMapper.updateUserByUserId(dto.toUser());
     }
-
 }
