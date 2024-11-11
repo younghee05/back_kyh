@@ -10,7 +10,6 @@
         <result property="email" column="email"></result>
         <result property="password" column="password"></result>
         <result property="phoneNumber" column="phone_number"></result>
-        <result property="point" column="point"></result>
         <result property="img" column="img"></result>
         <result property="createdAt" column="created_at"></result>
         <collection property="userRoles" javaType="java.util.Set" resultMap="userRolesResultMap"></collection>
@@ -51,7 +50,6 @@
             ut.name,
             ut.email,
             ut.phone_number,
-            ut.point,
             ut.img,
             ut.password,
             ut.created_at,
@@ -76,7 +74,6 @@
             ut.name,
             ut.email,
             ut.phone_number,
-            ut.point,
             ut.img,
             ut.password,
             ut.created_at,
