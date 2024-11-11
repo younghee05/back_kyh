@@ -99,7 +99,7 @@
             left outer join user_roles_tb urt on (ut.user_id = urt.user_id)
             left outer join roles_tb rt on (rt.role_id = urt.role_id)
         where
-            ut.user_id = #{id}
+            ut.user_id = #{userId}
     </select>
     <select id="findByName" resultType="java.lang.Integer">
         select
