@@ -9,6 +9,7 @@
         <result property="paymentStatus" column="payment_status"></result>
         <result property="amount" column="amount"></result>
         <result property="paymentDate" column="payment_date"></result>
+        <result property="paymentNum" column="payment_num"></result>
         <association property="order" resultMap="orderResultMap"></association>
         <collection property="orderItem" resultMap="orderItemResultMap"></collection>
     </resultMap>
@@ -55,7 +56,7 @@
         set
             payment_status = #{paymentStatus}
         where
-            order_id = #{orderId}
+            payment_num = #{paymentId}
     </update>
     <select id="findPaymentList" resultMap="paymentResultMap">
         select
@@ -115,9 +116,10 @@
         ORDER BY
             months.month asc;
     </select>
-    <select id="findPaymentNumByOrderId" resultType="java.lang.String">
+    <select id="findPaymentNumByOrderId" resultMap="paymentResultMap">
         select
-            payment_num
+            payment_num,
+            amount
         from
             payments_tb
         where

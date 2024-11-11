@@ -12,8 +12,8 @@ public interface PaymentsMapper {
     List<Payment> findPaymentList(String paymentStatus); // 일 별 매출 목록
     List<Payment> findMonthPaymentList(LocalDate date, String paymentStatus); // 월 별 매출 총합
     int addPayment (Payment payment);
-    String findPaymentNumByOrderId (Long orderId);
-    int updatePaymentStatus(String paymentStatus, Long orderId);
+    Payment findPaymentNumByOrderId (Long orderId);
+    int updatePaymentStatus(String paymentStatus, String paymentId);
     List<Product> getGraphData();
 
 }

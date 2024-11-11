@@ -18,9 +18,9 @@ public class PaymentController {
         return ResponseEntity.ok().body(paymentService.getPaymentNum(orderId));
     }
 
-    @PutMapping("/{orderId}")
-    public ResponseEntity<?> modifyStatus (@PathVariable Long orderId) {
-        paymentService.modifyStatus(orderId);
+    @PutMapping("/{paymentId}")
+    public ResponseEntity<?> modifyStatus (@PathVariable String paymentId) {
+        paymentService.modifyStatus(paymentId);
         return ResponseEntity.ok().body(true);
     }
 }
