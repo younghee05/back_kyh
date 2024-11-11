@@ -108,5 +108,14 @@
         where
             username = #{username}
     </select>
+    <select id="findUsername" resultType="java.lang.String">
+        select
+            username
+        from
+            users_tb
+        where
+            name = #{name}
+            and phone_number = #{phoneNumber}
+    </select>
 
 </mapper>

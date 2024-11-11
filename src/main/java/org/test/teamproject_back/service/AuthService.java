@@ -3,6 +3,7 @@ package org.test.teamproject_back.service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.test.teamproject_back.dto.request.ReqFindUsernameDto;
 import org.test.teamproject_back.dto.request.ReqOAuth2MergeDto;
 import org.test.teamproject_back.dto.request.ReqSigninDto;
 import org.test.teamproject_back.dto.request.ReqSignupDto;
@@ -115,5 +116,8 @@ public class AuthService {
         return user;
     }
 
+    public String findUsername(ReqFindUsernameDto dto) {
+        return userMapper.findUsername(dto.getName(), dto.getPhoneNumber());
+    }
 
 }
