@@ -1,8 +1,10 @@
 package org.test.teamproject_back.controller;
 
+import org.apache.coyote.Response;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.test.teamproject_back.dto.request.ReqAccessDto;
+import org.test.teamproject_back.dto.request.ReqFindUsernameDto;
 import org.test.teamproject_back.dto.request.ReqSigninDto;
 import org.test.teamproject_back.dto.request.ReqSignupDto;
 import org.test.teamproject_back.exception.SignupException;
@@ -22,8 +24,6 @@ public class AuthController {
     private AuthService authService;
     @Autowired
     private TokenService tokenService;
-    @Autowired
-    private OAuth2Service oAuth2Service;
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@Valid @RequestBody ReqSignupDto dto) throws SignupException {
@@ -40,6 +40,11 @@ public class AuthController {
     @GetMapping("/access")
     public ResponseEntity<?> access(ReqAccessDto dto) {
         return ResponseEntity.ok().body(tokenService.isValidAccessToken(dto.getAccessToken()));
+    }
+
+    @GetMapping("/find")
+    public ResponseEntity<?> findUsername(ReqFindUsernameDto dto) {
+        return ResponseEntity.ok().body(authService.findUsername(dto));
     }
 
 }
