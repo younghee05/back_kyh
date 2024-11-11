@@ -24,20 +24,15 @@ public class AdminSalesService {
     public RespSearchSalesDto getSalesList(ReqSearchSalesDto dto) {
         String paymentStatus = "completed";
         int startIndex = (dto.getPage() - 1) * dto.getLimit();
-        Long amount = paymentsMapper.findPaymentList(paymentStatus.trim())
-                .stream()
-                .mapToLong(Payment::getAmount)
-                .sum();
 
         return RespSearchSalesDto.builder()
-                .paymentList(paymentsMapper.findPaymentList(paymentStatus.trim()))
-                .amount(amount)
-                .count(paymentsMapper.findPaymentCount(dto.getLimit(), paymentStatus, startIndex))
+                .paymentList(paymentsMapper.findPaymentList(dto.getLimit(), paymentStatus, startIndex))
+                .count(paymentsMapper.findPaymentCount(paymentStatus))
                 .build();
     }
 
     public RespSalesDto getMonthSalesList(String date) {
-        String paymentStatus = "결제완료";
+        String paymentStatus = "completed";
         LocalDate formatDate = LocalDate.parse(date,  DateTimeFormatter.ISO_DATE);
 
         Long amount = paymentsMapper.findMonthPaymentList(formatDate, paymentStatus.trim())

@@ -81,7 +81,8 @@
             left outer join users_tb ut on(ut.user_id = ot.user_id)
             left outer join products_tb prt on(prt.product_id = oit.product_id)
         where
-            payment_status = #{paymentStatus};
+            payment_status = #{paymentStatus}
+        limit #{startIndex}, #{limit}
     </select>
     <select id="findMonthPaymentList" resultMap="paymentResultMap">
 <!--        select-->
@@ -137,10 +138,10 @@
     </select>
     <select id="findPaymentCount" resultType="java.lang.Integer">
         select
-            count()
+            count(*)
         from
-            payment_tb
+            payments_tb
         where
-            payment_status = #{}
+            payment_status = #{paymentStatus}
     </select>
 </mapper>

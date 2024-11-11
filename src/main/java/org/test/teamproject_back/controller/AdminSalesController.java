@@ -16,15 +16,16 @@ public class AdminSalesController {
     @Autowired
     private AdminSalesService adminSalesService;
 
-    @GetMapping("/day") // 일 별 매출 목록 및 합
+    @GetMapping("")
     public ResponseEntity<?> getSales(ReqSearchSalesDto dto) {
+        System.out.println(dto);
         return ResponseEntity.ok().body(adminSalesService.getSalesList(dto));
     }
 
-    @GetMapping("/month") // 월 별 매출 목록 및 합
-    public ResponseEntity<?> getMonthSales(@RequestParam String date) {
-        return ResponseEntity.ok().body(adminSalesService.getMonthSalesList(date));
-    }
+//    @GetMapping("/month") // 월 별 매출 목록 및 합
+//    public ResponseEntity<?> getMonthSales(@RequestParam String date) {
+//        return ResponseEntity.ok().body(adminSalesService.getMonthSalesList(date));
+//    }
 
     @GetMapping("/graph")
     public ResponseEntity<?> getGraphData() {

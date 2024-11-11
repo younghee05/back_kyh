@@ -10,6 +10,5 @@ import java.util.List;
 @Data
 public class RespSearchSalesDto {
     private List<Payment> paymentList;
-    private Long amount;
     private int count;
 }
