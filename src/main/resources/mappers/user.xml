@@ -36,6 +36,13 @@
         where
             user_id = #{userId}
     </update>
+    <update id="updateUserProfile">
+        update users_tb
+        set
+            img = #{imgUrl}
+        where
+            user_id = #{userId}
+    </update>
     <delete id="deleteByUserId">
         delete from users_tb
         where
