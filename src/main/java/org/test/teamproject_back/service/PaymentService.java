@@ -22,5 +22,6 @@ public class PaymentService {
     public void modifyStatus (String paymentId) {
         String paymentStatus = "failed";
         paymentsMapper.updatePaymentStatus(paymentStatus, paymentId.trim());
+
     }
 }

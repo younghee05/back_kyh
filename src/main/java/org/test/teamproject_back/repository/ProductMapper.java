@@ -3,6 +3,7 @@ package org.test.teamproject_back.repository;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.test.teamproject_back.entity.Category;
+import org.test.teamproject_back.entity.OrderItem;
 import org.test.teamproject_back.entity.Product;
 import org.test.teamproject_back.entity.ProductCategory;
 
@@ -23,4 +24,5 @@ public interface ProductMapper {
     List<Product> findNewProduct();
     List<Product> findPopularityProduct();
     List<Product> findRecommendedProduct();
+    int updateSalesCountAndStock(List<OrderItem> orderItemList);
 }

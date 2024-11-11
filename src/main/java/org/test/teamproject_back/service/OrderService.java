@@ -40,6 +40,7 @@ public class OrderService {
         orderMapper.addOrder(order);
         orderItemMapper.addOrderItem(order.getOrderId(), dto.getProducts());
         paymentsMapper.addPayment(dto.toPayment(order.getOrderId()));
+        productMapper.updateSalesCountAndStock(dto.getProducts());
     }
 
     public RespOrderDto getOrderList(Long productId) {

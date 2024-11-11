@@ -35,6 +35,16 @@
         <id property="semiCategoryId" column="semi_category_id"></id>
         <result property="name" column="sct_name"></result>
     </resultMap>
+    <update id="updateSalesCountAndStock">
+        <foreach collection="orderItemList" item="item" separator=";">
+            update products_tb
+            set
+                sales_count = sales_count + #{item.quantity},
+                stock = stock - #{item.quantity}
+            where
+                product_id = #{item.productId}
+        </foreach>
+    </update>
     <select id="findProduct" resultMap="productResultMap">
         select
             pt.product_id,
