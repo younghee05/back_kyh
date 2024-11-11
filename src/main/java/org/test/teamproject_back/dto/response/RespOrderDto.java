@@ -10,7 +10,6 @@ public class RespOrderDto {
     private Long userId;
     private String name;
     private String email;
-    private Long point;
     private Long addressId;
     private String address;
     private String detailAddress;

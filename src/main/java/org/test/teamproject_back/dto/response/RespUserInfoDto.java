@@ -14,7 +14,6 @@ public class RespUserInfoDto {
     private String email;
     private String phoneNumber;
     private String password;
-    private Long point;
     private String img;
     private Address address;
 }
