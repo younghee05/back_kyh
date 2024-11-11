@@ -17,4 +17,5 @@ public interface UserMapper {
     Integer findById(String username);
     int deleteByUserId(Long userId);
     int updateUserProfile(@Param("userId") Long userId,@Param("imgUrl") String imgUrl);
+    String findUsername(@Param("name") String name, @Param("phoneNumber") String phoneNumber);
 }
