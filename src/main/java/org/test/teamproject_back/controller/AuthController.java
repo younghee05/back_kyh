@@ -3,10 +3,7 @@ package org.test.teamproject_back.controller;
 import org.apache.coyote.Response;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.test.teamproject_back.dto.request.ReqAccessDto;
-import org.test.teamproject_back.dto.request.ReqFindUsernameDto;
-import org.test.teamproject_back.dto.request.ReqSigninDto;
-import org.test.teamproject_back.dto.request.ReqSignupDto;
+import org.test.teamproject_back.dto.request.*;
 import org.test.teamproject_back.exception.SignupException;
 import org.test.teamproject_back.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +42,12 @@ public class AuthController {
     @GetMapping("/find")
     public ResponseEntity<?> findUsername(ReqFindUsernameDto dto) {
         return ResponseEntity.ok().body(authService.findUsername(dto));
+    }
+
+    @PutMapping("/regen")
+    public ResponseEntity<?> generatePassword(@RequestBody ReqGeneratePasswordDto dto) {
+        authService.generatePassword(dto);
+        return ResponseEntity.ok().body(true);
     }
 
 }

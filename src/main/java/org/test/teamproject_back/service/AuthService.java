@@ -3,10 +3,7 @@ package org.test.teamproject_back.service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.test.teamproject_back.dto.request.ReqFindUsernameDto;
-import org.test.teamproject_back.dto.request.ReqOAuth2MergeDto;
-import org.test.teamproject_back.dto.request.ReqSigninDto;
-import org.test.teamproject_back.dto.request.ReqSignupDto;
+import org.test.teamproject_back.dto.request.*;
 import org.test.teamproject_back.dto.response.RespSigninDto;
 import org.test.teamproject_back.dto.response.RespSignupDto;
 import org.test.teamproject_back.entity.OAuth2User;
@@ -118,6 +115,10 @@ public class AuthService {
 
     public String findUsername(ReqFindUsernameDto dto) {
         return userMapper.findUsername(dto.getName(), dto.getPhoneNumber());
+    }
+
+    public void generatePassword(ReqGeneratePasswordDto dto) {
+        userMapper.updatePassword(dto.toUser(bCryptPasswordEncoder));
     }
 
 }
