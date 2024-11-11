@@ -25,6 +25,12 @@ public class AdminSalesController {
         return ResponseEntity.ok().body(adminSalesService.getMonthSalesList(date));
     }
 
+    @GetMapping("/graph")
+    public ResponseEntity<?> getGraphData() {
+        return ResponseEntity.ok().body(adminSalesService.getGraphData());
+    }
+
+
 //    @GetMapping("/category")
 //    public ResponseEntity<?> getCategorySales(@RequestParam String category) {
 //    }

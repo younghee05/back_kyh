@@ -2,6 +2,7 @@ package org.test.teamproject_back.repository;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.test.teamproject_back.entity.Payment;
+import org.test.teamproject_back.entity.Product;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,4 +14,6 @@ public interface PaymentsMapper {
     int addPayment (Payment payment);
     String findPaymentNumByOrderId (Long orderId);
     int updatePaymentStatus(String paymentStatus, Long orderId);
+    List<Product> getGraphData();
+
 }
