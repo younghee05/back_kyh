@@ -2,13 +2,16 @@ package org.test.teamproject_back.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.test.teamproject_back.dto.response.RespGraphDataDto;
 import org.test.teamproject_back.dto.response.RespSalesDto;
 import org.test.teamproject_back.entity.Payment;
+import org.test.teamproject_back.entity.Product;
 import org.test.teamproject_back.repository.AdminOrderMapper;
 import org.test.teamproject_back.repository.PaymentsMapper;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Service
 public class AdminSalesService {
@@ -42,6 +45,13 @@ public class AdminSalesService {
         return RespSalesDto.builder()
                 .paymentList(paymentsMapper.findMonthPaymentList(formatDate, paymentStatus.trim()))
                 .amount(amount)
+                .build();
+    }
+
+    public RespGraphDataDto getGraphData() {
+        List<Product> productList = paymentsMapper.getGraphData();
+        return RespGraphDataDto.builder()
+                .products(productList)
                 .build();
     }
 
