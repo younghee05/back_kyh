@@ -10,7 +10,7 @@ public class ReqCartListDto {
     private List<Long> id;
     private String address;
     private String detailAddress;
-    private int zipCode;
+    private String zipCode;
 
     public Address toAddress(Long userId) {
         return Address.builder()

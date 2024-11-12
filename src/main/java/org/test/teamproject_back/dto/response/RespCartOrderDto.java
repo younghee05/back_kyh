@@ -16,6 +16,6 @@ public class RespCartOrderDto {
     private Long addressId;
     private String address;
     private String detailAddress;
-    private int zipCode;
+    private String zipCode;
     private List<CartItem> cartItemList;
 }

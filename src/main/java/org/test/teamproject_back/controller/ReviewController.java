@@ -23,6 +23,7 @@ public class ReviewController {
 
     @PostMapping("/user/review")
     public ResponseEntity<?> addReview(@RequestBody ReqAddReviewDto dto) {
+        System.out.println(dto);
         reviewService.addReview(dto);
         return ResponseEntity.ok().body(true);
     }

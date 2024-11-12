@@ -14,5 +14,5 @@ public class Address {
     private Long userId;
     private String address;
     private String detailAddress;
-    private int zipCode;
+    private String zipCode;
 }

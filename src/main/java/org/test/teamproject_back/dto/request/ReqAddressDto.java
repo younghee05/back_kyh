@@ -7,7 +7,7 @@ import org.test.teamproject_back.entity.Address;
 public class ReqAddressDto {
     private String address;
     private String detailAddress;
-    private int zipCode;
+    private String zipCode;
 
     public Address toAddress(Long userId) {
         return Address.builder()

@@ -8,7 +8,7 @@ public class ReqProductOrderDto {
     private Long productId;
     private String address;
     private String detailAddress;
-    private int zipCode;
+    private String zipCode;
 
     public Address toAddress(Long userId) {
         return Address.builder()

@@ -15,7 +15,7 @@ public class ReqModifyUserDto {
     private String email;
     private String address;
     private String detailAddress;
-    private int zipCode;
+    private String zipCode;
 
     public User toUpdateUser(Long userId, BCryptPasswordEncoder bycryptPasswordEncoder) {
         return User.builder()

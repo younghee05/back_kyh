@@ -37,11 +37,24 @@ public class OrderService {
 
     @Transactional(rollbackFor = SQLException.class)
     public void addOrder(ReqOrderDto dto) {
+        PrincipalUser principalUser = (PrincipalUser) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
         Order order = dto.toOrder();
+
         orderMapper.addOrder(order);
         orderItemMapper.addOrderItem(order.getOrderId(), dto.getProducts());
         paymentsMapper.addPayment(dto.toPayment(order.getOrderId()));
         productMapper.updateSalesCountAndStock(dto.getProducts());
+
+        if (addressMapper.findAddressByUserId(principalUser.getId()) == null) {
+            addressMapper.addAddress(dto.toAddress(principalUser.getId()));
+            return;
+        }
+
+        addressMapper.updateAddress(dto.toAddress(principalUser.getId()));
+
     }
 
     public RespOrderDto getOrderList(ReqProductOrderDto dto) {
@@ -50,16 +63,10 @@ public class OrderService {
                 .getAuthentication()
                 .getPrincipal();
 
-
-        Address address = null;
         User user = userMapper.findUserByUserId(principalUser.getId());
         Product product = productMapper.findProductById(dto.getProductId());
 
-        if (dto.getAddress() == null && dto.getDetailAddress() == null && dto.getZipCode() == 0) {
-            addressMapper.addAddress(dto.toAddress(principalUser.getId()));
-        }
-
-        address = addressMapper.findAddressByUserId(principalUser.getId());
+        Address address = addressMapper.findAddressByUserId(principalUser.getId());
 
         return RespOrderDto.builder()
                 .userId(user.getUserId())
@@ -80,15 +87,10 @@ public class OrderService {
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
-        Address address = null;
+
         User user = userMapper.findUserByUserId(principalUser.getId());
         List<CartItem> cartItemList = cartItemMapper.findCartItemList(principalUser.getId(), dto.getId());
-
-        if (dto.getAddress() == null && dto.getDetailAddress() == null && dto.getZipCode() == 0) {
-            addressMapper.addAddress(dto.toAddress(principalUser.getId()));
-        }
-
-        address = addressMapper.findAddressByUserId(principalUser.getId());
+        Address address = addressMapper.findAddressByUserId(principalUser.getId());
 
         return RespCartOrderDto.builder()
                 .userId(user.getUserId())

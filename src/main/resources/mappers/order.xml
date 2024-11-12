@@ -46,5 +46,6 @@
             left outer join products_tb pt on (pt.product_id = oit.product_id)
             left outer join payments_tb pat on (pat.order_id = oit.order_id)
         where user_id = #{userId}
+        order by ot.created_at desc
     </select>
 </mapper>

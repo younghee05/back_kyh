@@ -14,6 +14,9 @@ public class ReqOrderDto {
     private String payMethod;
     private String paymentId;
     private int orderItemCount;
+    private String address;
+    private String detailAddress;
+    private String zipCode;
 
     public Order toOrder() {
         return Order.builder()
@@ -29,6 +32,15 @@ public class ReqOrderDto {
                 .paymentStatus("completed")
                 .paymentNum(paymentId)
                 .amount(totalAmount)
+                .build();
+    }
+
+    public Address toAddress(Long userId) {
+        return Address.builder()
+                .userId(userId)
+                .address(address)
+                .detailAddress(detailAddress)
+                .zipCode(zipCode)
                 .build();
     }
 }
