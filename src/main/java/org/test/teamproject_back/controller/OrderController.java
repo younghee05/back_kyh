@@ -19,6 +19,7 @@ public class OrderController {
     public ResponseEntity<?> getOrder(ReqProductOrderDto dto) {
         return ResponseEntity.ok().body(orderService.getOrderList(dto));
     }
+
     @PostMapping("/order")
     public ResponseEntity<?> addOrder(@RequestBody ReqOrderDto dto) {
         System.out.println(dto);
@@ -36,5 +37,6 @@ public class OrderController {
     public ResponseEntity<?> getOrderRecord() {
         return ResponseEntity.ok().body(orderService.getOrderRecord());
     }
+
 
 }

@@ -13,7 +13,7 @@
     </resultMap>
     <resultMap id="orderItemResultMap" type="org.test.teamproject_back.entity.OrderItem">
         <result property="quantity" column="quantity"></result>
-        <association property="product" resultMap="productResultMap"></association>
+        <collection property="products" resultMap="productResultMap"></collection>
     </resultMap>
     <resultMap id="productResultMap" type="org.test.teamproject_back.entity.Product">
         <id property="productId" column="product_id"></id>

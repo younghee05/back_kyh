@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,5 +17,7 @@ public class OrderItem {
     private Long productId;
     private int quantity;
     private int price;
+
     private Product product;
+    private List<Product> products;
 }
