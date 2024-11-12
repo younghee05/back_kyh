@@ -81,7 +81,8 @@
             left outer join users_tb ut on(ut.user_id = ot.user_id)
             left outer join products_tb prt on(prt.product_id = oit.product_id)
         where
-            payment_status = #{paymentStatus};
+            payment_status = #{paymentStatus}
+        limit #{startIndex}, #{limit}
     </select>
     <select id="findMonthPaymentList" resultMap="paymentResultMap">
 <!--        select-->
@@ -125,7 +126,7 @@
         where
             order_id = #{orderId}
     </select>
-    <select id="getGraphData" resultMap="userResultMap">
+    <select id="getGraphData" resultMap="productResultMap">
         select
             title,
             stock
@@ -134,5 +135,13 @@
         order by
             stock desc
         limit 5
+    </select>
+    <select id="findPaymentCount" resultType="java.lang.Integer">
+        select
+            count(*)
+        from
+            payments_tb
+        where
+            payment_status = #{paymentStatus}
     </select>
 </mapper>
