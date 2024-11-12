@@ -18,6 +18,7 @@
     <resultMap id="productResultMap" type="org.test.teamproject_back.entity.Product">
         <id property="productId" column="product_id"></id>
         <result property="title" column="title"></result>
+        <result property="thumbnailImg" column="thumbnail_img"></result>
     </resultMap>
     <insert id="addOrder" useGeneratedKeys="true" keyProperty="orderId">
         insert into orders_tb (order_id, user_id, total_amount, created_at)
@@ -31,7 +32,8 @@
             ot.created_at,
             oit.quantity,
             pt.product_id,
-            pt.title
+            pt.title,
+            pt.thumbnail_img
         from
             orders_tb ot
             left outer join order_items_tb oit on(ot.order_id = oit.order_id)
