@@ -17,7 +17,7 @@ public interface ProductMapper {
     List<Product> findAllProductsList(int startIndex, int limit);
     List<Product> findProduct(Map<String, Object> paging);
     int findProductCountByTitle(String title);
-    int findAllProductCount();
+    Integer findAllProductCount();
     int findProductCountBySemiCategory(int mainCategoryId, int semiCategoryId);
     List<Product> findProductByCategory(Map<String, Object> paging);
     Product findProductById(Long productId);
