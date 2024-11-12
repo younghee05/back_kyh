@@ -9,7 +9,12 @@
         <result property="createdAt" column="created_at"></result>
         <result property="totalAmount" column="total_amount"></result>
         <result property="createdAt" column="created_at"></result>
+        <association property="payment" resultMap="paymentResultMap"></association>
         <collection property="orderItems" resultMap="orderItemResultMap"></collection>
+    </resultMap>
+    <resultMap id="paymentResultMap" type="org.test.teamproject_back.entity.Payment">
+        <result property="paymentStatus" column="payment_status"></result>
+        <result property="paymentMethod" column="payment_method"></result>
     </resultMap>
     <resultMap id="orderItemResultMap" type="org.test.teamproject_back.entity.OrderItem">
         <result property="quantity" column="quantity"></result>
@@ -27,17 +32,19 @@
     <select id="findUserOrder" resultMap="orderResultMap">
         select
             ot.order_id,
-            ot.order_status,
             ot.total_amount,
             ot.created_at,
             oit.quantity,
             pt.product_id,
             pt.title,
-            pt.thumbnail_img
+            pt.thumbnail_img,
+            pat.payment_status,
+            pat.payment_method
         from
             orders_tb ot
             left outer join order_items_tb oit on(ot.order_id = oit.order_id)
             left outer join products_tb pt on (pt.product_id = oit.product_id)
+            left outer join payments_tb pat on (pat.order_id = oit.order_id)
         where user_id = #{userId}
     </select>
 </mapper>
