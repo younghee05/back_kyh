@@ -3,6 +3,7 @@ package org.test.teamproject_back.repository;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.test.teamproject_back.dto.request.ReqSearchSalesDto;
+import org.test.teamproject_back.entity.OrderItem;
 import org.test.teamproject_back.entity.Payment;
 import org.test.teamproject_back.entity.Product;
 
@@ -18,4 +19,5 @@ public interface PaymentsMapper {
     int updatePaymentStatus(String paymentStatus, String paymentId);
     List<Product> getGraphData();
     int findPaymentCount(String paymentStatus);
+    List<OrderItem> findOrderItems(String paymentId);
 }

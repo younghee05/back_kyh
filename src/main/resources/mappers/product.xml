@@ -35,15 +35,61 @@
         <id property="semiCategoryId" column="semi_category_id"></id>
         <result property="name" column="sct_name"></result>
     </resultMap>
-    <update id="updateSalesCountAndStock">
-        <foreach collection="orderItemList" item="item" separator=";">
-            update products_tb
-            set
-                sales_count = sales_count + #{item.quantity},
-                stock = stock - #{item.quantity}
-            where
-                product_id = #{item.productId}
-        </foreach>
+    <update id="updateSalesCountAndStock" parameterType="java.util.List">
+        update products_tb
+        set
+            sales_count =
+            case
+                <foreach collection="orderItemList" item="item" separator=" ">
+                    when product_id = #{item.productId}
+                    then sales_count + #{item.quantity}
+                </foreach>
+                else sales_count
+            end,
+
+            stock =
+            case
+                <foreach collection="orderItemList" item="item" separator=" ">
+                    when product_id = #{item.productId}
+                    then stock - #{item.quantity}
+                </foreach>
+                else stock
+            end
+
+        where
+            product_id in(
+                <foreach collection="orderItemList" item="item" separator=",">
+                    #{item.productId}
+                </foreach>
+            )
+    </update>
+    <update id="updateReturnSalesCountAndStock">
+        update products_tb
+        set
+            sales_count =
+            case
+                <foreach collection="orderItemList" item="item" separator=" ">
+                    when product_id = #{item.productId}
+                    then sales_count - #{item.quantity}
+                </foreach>
+            else sales_count
+        end,
+
+        stock =
+        case
+            <foreach collection="orderItemList" item="item" separator=" ">
+                when product_id = #{item.productId}
+                then stock + #{item.quantity}
+            </foreach>
+            else stock
+        end
+
+        where
+            product_id in(
+                <foreach collection="orderItemList" item="item" separator=",">
+                    #{item.productId}
+                </foreach>
+            )
     </update>
     <select id="findProduct" resultMap="productResultMap">
         select

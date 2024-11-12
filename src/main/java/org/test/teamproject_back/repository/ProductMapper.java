@@ -25,4 +25,5 @@ public interface ProductMapper {
     List<Product> findPopularityProduct();
     List<Product> findRecommendedProduct();
     int updateSalesCountAndStock(List<OrderItem> orderItemList);
+    int updateReturnSalesCountAndStock(List<OrderItem> orderItemList);
 }

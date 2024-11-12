@@ -28,6 +28,7 @@
     <resultMap id="orderItemResultMap" type="org.test.teamproject_back.entity.OrderItem">
         <id property="orderItemId" column="order_item_id"></id>
         <result property="orderId" column="order_id"></result>
+        <result property="productId" column="product_id"></result>
         <result property="price" column="price"></result>
         <result property="quantity" column="quantity"></result>
         <association property="product" resultMap="productResultMap"></association>
@@ -143,5 +144,16 @@
             payments_tb
         where
             payment_status = #{paymentStatus}
+    </select>
+    <select id="findOrderItems" resultMap="orderItemResultMap">
+        select
+            oit.product_id,
+            oit.quantity
+        from
+            payments_tb pt
+            left outer join orders_tb ot on (pt.order_id = ot.order_id)
+            left outer join order_items_tb oit on (ot.order_id = oit.order_id)
+        where
+            pt.payment_num = #{paymentId}
     </select>
 </mapper>
