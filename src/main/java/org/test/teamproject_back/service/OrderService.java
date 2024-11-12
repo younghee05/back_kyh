@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.test.teamproject_back.dto.request.ReqCartListDto;
 import org.test.teamproject_back.dto.request.ReqOrderDto;
+import org.test.teamproject_back.dto.request.ReqProductOrderDto;
 import org.test.teamproject_back.dto.response.RespCartOrderDto;
 import org.test.teamproject_back.dto.response.RespOrderDto;
 import org.test.teamproject_back.entity.*;
@@ -43,14 +44,22 @@ public class OrderService {
         productMapper.updateSalesCountAndStock(dto.getProducts());
     }
 
-    public RespOrderDto getOrderList(Long productId) {
+    public RespOrderDto getOrderList(ReqProductOrderDto dto) {
         PrincipalUser principalUser = (PrincipalUser) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
+
+
+        Address address = null;
         User user = userMapper.findUserByUserId(principalUser.getId());
-        Product product = productMapper.findProductById(productId);
-        Address address = addressMapper.findAddressByUserId(principalUser.getId());
+        Product product = productMapper.findProductById(dto.getProductId());
+
+        if (dto.getAddress() == null && dto.getDetailAddress() == null && dto.getZipCode() == 0) {
+            addressMapper.addAddress(dto.toAddress(principalUser.getId()));
+        }
+
+        address = addressMapper.findAddressByUserId(principalUser.getId());
 
         return RespOrderDto.builder()
                 .userId(user.getUserId())
