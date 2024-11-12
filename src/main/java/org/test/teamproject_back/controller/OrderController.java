@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.test.teamproject_back.dto.request.ReqCartListDto;
 import org.test.teamproject_back.dto.request.ReqOrderDto;
+import org.test.teamproject_back.dto.request.ReqProductOrderDto;
 import org.test.teamproject_back.service.OrderService;
 
 @RestController
@@ -13,11 +14,11 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
-//
-//    @GetMapping("/order")
-//    public ResponseEntity<?> getOrder(@RequestParam Long id) {
-//        return ResponseEntity.ok().body(orderService.getOrderList(id));
-//    }
+
+    @GetMapping("/order")
+    public ResponseEntity<?> getOrder(ReqProductOrderDto dto) {
+        return ResponseEntity.ok().body(orderService.getOrderList(dto));
+    }
     @PostMapping("/order")
     public ResponseEntity<?> addOrder(@RequestBody ReqOrderDto dto) {
         System.out.println(dto);
