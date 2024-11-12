@@ -207,9 +207,6 @@
             count(*)
         from
             products_tb
-        where
-            payment_status = #{paymentStatus}
-        limit #{startIndex}, #{limit}
     </select>
     <select id="findProductCountBySemiCategory" resultType="java.lang.Integer">
         select

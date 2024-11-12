@@ -29,6 +29,7 @@ public class ProductService {
                 "startIndex", startIndex,
                 "limit", dto.getLimit()
         );
+        System.out.println(paging);
 
         List<Product> productList = productMapper.findAllProductsList(startIndex, dto.getLimit());
         System.out.println(productList);
