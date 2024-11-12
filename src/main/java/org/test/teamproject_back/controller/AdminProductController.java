@@ -2,6 +2,7 @@ package org.test.teamproject_back.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.test.teamproject_back.dto.request.ReqAddProductDto;
 import org.test.teamproject_back.dto.request.ReqDeleteCheckDto;
@@ -10,6 +11,7 @@ import org.test.teamproject_back.dto.request.ReqSearchDto;
 import org.test.teamproject_back.service.AdminProductService;
 import org.test.teamproject_back.service.ProductService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,7 +24,7 @@ public class AdminProductController {
     private AdminProductService adminProductService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> addProduct(@RequestBody ReqAddProductDto dto) {
+    public ResponseEntity<?> addProduct(@Valid  @RequestBody ReqAddProductDto dto, BindingResult bindingResult) {
         System.out.println(dto);
         adminProductService.addProduct(dto);
         return ResponseEntity.ok().body(true);

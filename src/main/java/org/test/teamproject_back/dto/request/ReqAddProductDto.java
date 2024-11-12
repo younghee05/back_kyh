@@ -3,18 +3,26 @@ package org.test.teamproject_back.dto.request;
 import lombok.Data;
 import org.test.teamproject_back.entity.Product;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Set;
 
 @Data
 public class ReqAddProductDto {
+    @NotBlank(message = "상품명은 공백일 수 없습니다.")
     private String title;
+    @NotBlank(message = "가격은 공백일 수 없습니다.")
     private int price;
+    @NotBlank(message = "재고는 공백일 수 없습니다.")
     private int stock;
+    @NotBlank(message = "설명은 공백일 수 없습니다.")
     private String description;
+    @NotBlank(message = "원산지는 공백일 수 없습니다.")
     private String origin;
+    @NotBlank(message = "카테고리는 공백일 수 없습니다.")
     private int categoryId;
     private int semiCategoryId;
+    @NotBlank(message = "이미지는 공백일 수 없습니다.")
     private String thumbnailImg;
     private List<String> contentsImg;
 
