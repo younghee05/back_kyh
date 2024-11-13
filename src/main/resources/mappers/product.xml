@@ -246,7 +246,7 @@
         from
             products_tb
         order by
-            stock desc limit 10
+            sales_count desc limit 10
     </select>
     <select id="findRecommendedProduct" resultMap="productResultMap">
         select
